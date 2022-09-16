@@ -1,10 +1,9 @@
 name: Running cypress tests
 on: 
   push:
-    branches:
-      - '!master'
-      - '!staging'
-  workflow_dispatch:
+    branches-ignore:
+      - master
+      - staging
 
 jobs:
   cypress-run:
