@@ -51,13 +51,13 @@ const Multistep = ({ elements, selectedId, selectStep }: MultistepProps) => {
       </div>
       <div className={styles["window__main"]}>
         <AnimatePresence mode="wait">
-          <motion.div key={currentElement.id}
+          <motion.div key={currentElement?.id}
           variants={ wrapperVariants }
           initial="beforeShown"
           animate="shown"
           exit="afterShown"
           className={ styles["window__main--container"]}>
-            {currentElement.reactElement}
+            {currentElement?.reactElement}
           </motion.div>
         </AnimatePresence>
       </div>
