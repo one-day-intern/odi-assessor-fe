@@ -86,9 +86,7 @@ const AssessorSignupStoreProvider = ({
     if (responseData != null) {
       toast.success("Your new account has been created", {
         containerId: "root-toast",
-        position: toast.POSITION.TOP_CENTER,
-        theme: "colored",
-        autoClose: 2000
+        position: toast.POSITION.TOP_CENTER
       });
 
       router.push("/accounts/login/assessor");
@@ -99,8 +97,6 @@ const AssessorSignupStoreProvider = ({
       toast.error(responseError.message, {
         containerId: "root-toast",
         position: toast.POSITION.TOP_CENTER,
-        theme: "colored",
-        autoClose: 2000
       });
       return;
     }

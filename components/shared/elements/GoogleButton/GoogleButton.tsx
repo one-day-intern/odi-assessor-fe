@@ -14,6 +14,7 @@ const GoogleButton = ({ onClick }: GoogleButtonProps) => {
       data-testid="google-btn"
       onClick={onClick}
       className={styles["button--google"]}
+      type="button"
     >
       <GoogleLogo />
       <h2 className={styles["button--google__text"]}>Log In with Google</h2>
