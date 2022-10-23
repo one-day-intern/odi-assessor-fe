@@ -47,6 +47,7 @@
 
   grid-area: name;
 }
+
 .choice__text--description {
   color: rgba(49, 81, 173, 0.7);
   grid-area: details;
