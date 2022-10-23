@@ -4,12 +4,18 @@ module.exports = {
   coverageProvider: 'v8',
   collectCoverageFrom: [
     '**/*.{js,jsx,ts,tsx}',
+    "!**/index.ts",
+    "!**/cypress/**",
     '!**/*.d.ts',
     '!**/node_modules/**',
+    "!**/pages/**",
+    "!**/components/shared/**/svg/**",
     '!<rootDir>/out/**',
     '!<rootDir>/.next/**',
     '!<rootDir>/*.config.js',
+    '!<rootDir>/*.config.ts',
     '!<rootDir>/coverage/**',
+    "!**/mocks/**"
   ],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)
@@ -27,7 +33,8 @@ module.exports = {
     '^@components(.*)$': '<rootDir>/components/$1',
     "^@utils(.*)$": "<rootDir>/utils$1",
     "^@hooks(.*)$": "<rootDir>/hooks$1",
-    "^@services(.*)$": "<rootDir>/services$1"
+    "^@services(.*)$": "<rootDir>/services$1",
+    "^@context(.*)$": "<rootDir>/context$1"
   },
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
@@ -39,7 +46,7 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
   transformIgnorePatterns: [
-    '/node_modules/',
+    '/node_modules/(?!(uuid)/)',
     '^.+\\.module\\.(css|sass|scss)$',
   ],
   setupFilesAfterEnv: ["./jest.setup.ts"]
