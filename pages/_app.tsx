@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MotionConfig reducedMotion="user">
-      <ToastContainer containerId="root-toast"/>
+      <ToastContainer containerId="root-toast" autoClose={2000} theme="colored"/>
       <AuthProvider>
         <Component {...pageProps} />
       </AuthProvider>
