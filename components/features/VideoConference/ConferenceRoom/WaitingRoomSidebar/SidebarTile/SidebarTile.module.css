@@ -1,0 +1,42 @@
+.tile {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 2px solid grey;
+  display: flex;
+  align-items: center;
+}
+
+.peer-name {
+  margin: 0;
+  margin: 0 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.peer-abbrev {
+  height: 30px;
+  min-width: 30px;
+  border-radius: 5px;
+  font-weight: bold;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.actions .reject {
+  font-size: 0.85rem;
+  text-decoration: underline;
+  cursor: pointer;
+  user-select: none;
+}

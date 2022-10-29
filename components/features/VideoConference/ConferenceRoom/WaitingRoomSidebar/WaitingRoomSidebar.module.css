@@ -1,0 +1,48 @@
+.sidebar {
+  position: fixed;
+  width: min(500px, 100%);
+  height: 100%;
+  top: 0;
+  left: 0;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(13.5px);
+  -webkit-backdrop-filter: blur(13.5px);
+  border: 3px solid var(--primary);
+  padding: 2.5rem;
+}
+
+.sidebar-open {
+  width: 70px;
+  height: 70px;
+  position: absolute;
+  background: white;
+  color: var(--primary);
+  font-size: 4rem;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  top: 2rem;
+  left: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.waiting-room_list {
+  height: 100%;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.sidebar-header {
+  color: var(--primary);
+  text-align: center;
+  font-size: 1.25rem;
+}
