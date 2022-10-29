@@ -109,7 +109,6 @@ const FlowEditor = ({
     const edgeList = edgifyConnections(connection, realEdges)
 
     reactFlowInstance.setEdges(edgeList);
-    console.log({connection, realEdges})
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connection]);
