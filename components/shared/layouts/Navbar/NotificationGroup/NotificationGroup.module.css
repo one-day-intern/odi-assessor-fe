@@ -1,0 +1,35 @@
+.user-group__notif {
+  background: none;
+  padding: none;
+  text-align: left;
+  border: none;
+
+  cursor: pointer;
+  position: relative;
+
+  margin: 0 0.6rem;
+}
+
+.user-group__notif__count {
+  position: absolute;
+  background-color: #85aeff;
+  color: white;
+
+  width: 18px;
+  height: 18px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 3rem;
+  bottom: -15%;
+  right: -15%;
+}
+
+.user-group__notif__count p {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 0.7rem;
+
+  margin: 0;
+}
