@@ -25,6 +25,7 @@ import ToolPicker from "./ToolPicker/ToolPicker";
 import useCreateToolHandler from "@hooks/TestFlow/useCreateToolHandler";
 import { TimeField } from "@components/shared/forms/TimeField";
 import { useStack } from "@hooks/shared/useStack";
+import crypto from "crypto";
 
 interface DiagramState {
   assignmentsState: AssignmentNode[];
@@ -148,15 +149,14 @@ const CreateTestFlow = () => {
 
     setAssignmentEvent((prev) => {
       setData("tool", tools);
-
       const result: AssignmentNode[] = [
         ...prev,
         {
           ...tools!,
           id: uuidv4(),
           position: {
-            x: Math.random() * 200,
-            y: Math.random() * 200,
+            x: 15,
+            y: 15,
           },
         },
       ];
