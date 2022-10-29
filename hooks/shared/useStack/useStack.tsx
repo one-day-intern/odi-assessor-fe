@@ -16,7 +16,7 @@ function useStack<T>() {
 
   const peek = (): T | undefined => stack.at(-1);
 
-  const isEmpty = (): boolean => length === 0;
+  const isEmpty = (): boolean => stack.length === 0;
 
   const clear = () => setStack([]);
 
