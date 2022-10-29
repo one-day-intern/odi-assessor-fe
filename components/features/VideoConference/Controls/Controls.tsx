@@ -1,18 +1,30 @@
 import React from "react";
 import styles from "./Controls.module.css";
 import { motion } from "framer-motion";
-import { useAVToggle } from "@100mslive/react-sdk";
+import {
+  selectIsConnectedToRoom,
+  selectLocalPeer,
+  useAVToggle,
+  useHMSActions,
+  useHMSStore,
+} from "@100mslive/react-sdk";
 import VideoConferenceIcon from "@components/shared/svg/AppIcons/VideoConferenceIcon";
 import MicrophoneIcon from "./MicrophoneIcon";
 import LeaveIcon from "./LeaveIcon";
 
 interface Props {
   onLeave?: () => void;
+  onEndRoom?: () => void;
 }
 
-const Controls: React.FC<Props> = ({ onLeave }) => {
+const Controls: React.FC<Props> = ({ onLeave, onEndRoom }) => {
   const { isLocalVideoEnabled, isLocalAudioEnabled, toggleAudio, toggleVideo } =
-    useAVToggle((e) => { console.log(e.name) });
+    useAVToggle((e) => {
+      console.log(e.name);
+    });
+  const inRoom = useHMSStore(selectIsConnectedToRoom);
+  const localPeer = useHMSStore(selectLocalPeer);
+  const giveHostRoomControls = localPeer?.roleName === "host";
 
   return (
     <div className={`${styles.controls}`}>
@@ -34,14 +46,27 @@ const Controls: React.FC<Props> = ({ onLeave }) => {
       >
         <MicrophoneIcon color={isLocalAudioEnabled ? "black" : "white"} />
       </motion.button>
-      {onLeave && (
-        <motion.button
-        whileTap={{ scale: 0.8 }}
-          onClick={() => onLeave()}
-          className={`${styles["controls-button"]} ${styles.disabled}`}
-        >
-          <LeaveIcon color="white" />
-        </motion.button>
+      {inRoom && (
+        <>
+          {!giveHostRoomControls && (
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              onClick={() => onLeave && onLeave()}
+              className={`${styles["controls-button"]} ${styles.disabled}`}
+            >
+              <LeaveIcon color="white" />
+            </motion.button>
+          )}
+          {giveHostRoomControls && (
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              onClick={() => onEndRoom && onEndRoom()}
+              className={`${styles["end-room-button"]}`}
+            >
+              END ROOM
+            </motion.button>
+          )}
+        </>
       )}
     </div>
   );

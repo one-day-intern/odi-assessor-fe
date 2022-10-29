@@ -35,7 +35,7 @@ const WaitingRoomSidebar = () => {
         {peersInWaitingRoom.map((peer) => (
           <SidebarTile
             key={peer.id}
-            onAdmit={() => actions.changeRole(peer.id, "assessee", true)}
+            onAdmit={() => actions.changeRole(peer.id, "participant", true)}
             onReject={() => actions.removePeer(peer.id, "Rejected to enter")}
             peerName={peer.name}
           />
