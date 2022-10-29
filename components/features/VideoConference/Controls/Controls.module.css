@@ -21,6 +21,23 @@
   position: relative;
 }
 
+.end-room-button {
+  border: 0;
+  height: 60px;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 18px;
+  margin: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: red;
+  color: white;
+  font-weight: bold;
+}
+
 .controls-button > svg {
   width: 75%;
   height: 75%;

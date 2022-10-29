@@ -11,7 +11,13 @@ import VideoPlayer from "../VideoPlayer";
 import Controls from "../Controls";
 import WaitingRoomSidebar from "./WaitingRoomSidebar";
 
-const ConferenceRoom = () => {
+const restrictedRoles = ["waiting-room", "removed"];
+
+interface Props {
+  onEndRoom?: () => void;
+}
+
+const ConferenceRoom: React.FC<Props> = ({ onEndRoom }) => {
   const actions = useHMSActions();
   const peers = useHMSStore(selectPeers);
   const localPeer = useHMSStore(selectLocalPeer);
@@ -25,7 +31,7 @@ const ConferenceRoom = () => {
       <div className={styles["video-grid"]}>
         <AnimatePresence>
           {peers
-            .filter((peer) => peer.roleName !== "waiting-room")
+            .filter((peer) => !restrictedRoles.includes(peer.roleName!))
             .map((peer) => (
               <motion.div
                 layout
@@ -40,9 +46,9 @@ const ConferenceRoom = () => {
         </AnimatePresence>
       </div>
       <div className={styles["video-controls"]}>
-        <Controls onLeave={() => actions.leave()} />
+        <Controls onEndRoom={onEndRoom} onLeave={() => actions.leave()} />
       </div>
-      {localPeer?.roleName === "assessor" && <WaitingRoomSidebar />}
+      {localPeer?.roleName === "host" && <WaitingRoomSidebar />}
     </motion.main>
   );
 };

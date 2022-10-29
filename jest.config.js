@@ -17,7 +17,8 @@ module.exports = {
     '!<rootDir>/coverage/**',
     "!**/mocks/**",
     "!**/VideoConference.tsx",
-    "!**/components/**/TestFlow/**"
+    "!**/components/**/TestFlow/**",
+    "!**/LeaveIcon.tsx"
   ],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)
