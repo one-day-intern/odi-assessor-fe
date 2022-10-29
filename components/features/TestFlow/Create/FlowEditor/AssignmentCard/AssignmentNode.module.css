@@ -1,0 +1,35 @@
+.asg-card {
+  width: 35ch;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+  border-radius: 0.3rem;
+
+  background-color: white;
+
+  padding: 0.75rem;
+
+  display: grid;
+  gap: 0.25rem 1rem;
+  grid-template-columns: max-content 1fr;
+
+  grid-template-areas:
+    "🎨 📛"
+    "🎨 ⏱";
+}
+
+.asg-card__icon {
+  grid-area: 🎨;
+  display: grid;
+  place-items: center;
+}
+
+.asg-card__name {
+  grid-area: 📛;
+  margin: 0;
+
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.asg-card__time {
+  grid-area: ⏱;
+}
