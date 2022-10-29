@@ -16,6 +16,7 @@ module.exports = {
     '!<rootDir>/*.config.ts',
     '!<rootDir>/coverage/**',
     "!**/mocks/**",
+    "!**/VideoConference.tsx",
     "!**/components/**/TestFlow/**"
   ],
   moduleNameMapper: {
@@ -35,7 +36,8 @@ module.exports = {
     "^@utils(.*)$": "<rootDir>/utils$1",
     "^@hooks(.*)$": "<rootDir>/hooks$1",
     "^@services(.*)$": "<rootDir>/services$1",
-    "^@context(.*)$": "<rootDir>/context$1"
+    "^@context(.*)$": "<rootDir>/context$1",
+    "^uuid$": "uuid"
   },
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
