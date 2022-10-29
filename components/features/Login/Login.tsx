@@ -13,6 +13,7 @@ import { useLoginHandler } from "@hooks/Login/useLoginHandler";
 import usePostRequest from "@hooks/shared/usePostRequest";
 import { emailValidator } from "@utils/validators/emailValidator";
 import { emptyValidator } from "@utils/validators/emptyValidator";
+import { useRouter } from "next/router";
 import React, { FormEventHandler, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 
@@ -35,6 +36,8 @@ const Login = ({ loginUrl }: LoginProps) => {
   const { dispatch, user } = useAuthContext();
 
   const isMounted = useRef(false);
+  
+  const router = useRouter();
 
   const { data, error, status, postData } = usePostRequest<
     LoginFormInputs,
@@ -71,10 +74,13 @@ const Login = ({ loginUrl }: LoginProps) => {
         },
       });
 
+      router.push("/");
+      
       toast.success("You have logged in succesfully!", {
         containerId: "root-toast",
         position: toast.POSITION.TOP_CENTER,
       });
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, error, status]);
