@@ -1,1 +1,3 @@
-export { VideoConferenceIcon } from "./VideoConferenceIcon"
+import { VideoConferenceIcon } from "./VideoConferenceIcon";
+
+export default VideoConferenceIcon;
