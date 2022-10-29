@@ -27,7 +27,7 @@ import { TimeField } from "@components/shared/forms/TimeField";
 import { useStack } from "@hooks/shared/useStack";
 
 interface DiagramState {
-  assignmentsState : AssignmentNode[];
+  assignmentsState: AssignmentNode[];
   connectionState: Connection[];
 }
 
@@ -82,22 +82,28 @@ const CreateTestFlow = () => {
     push: redoPush,
     pop: redoPop,
     clear: redoClear,
-    isEmpty: redoIsEmpty
+    isEmpty: redoIsEmpty,
   } = useStack<DiagramState>();
 
   const handleUndo = useCallback(() => {
-    const diagramState: DiagramState = ({assignmentsState: assignmentEvent, connectionState: connections})
+    const diagramState: DiagramState = {
+      assignmentsState: assignmentEvent,
+      connectionState: connections,
+    };
     redoPush(diagramState);
     const item = historyPop();
     item?.assignmentsState && setAssignmentEvent(item?.assignmentsState!);
-    item?.connectionState && setConnections(item?.connectionState!)
+    item?.connectionState && setConnections(item?.connectionState!);
   }, [historyPop, redoPush, assignmentEvent, connections]);
 
   const handleRedo = useCallback(() => {
     if (redoIsEmpty()) return;
 
-    const diagramState: DiagramState = ({assignmentsState: assignmentEvent, connectionState: connections})
-    
+    const diagramState: DiagramState = {
+      assignmentsState: assignmentEvent,
+      connectionState: connections,
+    };
+
     historyPush(diagramState);
     const item = redoPop();
     item?.assignmentsState && setAssignmentEvent(item?.assignmentsState!);
@@ -106,26 +112,15 @@ const CreateTestFlow = () => {
 
   // Clear stack when unmounts, precaution
   useEffect(() => {
-    let timer: NodeJS.Timeout;
-    let inputtedCommand: string[] = [];
-
     const handleKeyBindings = (e: KeyboardEvent) => {
-      if (e.key === "Control") {
-        inputtedCommand.push("Control");
-        timer = setTimeout(() => {
-          inputtedCommand = [];
-        }, 5000);
-      } else {
-        clearTimeout(timer);
-        if (inputtedCommand.length > 0) {
-          if (e.key === "z") {
-            handleUndo();
-          }
-          if (e.key === "y") {
-            handleRedo();
-          }
-        }
-        inputtedCommand = [];
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+
+      if (e.key === "z") {
+        handleUndo();
+      }
+      if (e.key === "y") {
+        handleRedo();
       }
     };
 
@@ -145,7 +140,10 @@ const CreateTestFlow = () => {
     )
       return;
 
-    historyPush({assignmentsState: assignmentEvent, connectionState: connections});
+    historyPush({
+      assignmentsState: assignmentEvent,
+      connectionState: connections,
+    });
     redoClear();
 
     setAssignmentEvent((prev) => {
@@ -181,7 +179,10 @@ const CreateTestFlow = () => {
     )
       return;
 
-    historyPush({assignmentsState: assignmentEvent, connectionState: connections});
+    historyPush({
+      assignmentsState: assignmentEvent,
+      connectionState: connections,
+    });
     redoClear();
     const updatedAsgEvent = assignmentEvent.map((asg) =>
       asg.id === node.id ? { ...asg, position: node.position } : asg
@@ -204,15 +205,21 @@ const CreateTestFlow = () => {
       setConnections((prev) => [...prev]);
       return;
     }
-    
-    historyPush({assignmentsState: assignmentEvent, connectionState: connections});
+
+    historyPush({
+      assignmentsState: assignmentEvent,
+      connectionState: connections,
+    });
     redoClear();
     setConnections((prev) => [...prev, connection]);
   };
 
   const onEdgesDelete = (edges: Edge[]) => {
     const edge = edges[0];
-    historyPush({assignmentsState: assignmentEvent, connectionState: connections});
+    historyPush({
+      assignmentsState: assignmentEvent,
+      connectionState: connections,
+    });
     redoClear();
     setConnections((prev) =>
       prev.filter(
