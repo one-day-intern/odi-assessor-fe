@@ -10,11 +10,20 @@
   align-items: center;
 
   cursor: pointer;
+  gap: 0.5rem;
 
   width: 100%;
 }
 
-.button p,
+.button p {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.05em;
+
+  margin: 0;
+}
+
 .button h1,
 .button h2,
 .button h3,
