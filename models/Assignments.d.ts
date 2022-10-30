@@ -1,5 +1,5 @@
 interface Assignment {
-  tool_id: string;
+  assessment_id: string;
   name: string;
   type: string;
 }
@@ -16,8 +16,4 @@ interface AssignmentNode extends AssignmentInstance {
     x: number,
     y: number
   }
-}
-
-interface AssignmentEdge {
-  
 }
