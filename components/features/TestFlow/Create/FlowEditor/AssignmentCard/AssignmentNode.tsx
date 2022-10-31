@@ -13,13 +13,10 @@ const InteractiveQuizIcon = lazy(
 const ResponseTestIcon = lazy(
   () => import("@components/shared/svg/AppIcons/ResponseTestIcon")
 );
-const VideoConferenceIcon = lazy(
-  () => import("@components/shared/svg/AppIcons/VideoConferenceIcon")
-);
 
 const AssignmentCard = ({ data }: Props) => {
-  const { id, asg, release_time, start_time } = data;
-  const { tool_id, name, type } = asg!;
+  const { asg, release_time } = data;
+  const { name, type } = asg!;
 
   return (
     <>
@@ -27,12 +24,10 @@ const AssignmentCard = ({ data }: Props) => {
       <div className={styles["asg-card"]} data-testid="asg-card">
         <div className={styles["asg-card__icon"]}>
           <Suspense fallback={<div></div>}>
-            {type === "quiz" ? (
-              <InteractiveQuizIcon width={50} height={50} />
-            ) : type === "response" ? (
+            {type === "response" ? (
               <ResponseTestIcon width={50} height={50} />
             ) : (
-              <VideoConferenceIcon width={50} height={50} />
+              <InteractiveQuizIcon width={50} height={50} />
             )}
           </Suspense>
         </div>

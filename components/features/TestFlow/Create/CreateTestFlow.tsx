@@ -25,39 +25,28 @@ import ToolPicker from "./ToolPicker/ToolPicker";
 import useCreateToolHandler from "@hooks/TestFlow/useCreateToolHandler";
 import { TimeField } from "@components/shared/forms/TimeField";
 import { useStack } from "@hooks/shared/useStack";
-import crypto from "crypto";
+import useGetRequest from "@hooks/shared/useGetRequest";
+import usePostRequest from "@hooks/shared/usePostRequest";
+import { emptyValidator } from "@utils/validators/emptyValidator";
+import { timeParser } from "@utils/formatters/timeParser";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 interface DiagramState {
   assignmentsState: AssignmentNode[];
   connectionState: Connection[];
 }
 
-const options: AssignmentOption[] = [
-  {
-    value: {
-      tool_id: `1`,
-      name: "Video Conference",
-      type: "vidcon",
-    },
-    label: "Video Conference",
-  },
-  {
-    value: {
-      tool_id: `2`,
-      name: "Response Test",
-      type: "response",
-    },
-    label: "Response Test",
-  },
-  {
-    value: {
-      tool_id: `3`,
-      name: "Easy Assignment",
-      type: "quiz",
-    },
-    label: "Easy Assignment",
-  },
-];
+interface TestFlowAssignmentFormat {
+  tool_id: string;
+  release_time: string;
+  start_working_time: string;
+}
+
+interface TestFlowSubmission {
+  name: string;
+  tools_used: TestFlowAssignmentFormat[];
+}
 
 const edgeOptions = {
   animated: true,
@@ -71,12 +60,33 @@ const edgeOptions = {
   },
 };
 
+const ASSESSMENT_TOOL_LIST_URL = "/assessment/tools/";
+const TEST_FLOW_CREATE_URL = "/assessment/test-flow/create/";
+
 const CreateTestFlow = () => {
   const [assignmentEvent, setAssignmentEvent] = useState<AssignmentNode[]>([]);
   const [connections, setConnections] = useState<Connection[]>([]);
+  const [options, setOptions] = useState<AssignmentOption[]>([]);
   const { tools, setToolData } = useCreateToolHandler();
 
-  const { data, setData } = useTestFlowHandler();
+  const isFirstMount = useRef(false);
+
+  const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
+
+  const { data: assignmentToolsData, error: assignmentToolError } =
+    useGetRequest<Assignment[]>(ASSESSMENT_TOOL_LIST_URL, {
+      requiresToken: true,
+    });
+
+  const {
+    data: createTestFlowData,
+    error: createTestFlowError,
+    postData: postTestFlow,
+    status: postTestStatus,
+  } = usePostRequest<TestFlowSubmission, TestFlow>(TEST_FLOW_CREATE_URL, {
+    requiresToken: true,
+  });
 
   const { push: historyPush, pop: historyPop } = useStack<DiagramState>();
   const {
@@ -85,6 +95,8 @@ const CreateTestFlow = () => {
     clear: redoClear,
     isEmpty: redoIsEmpty,
   } = useStack<DiagramState>();
+
+  const router = useRouter();
 
   const handleUndo = useCallback(() => {
     const diagramState: DiagramState = {
@@ -111,16 +123,16 @@ const CreateTestFlow = () => {
     item?.connectionState && setConnections(item?.connectionState!);
   }, [historyPush, redoPop, assignmentEvent, connections, redoIsEmpty]);
 
-  // Clear stack when unmounts, precaution
   useEffect(() => {
     const handleKeyBindings = (e: KeyboardEvent) => {
       if (!e.ctrlKey && !e.metaKey) return;
-      e.preventDefault();
 
       if (e.key === "z") {
+        e.preventDefault();
         handleUndo();
       }
       if (e.key === "y") {
+        e.preventDefault();
         handleRedo();
       }
     };
@@ -131,6 +143,44 @@ const CreateTestFlow = () => {
       window.removeEventListener("keydown", handleKeyBindings);
     };
   }, [handleUndo, handleRedo]);
+
+  useEffect(() => {
+    if (assignmentToolsData == null) return;
+    console.log({ assignmentToolsData });
+
+    setOptions(
+      assignmentToolsData?.map((asg) => ({
+        value: asg,
+        label: asg.name,
+      })) ?? []
+    );
+  }, [assignmentToolsData]);
+
+  useEffect(() => {
+    if (!isFirstMount.current) {
+      isFirstMount.current = true;
+      return;
+    }
+
+    if (postTestStatus === "loading") return;
+
+    if (createTestFlowData != null) {
+      toast.success("A new test flow has been created.", {
+        containerId: "root-toast",
+        position: toast.POSITION.TOP_CENTER,
+      });
+      router.push("/testflow/list");
+      return;
+    }
+
+    if (createTestFlowError != null) {
+      toast.error(createTestFlowError.message, {
+        containerId: "root-toast",
+        position: toast.POSITION.TOP_CENTER,
+      });
+      return;
+    }
+  }, [createTestFlowData, createTestFlowError, postTestStatus, router]);
 
   const submitAssignment: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -148,7 +198,6 @@ const CreateTestFlow = () => {
     redoClear();
 
     setAssignmentEvent((prev) => {
-      setData("tool", tools);
       const result: AssignmentNode[] = [
         ...prev,
         {
@@ -168,6 +217,13 @@ const CreateTestFlow = () => {
     const deletedNode = nodes[0];
     const assignmentId = deletedNode.data.id;
     setAssignmentEvent((prev) => prev.filter((asg) => asg.id !== assignmentId));
+    setConnections((prev) =>
+      prev.filter(
+        (connection) =>
+          connection.source !== deletedNode.id ||
+          connection.target !== deletedNode.id
+      )
+    );
   };
 
   const onNodeDragEnd = (e: React.MouseEvent, node: Node, nodes: Node[]) => {
@@ -229,6 +285,31 @@ const CreateTestFlow = () => {
     );
   };
 
+  const convertFromNodesToAsgInstances = (
+    listOfAssignmentNodes: AssignmentNode[]
+  ) => {
+    const listOfAsgInstances: TestFlowAssignmentFormat[] =
+      listOfAssignmentNodes.map((asgNode) => ({
+        tool_id: asgNode.asg?.assessment_id!,
+        release_time: timeParser(asgNode.release_time).toISOString(),
+        start_working_time: timeParser(asgNode.start_time).toISOString(),
+      }));
+    return listOfAsgInstances;
+  };
+
+  const clickToCreateTestFlow = () => {
+    const [isNameValid, testFlowNameError] = emptyValidator(name);
+    setNameError(testFlowNameError);
+    if (!isNameValid) return;
+
+    const dataToBePosted: TestFlowSubmission = {
+      name,
+      tools_used: convertFromNodesToAsgInstances(assignmentEvent),
+    };
+
+    postTestFlow!(dataToBePosted);
+  };
+
   return (
     <main id="main-content" className={styles["content"]}>
       <div className={styles["content__nav"]}>
@@ -236,8 +317,9 @@ const CreateTestFlow = () => {
           <h1>Create Test Flow</h1>
           <InputField
             label="Name"
-            value={data.name}
-            onChange={(e) => setData("name", e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            error={nameError}
           />
 
           <div className={styles["content__add-assess"]}>
@@ -255,16 +337,17 @@ const CreateTestFlow = () => {
                 label="Release time"
                 onChange={(e) => {
                   setToolData("release_time", e.target.value);
-                  if (tools.asg?.type === "response")
+                  if (tools.asg?.type !== "responsetest")
                     setToolData("start_time", e.target.value);
                 }}
               />
+
               <TimeField
                 value={tools.start_time}
                 label="Start time"
                 onChange={(e) => setToolData("start_time", e.target.value)}
                 min={tools.release_time}
-                disabled={tools.asg?.type === "response"}
+                disabled={tools.asg?.type === "responsetest"}
               />
             </div>
 
@@ -288,7 +371,7 @@ const CreateTestFlow = () => {
           type="button"
           variant="primary"
           disabled={false}
-          onClick={() => handleUndo()}
+          onClick={clickToCreateTestFlow}
         >
           <h2>Save Flow</h2>
         </Button>

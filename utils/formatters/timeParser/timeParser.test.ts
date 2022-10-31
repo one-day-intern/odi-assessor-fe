@@ -13,5 +13,12 @@ describe("Time parser test suite", () => {
         expect(time.getHours()).toBe(12);
         expect(time.getMinutes()).toBe(5);
         expect(time.getSeconds()).toBe(15);
+    });
+
+    it("Test time parser with seconds zulu", () => {
+        const time = timeParser("01:15:05", { isUTC: true });
+        expect(time.getUTCHours()).toBe(1);
+        expect(time.getUTCMinutes()).toBe(15);
+        expect(time.getUTCSeconds()).toBe(5);
     })
 })

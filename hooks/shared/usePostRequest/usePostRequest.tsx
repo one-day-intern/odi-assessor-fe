@@ -72,6 +72,7 @@ function usePostRequest<T, V>(
 
   const postData = async (postBody: T) => {
     dispatch({ type: "loading" });
+    console.log(postBody)
 
     // Directly post data if doesn't require token
     if (!options?.requiresToken) {
@@ -114,6 +115,7 @@ function usePostRequest<T, V>(
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
+        body: JSON.stringify(postBody)
       });
 
       const data = await response.json();
