@@ -15,7 +15,7 @@ interface AddParticipantsRequest {
   list_of_participants: ParticipantsManyToMany[];
 }
 
-interface AssessmentEvent {
+interface AssessmentEventChoice {
   event_id: string;
   name: string;
   owning_company_id: string;

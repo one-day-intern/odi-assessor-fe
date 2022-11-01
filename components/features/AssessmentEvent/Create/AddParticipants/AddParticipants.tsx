@@ -37,7 +37,7 @@ const AddParticipants = ({
     data: createAssessmentData,
     error: createAssessmentError,
     postData: createAssessmentPost,
-  } = usePostRequest<CreateAssessmentDetailsSubmission, AssessmentEvent>(
+  } = usePostRequest<CreateAssessmentDetailsSubmission, AssessmentEventChoice>(
     CREATE_ASSESSMENT_EVENT_URL,
     {
       requiresToken: true,
@@ -54,8 +54,6 @@ const AddParticipants = ({
 
   useEffect(() => {
     if (createAssessmentData == null) return;
-
-    console.log(assessmentData.list_of_participants);
 
     addParticipantPost!({
       list_of_participants: assessmentData.list_of_participants,
