@@ -30,7 +30,7 @@ const AssessmentParticipationCard = ({
   assessmentEventId,
 }: AssessmentEventParticipation) => {
   const { data: roomData, fetchData } = useGetRequest<VideoConference>(
-    `/video-conference/rooms/get/by-participation/?assessment_event_id=${"e9043ccb-c0c6-4b61-ba6e-0b2c8f502356"}&conference_assessee_email=${"rashad.aziz@ui.ac.id"}`,
+    `/video-conference/rooms/get/by-participation/?assessment_event_id=${assessmentEventId}&conference_assessee_email=${assesseeEmail}`,
     { requiresToken: true }
   );
   const { postData } = usePostRequest<VideoConferenceRequest, VideoConference>(
@@ -41,8 +41,8 @@ const AssessmentParticipationCard = ({
 
   const toggleRoomVideo = async () => {
     const response = await postData({
-      assessment_event_id: "e9043ccb-c0c6-4b61-ba6e-0b2c8f502356",
-      conference_assessee_email: "rashad.aziz@ui.ac.id",
+      assessment_event_id: assessmentEventId,
+      conference_assessee_email: assesseeEmail,
       initiate: !roomData?.room_opened,
       purge: true,
     });
