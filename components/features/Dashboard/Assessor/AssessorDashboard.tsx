@@ -8,66 +8,56 @@ import { EventStatusFilter } from "./EventStatusFilter";
 import { FormSearch } from "../../../shared/forms/FormSearch";
 import { AnimatePresence, motion } from "framer-motion";
 import { AssessmentCard } from "./AssessmentCard";
+import useGetRequest from "@hooks/shared/useGetRequest";
+import { toast } from "react-toastify";
+import { useAuthContext } from "@context/Authentication";
 
 type StatusFilter = "active" | "archived";
 
-const initialAssessmentEvent: AssessmentEvent[] = [
-  {
-    id: "1",
-    name: "Machine Learning Intern",
-    date: new Date("2022-12-05"),
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    numberOfAssesssees: 3,
-    duration: new Date("2022-10-05T06:45:00"),
-  },
-  {
-    id: "2",
-    name: "UI/UX Assessmment",
-    date: new Date("2022-10-05"),
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    numberOfAssesssees: 3,
-    duration: new Date("2022-10-05T06:45:00"),
-  },
-  {
-    id: "3",
-    name: "Group Project",
-    date: new Date("2022-11-07"),
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    numberOfAssesssees: 3,
-    duration: new Date("2022-10-05T06:45:00"),
-  },
-  {
-    id: "4",
-    name: "Group Project",
-    date: new Date("2022-11-07"),
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    numberOfAssesssees: 3,
-    duration: new Date("2022-10-05T06:45:00"),
-  },
-  {
-    id: "5",
-    name: "Group Project",
-    date: new Date("2022-11-07"),
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.",
-    numberOfAssesssees: 3,
-    duration: new Date("2022-10-05T06:45:00"),
-  },
-];
+interface AssessmentEventListRequest {
+  event_id: string;
+  name: string;
+  start_date_time: string;
+}
 
 const AssessorDashboard = () => {
   const [searchedWords, setSearchedWords] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("active");
   const [assessmentEvents, setAssessmentEvents] = useState<AssessmentEvent[]>(
-    initialAssessmentEvent
+    []
   );
   const setStatus = (status: StatusFilter) => setStatusFilter(status);
-  
-  const lastElement = useRef<HTMLInputElement>(null);
+  const { fetchData } = useGetRequest<AssessmentEventListRequest[]>(
+    `/assessor/assessment-event-list/`,
+    {
+      requiresToken: true,
+      disableFetchOnMount: true,
+    }
+  );
+  const { user } = useAuthContext();
+
+  useEffect(() => {
+    const fetchAssessmentEvents = async () => {
+      const response = await fetchData();
+      if (response instanceof Error) {
+        toast.error(response.message);
+        return;
+      }
+      const assessmentEvents: AssessmentEvent[] = response.map((event) => ({
+        id: event.event_id,
+        name: event.name,
+        numberOfAssesssees: 1,
+        date: new Date(event.start_date_time),
+        description: "An assessment event",
+        duration: new Date(),
+      }));
+
+      setAssessmentEvents(assessmentEvents);
+    };
+
+    fetchAssessmentEvents();
+    // eslint-disable-next-line
+  }, [user]);
 
   const debouncedWord = useDebounce(searchedWords, 500);
 
@@ -84,7 +74,7 @@ const AssessorDashboard = () => {
       </div>
       <div className={styles["content__group-horizontal"]}>
         <EventStatusFilter status={statusFilter} setStatus={setStatus} />
-        <Link href="/assessments/create">
+        <Link href="/assessment/create">
           <Button
             variant="secondary"
             style={{

@@ -19,7 +19,11 @@ const initialAssessmentEvent: AssessmentEventParticipation[] = [
   }
 ];
 
-const ListOfAssessees = () => {
+interface Props extends React.PropsWithChildren {
+  assessees: AssessmentEventParticipation[];
+}
+
+const ListOfAssessees: React.FC<Props> = ({ assessees }) => {
   const [searchedWords, setSearchedWords] = useState("");
   const [participations, setParticipations] = useState<
     AssessmentEventParticipation[]
@@ -52,14 +56,14 @@ const ListOfAssessees = () => {
       </div>
       <motion.div layout className={styles["content__list"]}>
         <AnimatePresence>
-          {participations
-            .sort((a, b) => a.assesseeName.localeCompare(b.assesseeName))
+          {assessees
+            ?.sort((a, b) => a.assesseeName.localeCompare(b.assesseeName))
             .map((participation) => (
               <AssessmentParticipationCard
                 key={participation.assesseeEmail}
                 assesseeName={participation.assesseeName}
                 assesseeEmail={participation.assesseeEmail}
-                assessmentEventId={asgEventId}
+                assessmentEventId={participation.assessmentEventId}
               />
             ))}
         </AnimatePresence>

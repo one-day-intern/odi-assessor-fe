@@ -31,7 +31,7 @@ const ConferenceRoom: React.FC<Props> = ({ onEndRoom }) => {
       <div className={styles["video-grid"]}>
         <AnimatePresence>
           {peers
-            .filter((peer) => !restrictedRoles.includes(peer.roleName!))
+            .filter((peer) => !restrictedRoles.includes(peer.roleName!) && peer.videoTrack)
             .map((peer) => (
               <motion.div
                 layout

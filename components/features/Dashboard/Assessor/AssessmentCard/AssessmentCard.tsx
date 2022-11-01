@@ -14,11 +14,6 @@ const AssessmentCard = ({
   id,
   numberOfAssesssees,
 }: AssessmentEvent) => {
-  const [roomId, setRoomId] = useState("asdfasdf");
-  const [isLocked, setIsLocked] = useState(true);
-
-  const unlockRoomVideo = () => setIsLocked(prev => !prev);
-
   return (
     <motion.div
       layout
