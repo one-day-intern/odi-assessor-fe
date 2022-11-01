@@ -10,7 +10,7 @@ interface AddParticipantsProps {
   assessmentData: CreateAssessmentDetailsSubmission;
   setAssessmentData: (
     key: keyof CreateAssessmentDetailsSubmission,
-    value: string | ParticipantsManyToMany[]
+    value: string | ParticipantsManyToMany
   ) => void;
   assessmentErrors: CreateAssessmentDetailsSubmission;
   setAssessmentErrors: (
@@ -72,6 +72,10 @@ const AddParticipants = ({
 
   }, [addParticipantData, router]);
 
+  useEffect(() => {
+    console.log(addParticipantError)
+  }, [addParticipantError])
+
   return (
     <div className={styles["name-form"]} data-testid="add-part">
       <h2 className={styles["form__heading"]}>Add Participants</h2>
@@ -80,12 +84,6 @@ const AddParticipants = ({
           method="POST"
           onSubmit={(e) => {
             e.preventDefault();
-            setAssessmentData("list_of_participants", [
-              {
-                assessee_email: assesseeEmail,
-                assessor_email: assessorEmail,
-              },
-            ]);
             createAssessmentPost!(assessmentData);
           }}
         >
@@ -99,6 +97,21 @@ const AddParticipants = ({
             onChange={(e) => setAssessorEmail(e.target.value)}
             value={assessorEmail}
           />
+          <Button type="button" onClick={
+            (e: Event) => {
+              e.preventDefault();
+              setAssesseeEmail("");
+              setAssessorEmail("");
+              setAssessmentData("list_of_participants", 
+              {
+                assessee_email: assesseeEmail,
+                assessor_email: assessorEmail,
+              },
+            );
+            }
+          } variant="secondary">
+            <h2>Add</h2>
+          </Button>
           <Button type="submit" variant="primary">
             <h2>Submit</h2>
           </Button>
