@@ -2,6 +2,7 @@ import { Button } from "@components/shared/elements/Button";
 import { InputField } from "@components/shared/forms/InputField";
 import { useCreateAssessmentEventDetails } from "@hooks/CreateAssessmentEvent/useCreateAssessmentEventStore/useCreateAssessmentEventDetails";
 import usePostRequest from "@hooks/shared/usePostRequest";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "./AddParticipants.module.css";
 
@@ -29,6 +30,8 @@ const AddParticipants = ({
 
   const [assesseeEmail, setAssesseeEmail] = useState("");
   const [assessorEmail, setAssessorEmail] = useState("");
+
+  const router = useRouter();
 
   const {
     data: createAssessmentData,
@@ -66,8 +69,10 @@ const AddParticipants = ({
   }, [createAssessmentError]);
 
   useEffect(() => {
-    console.log({ addParticipantData, addParticipantError });
-  }, [addParticipantData, addParticipantError]);
+    if (addParticipantData == null) return;
+    router.push("/");
+
+  }, [addParticipantData, router]);
 
   return (
     <div className={styles["name-form"]} data-testid="add-part">
