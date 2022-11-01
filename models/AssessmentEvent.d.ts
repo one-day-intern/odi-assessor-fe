@@ -6,3 +6,9 @@ interface AssessmentEvent {
   date: Date;
   duration: Date;
 }
+
+interface AssessmentEventParticipation {
+  assesseeName: string;
+  assesseeEmail: string;
+  assessmentEventId: string;
+}

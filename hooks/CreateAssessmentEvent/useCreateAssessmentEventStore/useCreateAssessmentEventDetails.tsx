@@ -24,10 +24,10 @@ const useCreateAssessmentEventDetails = () => {
     const [assessmentEventDetails, setAssessmentEventDetails] = useState<CreateAssessmentDetailsSubmission>(initialState);
     const [assessmentEventErrors, setAssessmentEventErrors] = useState<CreateAssessmentDetailsSubmission>(initialState);
 
-    const setAssessmentData = (key: keyof CreateAssessmentDetailsSubmission, value: string | ParticipantsManyToMany[]) => {
+    const setAssessmentData = (key: keyof CreateAssessmentDetailsSubmission, value: string | ParticipantsManyToMany) => {
         setAssessmentEventDetails(prev => ({
             ...prev,
-            [key]: value
+            [key]: (key === "list_of_participants") ? [...prev.list_of_participants, value] : value
         }))
     };
 
