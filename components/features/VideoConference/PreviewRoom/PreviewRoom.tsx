@@ -4,6 +4,9 @@ import {
   useHMSStore,
   selectIsInPreview,
   selectLocalPeer,
+  selectIsConnectedToRoom,
+  useHMSNotifications,
+  HMSNotificationTypes,
 } from "@100mslive/react-sdk";
 import styles from "./PreviewRoom.module.css";
 import { motion } from "framer-motion";
@@ -11,6 +14,10 @@ import { Loader } from "@components/shared/elements/Loader";
 import { Button } from "@components/shared/elements/Button";
 import VideoPlayer from "../VideoPlayer";
 import Controls from "../Controls";
+import { useAuthContext } from "@context/Authentication";
+import { useRouter } from "next/router";
+import useGetRequest from "@hooks/shared/useGetRequest";
+import { toast } from "react-toastify";
 
 interface Props extends React.PropsWithChildren {
   setIsConnected: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,17 +29,33 @@ const PreviewRoom: React.FC<Props> = ({ token, setIsConnected }) => {
   const localPeer = useHMSStore(selectLocalPeer);
   const actions = useHMSActions();
   const inPreview = useHMSStore(selectIsInPreview);
+  const inRoom = useHMSStore(selectIsConnectedToRoom)
+  const { user } = useAuthContext();
+  const fullName = `${user?.first_name} ${user?.last_name}`
+  const router = useRouter();
+  const { fetchData, error } = useGetRequest<{ token: string }>(
+    `/video-conference/rooms/join/assessor/?room_id=${router.query["room_id"]}`,
+    { requiresToken: true }
+  );
+  const joining = useRef(false);
 
   useEffect(() => {
-    if (!inPreview && !isConnecting.current && token) {
+    if (!inPreview && !isConnecting.current && !joining.current && !inRoom && token) {
       isConnecting.current = true;
-      actions.preview({ authToken: token, userName: "wizzy" });
+      actions.preview({ authToken: token, userName: fullName });
     } else if (inPreview) {
       isConnecting.current = false;
       setIsConnected(true);
     }
     // eslint-disable-next-line
-  }, [inPreview]);
+  }, [inPreview, inRoom, token]);
+
+  useEffect(() => {
+    if (error && joining.current) {
+      toast.error(error.message, { containerId: 'root-toast' });
+      router.push("/");
+    }
+  }, [error, router])
 
   return (
     <motion.main
@@ -57,9 +80,11 @@ const PreviewRoom: React.FC<Props> = ({ token, setIsConnected }) => {
             <Controls />
             <Button
               style={{ fontWeight: "bold", fontSize: "1rem", maxWidth: 300 }}
-              onClick={() => {
-                if (token) {
-                  actions.join({ authToken: token, userName: "wizzy" });
+              onClick={async () => {
+                if (token && fetchData) {
+                  joining.current = true;
+                  await fetchData();
+                  actions.join({ authToken: token, userName: fullName });
                 }
               }}
               variant="primary"

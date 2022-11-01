@@ -2,11 +2,14 @@ import React from "react";
 import { HMSRoomProvider } from "@100mslive/react-sdk";
 import ConferenceWrapper from "./ConferenceWrapper/ConferenceWrapper";
 
+interface Props {
+  token?: string;
+}
 
-const VideoConference = () => {
+const VideoConference: React.FC<Props> = ({ token }) => {
   return (
     <HMSRoomProvider>
-      <ConferenceWrapper token={process.env.NEXT_PUBLIC_HMS_DEV_TOKEN} />
+      <ConferenceWrapper token={token} />
     </HMSRoomProvider>
   );
 };
