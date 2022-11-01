@@ -1,0 +1,16 @@
+.name-form {
+  width: 100%;
+
+  background: white;
+
+  display: flex;
+  flex-direction: column;
+  padding: 5rem 15vw;
+
+  z-index: 1;
+}
+
+.form__heading {
+  font-family: "Inter", sans-serif;
+  font-size: 3rem;
+}
