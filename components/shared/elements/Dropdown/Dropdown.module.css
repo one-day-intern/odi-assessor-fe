@@ -1,6 +1,7 @@
 .dropdown {
   position: relative;
   isolation: isolate;
+  z-index: 3;
 }
 
 .dropdown__button {
