@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import useGetRequest from "@hooks/shared/useGetRequest";
 import { toast } from "react-toastify";
+import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 
 const VideoConference = dynamic(
   async () => await import("@components/features/VideoConference"),
@@ -21,12 +22,14 @@ const VideoConferencePage: NextPage = () => {
     if (router.isReady) {
       if (error) {
         toast.error(error.message, {
+          toastId: "error-room",
           containerId: "root-toast",
         });
         router.push("/");
         return;
       } else if (!router.query["room_id"]) {
         toast.error("Invalid room id", {
+          toastId: "invalid-room",
           containerId: "root-toast",
         });
         router.push("/");
@@ -35,7 +38,11 @@ const VideoConferencePage: NextPage = () => {
     }
   }, [error, router]);
 
-  return <>{data && <VideoConference token={data.token} />}</>;
+  return (
+    <ProtectedRoute>
+      {data && <VideoConference token={data.token} />}
+    </ProtectedRoute>
+  );
 };
 
 export default VideoConferencePage;
