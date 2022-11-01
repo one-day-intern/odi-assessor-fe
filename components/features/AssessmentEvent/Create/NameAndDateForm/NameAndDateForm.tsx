@@ -13,7 +13,7 @@ import Select from "react-select";
 interface NameAndDateFormProps {
   selectStep: (id: number) => void;
   assessmentData: CreateAssessmentDetailsSubmission,
-  setAssessmentData: (key: keyof CreateAssessmentDetailsSubmission, value: string | ParticipantsManyToMany[]) => void,
+  setAssessmentData: (key: keyof CreateAssessmentDetailsSubmission, value: string | ParticipantsManyToMany) => void,
   assessmentErrors: CreateAssessmentDetailsSubmission,
   setAssessmentErrors: (key: keyof CreateAssessmentDetailsSubmission, value: string) => void
 }

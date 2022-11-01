@@ -1,7 +1,9 @@
 import { Button } from "@components/shared/elements/Button";
+import { LockIcon } from "@components/shared/svg/LockIcon";
+import { UnlockIcon } from "@components/shared/svg/UnlockIcon";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./AssessmentCard.module.css";
 
 const AssessmentCard = ({
@@ -12,6 +14,11 @@ const AssessmentCard = ({
   id,
   numberOfAssesssees,
 }: AssessmentEvent) => {
+  const [roomId, setRoomId] = useState("asdfasdf");
+  const [isLocked, setIsLocked] = useState(true);
+
+  const unlockRoomVideo = () => setIsLocked(prev => !prev);
+
   return (
     <motion.div
       layout
@@ -22,17 +29,29 @@ const AssessmentCard = ({
       data-testid="card"
     >
       <h2 className={styles["assessment-card__heading"]}>{name}</h2>
-      <p className={`${styles["assessment-card__text"]} ${styles["assessment-card__text--blue"]}`}>{ numberOfAssesssees } {numberOfAssesssees === 1 ? "candidate" : "candidates"} assessed</p>
+      <p
+        className={`${styles["assessment-card__text"]} ${styles["assessment-card__text--blue"]}`}
+      >
+        {numberOfAssesssees}{" "}
+        {numberOfAssesssees === 1 ? "candidate" : "candidates"} assessed
+      </p>
       <p className={styles["assessment-card__text"]}>{description}</p>
-      <Link href={`/assessment/${id}`}>
-        <Button type="button" variant="primary" style={{
-            margin: 0,
-            width: "fit-content",
-            padding: "0.5rem 3rem"
-        }}>
+
+      <div className={styles["assessment-card__div"]}>
+        <Link href={`/assessment/${id}`}>
+          <Button
+            type="button"
+            variant="primary"
+            style={{
+              margin: 0,
+              width: "fit-content",
+              padding: "0.5rem 3rem",
+            }}
+          >
             <p>View</p>
-        </Button>
-      </Link>
+          </Button>
+        </Link>
+      </div>
     </motion.div>
   );
 };
