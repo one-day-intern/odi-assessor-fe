@@ -95,7 +95,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       setIsLoading(false);
       return;
     }
-
     const initialLogin = async () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/get-info/`,

@@ -6,7 +6,10 @@ interface State<T, V> {
   data?: V;
   error?: PostError;
   status?: "loading" | "fetched" | "error" | "initial";
-  postData?: (postBody: T) => void;
+}
+
+interface UsePostRequest<T, V> extends State<T, V> {
+  postData: (postBody: T) => Promise<V | PostError>;
 }
 
 interface PostError extends Error {
@@ -27,14 +30,13 @@ type Action<T> =
 function usePostRequest<T, V>(
   uri: string,
   options?: Options
-): State<T,V> {
+): UsePostRequest<T,V> {
   const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}${uri}`;
   const {
     user,
     accessToken,
     refreshToken,
     dispatch: authDispatch,
-    remember,
   } = useAuthContext();
 
   // Used to prevent state update if the component is unmounted
@@ -72,7 +74,6 @@ function usePostRequest<T, V>(
 
   const postData = async (postBody: T) => {
     dispatch({ type: "loading" });
-    console.log(postBody)
 
     // Directly post data if doesn't require token
     if (!options?.requiresToken) {
@@ -96,7 +97,7 @@ function usePostRequest<T, V>(
           type: "error",
           payload: error as PostError,
         });
-        return;
+        return error as PostError;
       }
 
 
@@ -104,12 +105,11 @@ function usePostRequest<T, V>(
         type: "fetched",
         payload: json,
       });
-      return;
+      return json;
     }
 
     try {
 
-      console.log(postBody)
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -184,7 +184,7 @@ function usePostRequest<T, V>(
               type: "error",
               payload: error as PostError,
             });
-            return;
+            return error as PostError;
           }
 
           dispatch({
@@ -192,7 +192,7 @@ function usePostRequest<T, V>(
             payload: json as V
           })
 
-          return;
+          return json;
         } catch (err) {
           authDispatch({
             type: AuthDispatchTypes.LOGOUT,

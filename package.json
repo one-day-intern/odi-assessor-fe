@@ -11,7 +11,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "@100mslive/react-sdk": "^0.4.2",
+    "@100mslive/react-sdk": "^0.4.4",
     "@types/react-flatpickr": "^3.8.7",
     "@types/uuid": "^8.3.4",
     "framer-motion": "^7.3.5",
