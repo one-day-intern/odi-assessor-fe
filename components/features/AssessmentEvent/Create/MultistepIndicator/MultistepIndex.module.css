@@ -1,0 +1,14 @@
+.multistep {
+  width: 25vw;
+  height: 100%;
+
+  padding: 4rem;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  gap: 4rem 0;
+  
+  z-index: 1;
+}

@@ -109,6 +109,7 @@ function usePostRequest<T, V>(
 
     try {
 
+      console.log(postBody)
       const response = await fetch(url, {
         method: "POST",
         headers: {

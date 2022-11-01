@@ -1,0 +1,45 @@
+.multistep__number {
+  background: none;
+  border: none;
+
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin: 0;
+  cursor: pointer;
+}
+
+.multistep__number--disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.multistep__number--circle {
+  display: grid;
+  place-items: center;
+
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 50%;
+
+  background: var(--secondary);
+}
+
+.multistep__number--number {
+  font-size: 1.25rem;
+  color: white;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+}
+
+.multistep__number--text {
+  margin: 0;
+  /* width: 30ch; */
+
+  font-weight: 600;
+  font-size: 1.15rem;
+  font-family: "Inter", sans-serif;
+  color: var(--secondary);
+}
