@@ -166,7 +166,7 @@ const CreateTestFlow = () => {
         containerId: "root-toast",
         position: toast.POSITION.TOP_CENTER,
       });
-      router.push("/testflow/list");
+      router.push("/");
       return;
     }
 
