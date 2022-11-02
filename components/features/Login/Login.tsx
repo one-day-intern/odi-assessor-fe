@@ -14,7 +14,7 @@ import usePostRequest from "@hooks/shared/usePostRequest";
 import { emailValidator } from "@utils/validators/emailValidator";
 import { emptyValidator } from "@utils/validators/emptyValidator";
 import { useRouter } from "next/router";
-import React, { FormEventHandler, useEffect, useRef } from "react";
+import React, { FormEventHandler, useState } from "react";
 import { toast } from "react-toastify";
 
 import styles from "./Login.module.css";
@@ -30,75 +30,80 @@ interface TokenReturnType {
 }
 
 const Login = ({ loginUrl }: LoginProps) => {
+  const [loading, setLoading] = useState(false);
   const { loginStore, loginError, setStoreValue, setErrorValue } =
     useLoginHandler();
 
-  const { dispatch, user } = useAuthContext();
-
-  const isMounted = useRef(false);
+  const { dispatch } = useAuthContext();
   
   const router = useRouter();
 
-  const { data, error, status, postData } = usePostRequest<
+  const { postData } = usePostRequest<
     LoginFormInputs,
     TokenReturnType
   >(loginUrl, {
     requiresToken: false,
   });
 
-  useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
-      return;
-    }
-
-    if (status === "loading" || status === "initial") return;
-
-    if (error != null) {
-      toast.error(error.message, {
-        containerId: "root-toast",
-        position: toast.POSITION.TOP_CENTER,
-      });
-      return;
-    }
-
-    if (data != null) {
-      const { access, refresh } = data;
-      dispatch({
-        type: AuthDispatchTypes.LOGIN,
-        payload: {
-          user,
-          accessToken: access,
-          refreshToken: refresh,
-          remember: loginStore.remember,
-        },
-      });
-
-      router.push("/");
-      
-      toast.success("You have logged in succesfully!", {
-        containerId: "root-toast",
-        position: toast.POSITION.TOP_CENTER,
-      });
-
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, error, status]);
-
-  const handleSubmit: FormEventHandler = (e) => {
+  const handleSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-
     const [isEmailValid, emailError] = emailValidator(loginStore.email);
     setErrorValue("email", emailError);
-
     const [isPasswordValid, passwordError] = emptyValidator(
       loginStore.password
     );
     setErrorValue("password", passwordError);
-
     if (!isEmailValid || !isPasswordValid) return;
-
-    postData!(loginStore);
+    
+    setLoading(true);
+    const response = await postData(loginStore);
+    if (response instanceof Error) {
+      toast.error(response.message, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored",
+        containerId: "root-toast",
+        autoClose: 2000,
+      });
+      setLoading(false);
+      return;
+    }
+    const { access, refresh } = response;
+    const requestUser = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/get-info/`,
+      {
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+      }
+    );
+    const user = await requestUser.json();
+    if (!requestUser.ok) {
+      toast.error((requestUser as any).message, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored",
+        containerId: "root-toast",
+        autoClose: 2000,
+      });
+      setLoading(false);
+      return;
+    }
+    dispatch({
+      type: AuthDispatchTypes.LOGIN,
+      payload: {
+        user,
+        accessToken: access,
+        refreshToken: refresh,
+        remember: loginStore.remember,
+      },
+    });
+    toast.success("Login successful!", {
+      position: toast.POSITION.TOP_CENTER,
+      theme: "colored",
+      containerId: "root-toast",
+      autoClose: 2000,
+    });
+    setLoading(false);
+    router.push('/');
   };
 
   return (
@@ -130,9 +135,9 @@ const Login = ({ loginUrl }: LoginProps) => {
             style={{
               margin: "1.25rem 0",
             }}
-            disabled={status === "loading"}
+            disabled={loading}
           >
-            {status === "loading" ? <Loader /> : <h2>Login</h2>}
+            {loading ? <Loader /> : <h2>Login</h2>}
           </Button>
           <div className={styles["form__remember"]}>
             <Checkbox
