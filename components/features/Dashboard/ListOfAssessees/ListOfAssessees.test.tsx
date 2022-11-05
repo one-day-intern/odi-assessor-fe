@@ -11,7 +11,7 @@ describe("Assessor Signup Page Test", () => {
       <RouterContext.Provider
         value={createMockRouter({ query: { code: "jotar" } })}
       >
-        <ListOfAssessees />
+        <ListOfAssessees assessees={[]} />
       </RouterContext.Provider>
     );
     const mainContent = screen.getByTestId("main");
