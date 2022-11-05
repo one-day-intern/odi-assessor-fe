@@ -114,7 +114,7 @@ const NameAndDateForm = ({
               />
 
               <SelectField
-                choices={choices ?? []}
+                choices={testFlowList ?? []}
                 onChange={(option: TestFlowOption | null) => {
                   setAssessmentData("test_flow", option?.value!);
                 }}
