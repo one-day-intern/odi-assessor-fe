@@ -14,7 +14,7 @@ const initialState: AssignmentNode = {
 const useCreateToolHandler = () => {
     const [tools, setTools] = useState<AssignmentNode>(initialState);
 
-    const setToolData = (key: keyof AssignmentNode, value: string | Assignment) => {
+    const setToolData = (key: keyof AssignmentNode, value: string | AssessmentTool) => {
         setTools(prev => ({
             ...prev,
             [key]: value

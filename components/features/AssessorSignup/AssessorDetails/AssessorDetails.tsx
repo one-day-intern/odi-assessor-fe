@@ -7,7 +7,6 @@ import React, { FormEventHandler, useEffect, useMemo, useRef } from "react";
 import { Button } from "@components/shared/elements/Button";
 import { SigninNotice } from "@components/shared/forms/SigninNotice";
 import { emptyValidator } from "@utils/validators/emptyValidator";
-import { dateValidator } from "@utils/validators/dateValidator/dateValidator";
 import { PhoneField } from "@components/shared/forms/PhoneField";
 import { useAssessorSignupStepContext } from "@context/Signup/AssessorSignupStepContext";
 import { phoneParser } from "@utils/formatters/phoneParser";

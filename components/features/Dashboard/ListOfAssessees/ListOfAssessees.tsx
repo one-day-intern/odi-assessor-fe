@@ -25,9 +25,6 @@ interface Props extends React.PropsWithChildren {
 
 const ListOfAssessees: React.FC<Props> = ({ assessees }) => {
   const [searchedWords, setSearchedWords] = useState("");
-  const [participations, setParticipations] = useState<
-    AssessmentEventParticipation[]
-  >(initialAssessmentEvent);
   const [asgEventId, setAsgEventId] = useState("");
 
   const router = useRouter();
@@ -56,7 +53,7 @@ const ListOfAssessees: React.FC<Props> = ({ assessees }) => {
       </div>
       <motion.div layout className={styles["content__list"]}>
         <AnimatePresence>
-          {assessees
+          {[...assessees]
             ?.sort((a, b) => a.assesseeName.localeCompare(b.assesseeName))
             .map((participation) => (
               <AssessmentParticipationCard
