@@ -1,0 +1,7 @@
+.create-assignment {
+    width: 100%;
+    height: 1000px;
+    position: absolute;
+
+    display: flex;
+}
