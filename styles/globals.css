@@ -11,6 +11,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   --primary: #9076c0;
   --secondary: #3d65d8;
+  --danger: #D75C5C;
 }
 
 a {

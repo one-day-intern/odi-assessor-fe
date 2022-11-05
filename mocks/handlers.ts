@@ -149,8 +149,14 @@ export const handlers = [
     }
   ),
   rest.post(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/assessment/create/assignment/`, (req, res, ctx) => {
+      return res(ctx.json({ message: "okay" }));
+    }
+  ),
+  rest.post(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/assessment/assessment-event/add-participant/`, (req, res, ctx) => {
       return res(ctx.json({ message: "Participant added "}));
     }
   )
+  
 ];
