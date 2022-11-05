@@ -28,14 +28,16 @@ const MultistepChoice = ({
   disabled,
   isSelected,
 }: MultistepForm) => {
+  const tabbable = isSelected ? -1 : disabled ? -1 : 0;
+  const stylingIfDisabled = disabled ? styles["choice--disabled"] : "";
   return (
     <button
       data-testid="choice-element"
       className={`${styles["choice"]} ${styles["button"]} ${
-        isSelected ? styles["choice--selected"] : disabled ? styles["choice--disabled"] : ""
+        isSelected ? styles["choice--selected"] : stylingIfDisabled
       }`}
       onClick={onClick}
-      tabIndex={isSelected ? -1 : disabled ? -1 : 0 }
+      tabIndex={tabbable}
     >
       <MultistepChoiceRadio disabled={disabled} isSelected={isSelected} />
       <motion.p

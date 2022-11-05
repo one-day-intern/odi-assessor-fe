@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import styles from "./Backdrop.module.css";
-import { BackdropProps } from "./BackdropProps";
+
+interface BackdropProps {
+  children?: ReactNode;
+}
 
 const Backdrop = ({ children } : BackdropProps) => {
   return (

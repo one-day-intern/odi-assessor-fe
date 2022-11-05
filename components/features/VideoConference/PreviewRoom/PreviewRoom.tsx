@@ -4,9 +4,7 @@ import {
   useHMSStore,
   selectIsInPreview,
   selectLocalPeer,
-  selectIsConnectedToRoom,
-  useHMSNotifications,
-  HMSNotificationTypes,
+  selectIsConnectedToRoom
 } from "@100mslive/react-sdk";
 import styles from "./PreviewRoom.module.css";
 import { motion } from "framer-motion";

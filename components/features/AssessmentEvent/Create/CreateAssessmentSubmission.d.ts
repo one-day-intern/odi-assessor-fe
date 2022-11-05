@@ -1,13 +1,19 @@
 interface ParticipantsManyToMany {
   assessee_email: string;
   assessor_email: string;
+  isSettled?: boolean;
+  readonly id: string;
 }
 
 interface CreateAssessmentDetailsSubmission {
   name: string;
   start_date: string;
-  test_flow_id: string;
+  test_flow: TestFlow | null;
   list_of_participants: ParticipantsManyToMany[];
+}
+
+type CreateAssessmentDetailsErrors = {
+  [Property in keyof CreateAssessmentDetailsSubmission] : string;
 }
 
 interface AddParticipantsRequest {

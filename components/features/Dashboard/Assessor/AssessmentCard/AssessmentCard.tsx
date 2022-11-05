@@ -1,19 +1,24 @@
 import { Button } from "@components/shared/elements/Button";
-import { LockIcon } from "@components/shared/svg/LockIcon";
-import { UnlockIcon } from "@components/shared/svg/UnlockIcon";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./AssessmentCard.module.css";
+
+interface AssessmentCardProps {
+  name: string;
+  date: Date;
+  description: string;
+  event_id: string;
+  numberOfAssesssees: number;
+}
 
 const AssessmentCard = ({
   name,
   date,
   description,
-  duration,
-  id,
+  event_id,
   numberOfAssesssees,
-}: AssessmentEvent) => {
+}: AssessmentCardProps) => {
   return (
     <motion.div
       layout
@@ -33,7 +38,7 @@ const AssessmentCard = ({
       <p className={styles["assessment-card__text"]}>{description}</p>
 
       <div className={styles["assessment-card__div"]}>
-        <Link href={`/assessment/${id}`}>
+        <Link href={`/assessment/${event_id}`}>
           <Button
             type="button"
             variant="primary"

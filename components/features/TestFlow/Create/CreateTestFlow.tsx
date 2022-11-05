@@ -22,7 +22,6 @@ import ToolPicker from "./ToolPicker/ToolPicker";
 import useCreateToolHandler from "@hooks/TestFlow/useCreateToolHandler";
 import { TimeField } from "@components/shared/forms/TimeField";
 import { useStack } from "@hooks/shared/useStack";
-import useGetRequest from "@hooks/shared/useGetRequest";
 import usePostRequest from "@hooks/shared/usePostRequest";
 import { emptyValidator } from "@utils/validators/emptyValidator";
 import { timeParser } from "@utils/formatters/timeParser";
@@ -45,6 +44,10 @@ interface TestFlowSubmission {
   tools_used: TestFlowAssignmentFormat[];
 }
 
+interface CreateTestFlowProps {
+  options: AssignmentOption[];
+}
+
 const edgeOptions = {
   animated: true,
   style: {
@@ -57,24 +60,17 @@ const edgeOptions = {
   },
 };
 
-const ASSESSMENT_TOOL_LIST_URL = "/assessment/tools/";
 const TEST_FLOW_CREATE_URL = "/assessment/test-flow/create/";
 
-const CreateTestFlow = () => {
+const CreateTestFlow = ({ options } : CreateTestFlowProps) => {
   const [assignmentEvent, setAssignmentEvent] = useState<AssignmentNode[]>([]);
   const [connections, setConnections] = useState<Connection[]>([]);
-  const [options, setOptions] = useState<AssignmentOption[]>([]);
   const { tools, setToolData } = useCreateToolHandler();
 
   const isFirstMount = useRef(false);
 
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
-
-  const { data: assignmentToolsData, error: assignmentToolError } =
-    useGetRequest<Assignment[]>(ASSESSMENT_TOOL_LIST_URL, {
-      requiresToken: true,
-    });
 
   const {
     data: createTestFlowData,
@@ -140,18 +136,6 @@ const CreateTestFlow = () => {
       window.removeEventListener("keydown", handleKeyBindings);
     };
   }, [handleUndo, handleRedo]);
-
-  useEffect(() => {
-    if (assignmentToolsData == null) return;
-    console.log({ assignmentToolsData });
-
-    setOptions(
-      assignmentToolsData?.map((asg) => ({
-        value: asg,
-        label: asg.name,
-      })) ?? []
-    );
-  }, [assignmentToolsData]);
 
   useEffect(() => {
     if (!isFirstMount.current) {

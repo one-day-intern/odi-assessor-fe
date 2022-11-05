@@ -2,7 +2,7 @@ import { Button } from "@components/shared/elements/Button";
 import { AddIcon } from "@components/shared/svg/AddIcon";
 import { useDebounce } from "@hooks/shared/useDebounce";
 import Link from "next/link";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./AssessorDashboard.module.css";
 import { EventStatusFilter } from "./EventStatusFilter";
 import { FormSearch } from "../../../shared/forms/FormSearch";
@@ -44,7 +44,7 @@ const AssessorDashboard = () => {
         return;
       }
       const assessmentEvents: AssessmentEvent[] = response.map((event) => ({
-        id: event.event_id,
+        event_id: event.event_id,
         name: event.name,
         numberOfAssesssees: 1,
         date: new Date(event.start_date_time),
@@ -97,7 +97,7 @@ const AssessorDashboard = () => {
             )
             .sort((a, b) => a.date.getTime() - b.date.getTime())
             .map((event) => (
-              <AssessmentCard key={event.id} {...event} />
+              <AssessmentCard key={event.event_id} {...event} />
             ))}
         </AnimatePresence>
       </motion.div>

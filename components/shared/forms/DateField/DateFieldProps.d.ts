@@ -7,4 +7,7 @@ interface DateFieldProps {
   error: string;
   label: string;
   reference: Ref<Flatpickr>
+  maxDate?: Date;
+  minDate?: Date;
+  date?: string;
 }

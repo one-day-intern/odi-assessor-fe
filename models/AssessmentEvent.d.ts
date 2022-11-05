@@ -1,5 +1,5 @@
 interface AssessmentEvent {
-  id: string;
+  event_id: string;
   name: string;
   numberOfAssesssees: number;
   description: string;

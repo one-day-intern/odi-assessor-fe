@@ -1,4 +1,4 @@
 interface AssignmentOption {
-  readonly value: Assignment;
+  readonly value: AssessmentTool;
   readonly label: string;
 }

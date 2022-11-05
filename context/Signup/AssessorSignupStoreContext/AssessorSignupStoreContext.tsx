@@ -98,7 +98,6 @@ const AssessorSignupStoreProvider = ({
         containerId: "root-toast",
         position: toast.POSITION.TOP_CENTER,
       });
-      return;
     }
   }, [responseData, responseError, status, router]);
 
@@ -155,7 +154,7 @@ const AssessorSignupStoreProvider = ({
     const [isValid, postedData] = validate();
     if (!isValid) return;
 
-    postData!(postedData);
+    postData(postedData);
   };
 
   return (

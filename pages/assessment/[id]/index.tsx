@@ -31,13 +31,12 @@ const ListOfAssesseePage = () => {
         toast.error(response.message);
         return;
       }
-      const assesseesTransformed: AssessmentEventParticipation[] = response.map(
-        (assesee) => ({
+      const assesseesTransformed: AssessmentEventParticipation[] =
+        response?.map((assesee) => ({
           assesseeEmail: assesee.email,
           assesseeName: `${assesee.first_name} ${assesee.last_name}`,
           assessmentEventId: assessmentEventId as string,
-        })
-      );
+        })) ?? [];
       setAssessees(assesseesTransformed);
     };
 

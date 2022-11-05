@@ -10,7 +10,7 @@ import React, { FormEventHandler, useEffect, useMemo, useRef } from "react";
 import styles from "./AssessorPassword.module.css";
 
 const AssessorPassword = () => {
-  const { data, errors, setValue, setError, postResult, loadingStatus } =
+  const { data, errors, setValue, postResult, loadingStatus } =
     useAssessorSignupStoreContext();
   const { password, confirmed_password: confirmedPassword, email } = data;
 
@@ -48,7 +48,11 @@ const AssessorPassword = () => {
       <OdiLogo />
 
       <h2 className={styles["window__text--heading"]}>Your Password</h2>
-      <form className={styles["window__form"]} data-testid="form" onSubmit={ handleSubmit }>
+      <form
+        className={styles["window__form"]}
+        data-testid="form"
+        onSubmit={handleSubmit}
+      >
         <InputField
           ref={inputRefs.email}
           label="Email Address *"

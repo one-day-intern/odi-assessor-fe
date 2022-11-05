@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import NameAndDateForm from "./NameAndDateForm";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { createMockRouter } from "../../../../../mocks/createMockRouter";
@@ -15,10 +15,11 @@ describe("Login Details Test", () => {
       <RouterContext.Provider value={createMockRouter({ push: fakePush })}>
         <NameAndDateForm
           selectStep={fakeSelect}
-          assessmentData={{ name: "", start_date: "", test_flow_id: "" }}
+          assessmentData={{ name: "", start_date: "", test_flow: "" }}
           setAssessmentData={fakeSetData}
-          assessmentErrors={{ name: "", start_date: "", test_flow_id: "" }}
+          assessmentErrors={{ name: "", start_date: "", test_flow: "" }}
           setAssessmentErrors={fakeSetError}
+          testFlowList={[]}
         />
       </RouterContext.Provider>
     );
@@ -28,4 +29,5 @@ describe("Login Details Test", () => {
     const element = screen.getByTestId("name-form");
     expect(element).toBeInTheDocument();
   });
+
 });

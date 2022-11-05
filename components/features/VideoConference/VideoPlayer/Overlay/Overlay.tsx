@@ -1,6 +1,5 @@
 import {
   selectIsPeerAudioEnabled,
-  selectLocalPeer,
   selectPeerAudioByID,
   useHMSStore,
   HMSPeer,
@@ -14,7 +13,6 @@ interface Props extends React.PropsWithChildren {
 }
 
 const Overlay: React.FC<Props> = ({ peer }) => {
-  const localPeer = useHMSStore(selectLocalPeer);
   const audioLevel = useHMSStore(selectPeerAudioByID(peer?.id));
   const micEnabled = useHMSStore(selectIsPeerAudioEnabled(peer?.id));
 

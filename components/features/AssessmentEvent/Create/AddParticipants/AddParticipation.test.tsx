@@ -1,12 +1,12 @@
 import React from "react";
-import {render, screen} from "@testing-library/react";
+import {fireEvent, render, screen} from "@testing-library/react";
 import AddParticipants  from "./AddParticipants";
-import { RouterContext } from "next/dist/shared/lib/router-context";
-import { createMockRouter } from "../../../../../mocks/createMockRouter";
 
-const fakePush = jest.fn();
-const setCurrentData = jest.fn();
-const setCurrentError = jest.fn();
+const mockUpdate = jest.fn();
+const mockAddEmpty = jest.fn();
+const mockRemove = jest.fn();
+const mockValidate = jest.fn();
+const mockSelect = jest.fn();
 
 const data = {
     name: "",
@@ -18,14 +18,23 @@ const data = {
 describe("MultistepIndex test", () => {
   beforeEach(() => {
     render(
-      <RouterContext.Provider value={createMockRouter({ push: fakePush })}>
-        <AddParticipants assessmentData={data} assessmentErrors={data} setAssessmentData={setCurrentData} setAssessmentErrors={setCurrentError}/>
-      </RouterContext.Provider>
+        <AddParticipants selectStep={mockSelect} addEmptyParticipation={mockAddEmpty} assessmentData={data} removeParticipation={mockRemove} updateParticipation={mockUpdate} validateParticipationBeforeSubmit={mockValidate}/>
     );
   });
 
   it("Test if element rendered properly", () => {
     const element = screen.getByTestId("add-part");
     expect(element).toBeInTheDocument();
+  });
+
+  it("Test if adding new participant triggers update", async () => {
+    const addButton = screen.getAllByTestId("button");
+    fireEvent.click(addButton[0]);
+
+    expect(mockAddEmpty).toBeCalledTimes(1);
+    fireEvent.click(addButton[1]);
+
+    await new Promise(resolve => setTimeout(resolve, 500));
+
   })
 });
