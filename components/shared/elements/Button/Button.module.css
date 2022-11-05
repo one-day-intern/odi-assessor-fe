@@ -39,12 +39,17 @@
 }
 
 .button--primary {
-  background-color: #9076c0;
+  background-color: var(--primary);
   color: white;
 }
 
 .button--secondary {
-  background-color: #3d65d8;
+  background-color: var(--secondary);
+  color: white;
+}
+
+.button--danger {
+  background-color: var(--danger);
   color: white;
 }
 

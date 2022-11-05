@@ -28,6 +28,7 @@
   font-weight: 400;
 
   transition: all 300ms ease-in-out;
+  cursor: pointer;
 }
 
 .navbar__link:hover {

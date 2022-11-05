@@ -1,4 +1,5 @@
 import { Button } from "@components/shared/elements/Button";
+import { Loader } from "@components/shared/elements/Loader";
 import usePostRequest from "@hooks/shared/usePostRequest";
 import { dateFormatter } from "@utils/formatters/dateFormatter";
 import { useRouter } from "next/router";
@@ -35,19 +36,21 @@ const Confirmation = ({
 
   const router = useRouter();
 
-  const { postData: postCreateAssessment } = usePostRequest<
-    AssessmentEventSubmission,
-    AssessmentEvent
-  >(ASSESSMENT_EVENT_CREATE_URL, {
-    requiresToken: true,
-  });
+  const { status: createStatus, postData: postCreateAssessment } =
+    usePostRequest<AssessmentEventSubmission, AssessmentEvent>(
+      ASSESSMENT_EVENT_CREATE_URL,
+      {
+        requiresToken: true,
+      }
+    );
 
-  const { postData: postAssignAssessment } = usePostRequest<
-    AddParticipantsSubmission,
-    { message: string }
-  >(ASSESSMENT_ADD_PARTICIPANT_URL, {
-    requiresToken: true,
-  });
+  const { status: assignStatus, postData: postAssignAssessment } =
+    usePostRequest<AddParticipantsSubmission, { message: string }>(
+      ASSESSMENT_ADD_PARTICIPANT_URL,
+      {
+        requiresToken: true,
+      }
+    );
 
   const handleConfirm = async () => {
     const assessmentSubmission: AssessmentEventSubmission = {
@@ -87,11 +90,10 @@ const Confirmation = ({
     }
 
     toast.success("Assessment event successfully created.", {
-        containerId: "root-toast",
-        position: toast.POSITION.TOP_CENTER,
+      containerId: "root-toast",
+      position: toast.POSITION.TOP_CENTER,
     });
     router.push("/");
-
   };
 
   return (
@@ -125,8 +127,17 @@ const Confirmation = ({
           ))}
         </div>
       </div>
-      <Button onClick={handleConfirm} type="button" variant="primary">
-        <h2>Create Assessment Event</h2>
+      <Button
+        onClick={handleConfirm}
+        type="button"
+        variant="primary"
+        disabled={assignStatus === "loading" || createStatus === "loading"}
+      >
+        {assignStatus === "loading" || createStatus === "loading" ? (
+          <Loader />
+        ) : (
+          <h2>Create Assessment Event</h2>
+        )}
       </Button>
     </div>
   );
