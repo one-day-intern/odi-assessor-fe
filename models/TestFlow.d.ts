@@ -10,3 +10,8 @@ interface TestFlow {
   is_usable: boolean;
   tools: AssignmentInstance[];
 }
+
+interface TestFlowOption {
+  readonly value: TestFlow;
+  readonly label: string;
+}

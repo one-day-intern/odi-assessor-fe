@@ -1,4 +1,4 @@
-interface Assignment {
+interface AssessmentTool {
   assessment_id: string;
   name: string;
   type: string;
@@ -6,7 +6,7 @@ interface Assignment {
 
 interface AssignmentInstance {
   id: string;
-  asg: Assignment | null;
+  asg: AssessmentTool | null;
   release_time: string;
   start_time: string;
 }
