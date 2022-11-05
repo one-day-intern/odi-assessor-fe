@@ -5,7 +5,6 @@ import {
   selectIsConnectedToRoom,
   selectLocalPeer,
   useAVToggle,
-  useHMSActions,
   useHMSStore,
 } from "@100mslive/react-sdk";
 import VideoConferenceIcon from "@components/shared/svg/AppIcons/VideoConferenceIcon";

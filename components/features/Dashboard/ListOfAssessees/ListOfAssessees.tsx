@@ -25,7 +25,7 @@ interface Props extends React.PropsWithChildren {
 
 const ListOfAssessees: React.FC<Props> = ({ assessees }) => {
   const [searchedWords, setSearchedWords] = useState("");
-  const [asgEventId, setAsgEventId] = useState("");
+  const [_, setAsgEventId] = useState("");
 
   const router = useRouter();
 

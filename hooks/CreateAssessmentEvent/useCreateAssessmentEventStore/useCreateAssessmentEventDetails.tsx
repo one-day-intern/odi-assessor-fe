@@ -46,10 +46,10 @@ const useCreateAssessmentEventDetails = () => {
       assessorEmailError: "",
     };
     const assesseeWithSameEmailExists = (
-      assessmentEventDetails.list_of_participants as ParticipantsManyToMany[]
+      assessmentEventDetails.list_of_participants
     ).some((participant) => participant.assessee_email === assesseeEmail);
     const assessorWithSameEmailExists = (
-      assessmentEventDetails.list_of_participants as ParticipantsManyToMany[]
+      assessmentEventDetails.list_of_participants
     ).some((participant) => participant.assessor_email === assessorEmail);
 
     if (assesseeWithSameEmailExists)

@@ -33,7 +33,6 @@ type CreateAssessmentDetailsError = {
   [Property in keyof CreateAssessmentDetailsSubmission]: string;
 };
 
-const GET_TEST_FLOWS_URL = "/assessment/test-flow/all/";
 
 const NameAndDateForm = ({
   selectStep,
@@ -71,7 +70,7 @@ const NameAndDateForm = ({
     }),
     []
   );
-  const [choices, setChoices] = useState<TestFlowOption[]>();
+  const [choices, _] = useState<TestFlowOption[]>();
 
   useEffect(() => {
     for (let field of Object.keys(inputRefs)) {
@@ -123,7 +122,7 @@ const NameAndDateForm = ({
                   assessmentData.test_flow != null
                     ? {
                         value: assessmentData.test_flow,
-                        label: assessmentData.test_flow.name!,
+                        label: assessmentData.test_flow.name,
                       }
                     : undefined
                 }

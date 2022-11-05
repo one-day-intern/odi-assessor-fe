@@ -1,6 +1,5 @@
 import {
   selectIsPeerAudioEnabled,
-  selectLocalPeer,
   selectPeerAudioByID,
   useHMSStore,
   HMSPeer,

@@ -75,14 +75,14 @@ function useGetRequest<T = unknown>(
 
     // If a cache exists for this url, return it
     // If token is required, cache is automatically disabled
-    if (!options?.requiresToken && options?.useCache && cache.current[url!]) {
-      dispatch({ type: "fetched", payload: cache.current[url!] });
-      return cache.current[url!];
+    if (!options?.requiresToken && options?.useCache && cache.current[url]) {
+      dispatch({ type: "fetched", payload: cache.current[url] });
+      return cache.current[url];
     }
 
     if (!options?.requiresToken) {
       if (cancelRequest.current) return;
-      const response = await fetch(url!);
+      const response = await fetch(url);
       const json = await response.json();
 
       if (!response.ok) {
@@ -90,11 +90,11 @@ function useGetRequest<T = unknown>(
         const error: FetchError = new Error(response.statusText);
         error.status = response.status;
         error.message = json?.message;
-        dispatch({ type: "error", payload: error as FetchError });
+        dispatch({ type: "error", payload: error });
         return;
       }
 
-      cache.current[url!] = json;
+      cache.current[url] = json;
 
       dispatch({ type: "fetched", payload: json });
 
@@ -102,7 +102,7 @@ function useGetRequest<T = unknown>(
     }
 
     try {
-      const response = await fetch(url!, {
+      const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -116,7 +116,7 @@ function useGetRequest<T = unknown>(
       }
 
       const data = (await response.json()) as T;
-      cache.current[url!] = data;
+      cache.current[url] = data;
       if (cancelRequest.current) return;
 
       dispatch({ type: "fetched", payload: data });
@@ -152,13 +152,13 @@ function useGetRequest<T = unknown>(
             },
           });
           if (options.disableFetchOnMount) {
-            const response = await fetch(url!, {
+            const response = await fetch(url, {
               headers: {
                 Authorization: `Bearer ${access}`,
               },
             });
             const data = (await response.json()) as T;
-            cache.current[url!] = data;
+            cache.current[url] = data;
             if (cancelRequest.current) return;
 
             dispatch({ type: "fetched", payload: data });
