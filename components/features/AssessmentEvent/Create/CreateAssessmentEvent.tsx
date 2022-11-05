@@ -4,44 +4,77 @@ import React, { useMemo, useState } from "react";
 import AddParticipants from "./AddParticipants";
 import { MultistepIndex } from "./MultistepIndicator";
 import { NameAndDateForm } from "./NameAndDateForm";
+import styles from "./CreateAssessmentEvent.module.css";
+import { Confirmation } from "./Confirmation";
 
-const CreateAssessmentEvent = () => {
+interface CreateAssessmentEventProps {
+  testFlows: TestFlowOption[] | null;
+}
+
+const CreateAssessmentEvent = ({ testFlows } : CreateAssessmentEventProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const setCurrentStepId = (id: number) => setCurrentStep(id);
 
   const {
+    addEmptyParticipation,
+    removeParticipation,
+    updateParticipation,
     assessmentData,
-    setAssessmentData,
     assessmentErrors,
-    setAssessmentErrors,
+    validateParticipationBeforeSubmit,
+    setAssessmentData,
+    setAssessmentErrors
   } = useCreateAssessmentEventDetails();
 
   const steps: Step[] = useMemo(
     () => [
       {
         id: 0,
-        component: <NameAndDateForm selectStep={setCurrentStep} assessmentData={assessmentData} setAssessmentData={setAssessmentData} assessmentErrors={assessmentErrors} setAssessmentErrors={setAssessmentErrors} />,
+        component: (
+          <NameAndDateForm
+            selectStep={setCurrentStep}
+            assessmentData={assessmentData}
+            setAssessmentData={setAssessmentData}
+            assessmentErrors={assessmentErrors}
+            setAssessmentErrors={setAssessmentErrors}
+            testFlowList={testFlows}
+          />
+        ),
         name: "Create Assessment Event",
       },
       {
         id: 1,
-        component: <AddParticipants assessmentData={assessmentData} setAssessmentData={setAssessmentData} assessmentErrors={assessmentErrors} setAssessmentErrors={setAssessmentErrors} />,
+        component: <AddParticipants 
+        selectStep={setCurrentStep}
+        addEmptyParticipation={addEmptyParticipation}
+        removeParticipation={removeParticipation}
+        updateParticipation={updateParticipation}
+        assessmentData={assessmentData}
+        validateParticipationBeforeSubmit={validateParticipationBeforeSubmit}/>,
         name: "Assign Participants",
       },
+      {
+        id: 2,
+        component: <Confirmation {...assessmentData}/>,
+        name: "Confirm Event Creation"
+      }
     ],
-    [assessmentData, assessmentErrors, setAssessmentData, setAssessmentErrors]
+    [assessmentData, testFlows, assessmentErrors, setAssessmentData, setAssessmentErrors, addEmptyParticipation, removeParticipation, updateParticipation, validateParticipationBeforeSubmit]
   );
 
   return (
-    <Backdrop>
-      <MultistepIndex
-        currentStepId={currentStep}
-        setCurrentStepId={setCurrentStepId}
-        steps={steps}
-      />
-      {steps[currentStep].component}
-    </Backdrop>
+    <>
+      <Backdrop/>
+      <div className={styles["multistep-wrapper"]}>
+        <MultistepIndex
+          currentStepId={currentStep}
+          setCurrentStepId={setCurrentStepId}
+          steps={steps}
+        />
+        {steps[currentStep].component}
+      </div>
+    </>
   );
 };
 
