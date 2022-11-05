@@ -1,0 +1,43 @@
+.participation-card {
+  padding: 1.2rem 2rem;
+  margin: 1rem 0;
+
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 11px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  position: relative;
+}
+
+.participation__text--details {
+  font-size: 0.85rem;
+  margin: 0;
+  color: var(--secondary);
+}
+
+.participation__text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.participation-card__div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.participation__close {
+  position: absolute;
+  top: 4%;
+  right: 1%;
+
+  background: none;
+  border: none;
+  cursor: pointer
+}
