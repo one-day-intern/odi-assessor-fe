@@ -1,0 +1,81 @@
+.navbar {
+  height: var(--navbar-height);
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: white;
+
+  padding: 1rem 3rem;
+}
+
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar__links li {
+  list-style: none;
+}
+
+.navbar__link {
+  font-family: "Inter", sans-serif;
+  font-size: 0.96rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+
+  transition: all 300ms ease-in-out;
+  cursor: pointer;
+}
+
+.navbar__link:hover {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.navbar__link--selected {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  line-height: 120%;
+  color: #85aeff;
+  transition: all 300ms ease-in-out;
+}
+
+.navbar__link--selected:hover {
+  color: #4d88ff;
+}
+
+.button--logout {
+  background: none;
+  text-align: left;
+  padding: 0;
+
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown__text {
+  font-family: "Inter", sans-serif;
+  font-size: 0.96rem;
+  font-weight: 400;
+  margin: 0;
+
+  transition: all 300ms ease-in-out;
+}
+
+.dropdown__text:hover {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+.user-group {
+  display: flex;
+  align-items: center;
+}
+
+.user-info {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}

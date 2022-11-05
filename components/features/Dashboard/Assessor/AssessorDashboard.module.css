@@ -1,0 +1,38 @@
+.content {
+  padding: 2rem 4rem;
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+.content__list {
+  height: 80vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.content__list::-webkit-scrollbar-track {
+  background-color: white;
+  margin-left: 1rem;
+}
+
+.content__list::-webkit-scrollbar {
+  width: 5px;
+  background-color: white;
+}
+
+.content__list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgb(145, 119, 192, 0.5);
+}
+
+.content__group-horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text--heading {
+  font-weight: 600;
+  font-size: 2.7rem;
+
+  margin: 0;
+}
