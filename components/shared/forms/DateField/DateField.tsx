@@ -5,24 +5,35 @@ import "flatpickr/dist/themes/airbnb.css";
 
 import styles from "./DateField.module.css";
 
-const DateField = ({ onChange, error, label, reference }: DateFieldProps) => {
+const DateField = ({
+  onChange,
+  error,
+  label,
+  reference,
+  maxDate,
+  minDate,
+  date
+}: DateFieldProps) => {
   const inputId = useId();
 
   return (
     <div className={styles["form__control"]}>
       <label className={styles["form__label"]} htmlFor={inputId}>
-          {label}
+        {label}
       </label>
       <Flatpickr
-        id={ inputId }
+        id={inputId}
         options={{
           altInput: true,
           altFormat: "F j, Y",
-          maxDate: new Date()
+          minDate: minDate,
+          maxDate: maxDate,
         }}
         onChange={onChange}
         data-testid="inputField"
-        ref={ reference }
+        ref={reference}
+        defaultValue={date}
+
       />
       <div className={styles["form__error"]}>{error ?? ""}</div>
     </div>
