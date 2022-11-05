@@ -2,7 +2,7 @@ import { ReactNode, CSSProperties } from "react";
 
 interface ButtonProps {
   children: ReactNode;
-  variant: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "danger";
   onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   style?: CSSProperties;
