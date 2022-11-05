@@ -13,4 +13,40 @@
 .form__heading {
   font-family: "Inter", sans-serif;
   font-size: 3rem;
+  margin: 0;
+}
+
+.form__div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.participation {
+  overflow-y: scroll;
+  height: 50vh;
+  padding: 2rem;
+  margin-bottom: 2.25rem;
+}
+
+.participation::-webkit-scrollbar-track {
+  background-color: white;
+  margin-left: 1rem;
+}
+
+.participation::-webkit-scrollbar {
+  width: 5px;
+  background-color: white;
+}
+
+.participation::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgb(145, 119, 192, 0.5);
+}
+
+.separator {
+  width: 100%;
+  height: 2px;
+  background-color: var(--primary);
+  border-radius: 15rem;
+  margin-bottom: 0.5rem;
 }
