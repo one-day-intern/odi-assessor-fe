@@ -1,7 +1,7 @@
 import React from "react";
 import {render, screen} from "@testing-library/react";
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import { createMockRouter } from "../../../../../../mocks/createMockRouter";
+import { createMockRouter } from "../../../../../mocks/createMockRouter";
 import MultistepNumber from "./MultistepNumber";
 
 const fakePush = jest.fn();

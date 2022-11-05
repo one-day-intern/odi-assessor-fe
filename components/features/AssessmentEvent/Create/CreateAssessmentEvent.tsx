@@ -2,7 +2,7 @@ import { Backdrop } from "@components/shared/layouts/Backdrop";
 import { useCreateAssessmentEventDetails } from "@hooks/CreateAssessmentEvent/useCreateAssessmentEventStore/useCreateAssessmentEventDetails";
 import React, { useMemo, useState } from "react";
 import AddParticipants from "./AddParticipants";
-import { MultistepIndex } from "./MultistepIndicator";
+import { MultistepIndex } from "../../../shared/layouts/MultistepAssignment";
 import { NameAndDateForm } from "./NameAndDateForm";
 import styles from "./CreateAssessmentEvent.module.css";
 import { Confirmation } from "./Confirmation";

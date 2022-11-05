@@ -55,6 +55,19 @@ const Navbar = () => {
     [logout]
   );
 
+  const moduleDropdown = useMemo(
+    () => [
+      {
+        id: 1,
+        reactElement: () => (
+          <Link href="/assignment/create">
+            <p className={styles["dropdown__text"]}>Assignment</p>
+          </Link>
+        )
+      }
+    ], []
+  )
+
   const setGlobalDropdownState =
     (id: number, state: boolean): React.MouseEventHandler<HTMLButtonElement> =>
     (e) => {
@@ -117,6 +130,7 @@ const Navbar = () => {
           <Dropdown
             isOpened={dropdownState[0].isOpen}
             setOpened={setGlobalDropdownState(1, !dropdownState[0].isOpen)}
+            dropdownElements={moduleDropdown}
           >
             <p data-testid="dropdown-1" className={styles["navbar__link"]}>
               Modules
@@ -124,8 +138,10 @@ const Navbar = () => {
           </Dropdown>
         </li>
         <li>
-          <Link href="/">
-            <a className={styles["navbar__link"]}>Flow Builder</a>
+          <Link href="/testflow/create">
+            <a className={`${styles["navbar__link"]} ${
+                routerPath === "/testflow/create" && styles["navbar__link--selected"]
+              }`}>Flow Builder</a>
           </Link>
         </li>
         <li>
@@ -152,8 +168,8 @@ const Navbar = () => {
           dropdownElements={profileDropdown}
         >
           <p data-testid="dropdown-2" className={styles["user-info"]}>{`${
-            user?.first_name ?? "Johanes"
-          } ${user?.last_name ?? "Tarigan"}`}</p>
+            user?.first_name ?? ""
+          } ${user?.last_name ?? ""}`}</p>
         </Dropdown>
       </div>
     </nav>
