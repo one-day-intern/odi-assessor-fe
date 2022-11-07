@@ -1,6 +1,6 @@
 import { DateField } from "@components/shared/forms/DateField";
 import { InputField } from "@components/shared/forms/InputField";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import styles from "./NameAndDateForm.module.css";
 import Flatpickr from "react-flatpickr";
 import { Button } from "@components/shared/elements/Button";
