@@ -1,7 +1,7 @@
 import { Button } from "@components/shared/elements/Button";
 import { InputField } from "@components/shared/forms/InputField";
 import usePostRequest from "@hooks/shared/usePostRequest";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "./OneTimeCode.module.css";
 
@@ -31,7 +31,7 @@ const OneTimeCode = () => {
     e
   ) => {
     e.preventDefault();
-    postData!({ assessor_emails: emailList });
+    postData({ assessor_emails: emailList });
   };
 
   const onClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
