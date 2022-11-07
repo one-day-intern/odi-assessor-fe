@@ -70,7 +70,6 @@ const NameAndDateForm = ({
     }),
     []
   );
-  const [choices, _] = useState<TestFlowOption[]>();
 
   useEffect(() => {
     for (let field of Object.keys(inputRefs)) {
