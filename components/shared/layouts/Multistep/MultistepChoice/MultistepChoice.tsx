@@ -28,7 +28,8 @@ const MultistepChoice = ({
   disabled,
   isSelected,
 }: MultistepForm) => {
-  const tabbable = isSelected ? -1 : disabled ? -1 : 0;
+  const isDisabled = disabled ? -1 : 0;
+  const tabbable = isSelected ? -1 : isDisabled;
   const stylingIfDisabled = disabled ? styles["choice--disabled"] : "";
   return (
     <button

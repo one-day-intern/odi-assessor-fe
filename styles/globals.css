@@ -45,3 +45,7 @@ input.form-control.input:focus-within {
   outline: none;
   box-shadow: 0px 0px 0px 2px #9076C0;
 }
+
+.ql-container.ql-snow {
+  height: 30vh;
+}

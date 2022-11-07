@@ -82,10 +82,11 @@ const Confirmation = ({
     );
 
     if (responseFromAssigning instanceof Error) {
-      toast.error("Participants unsuccesfully assigned.", {
+      toast.error(`${responseFromAssigning.message}. Assessment event created.`, {
         containerId: "root-toast",
         position: toast.POSITION.TOP_CENTER,
       });
+      router.push("/");
       return;
     }
 
