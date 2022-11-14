@@ -1,18 +1,12 @@
 import { Loader } from "@components/shared/elements/Loader";
 import dynamic from "next/dynamic";
-import { DeltaStatic, Sources } from "quill";
 import Quill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import styles from "./TextEditor.module.css";
 
 interface Props {
   value: string;
-  onChange: (
-    value: string,
-    delta: DeltaStatic,
-    source: Sources,
-    editor: Quill.UnprivilegedEditor
-  ) => void;
+  onChange: Quill.ReactQuillProps["onChange"]
   error: string;
 }
 
