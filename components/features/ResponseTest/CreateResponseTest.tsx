@@ -43,7 +43,7 @@ const CreateResponseTest = ({ onSubmit, status }: Props) => {
           <TextEditor
             error={error.message}
             value={data.message}
-            onChange={(content, _, __, ___) => {
+            onChange={(content: string) => {
               setDataValue("message", content);
             }}
           />
