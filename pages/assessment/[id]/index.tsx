@@ -1,5 +1,6 @@
 import { ListOfAssessees } from "@components/features/Dashboard/ListOfAssessees";
 import { PageTemplate } from "@components/shared/layouts/PageTemplate";
+import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 import { useAuthContext } from "@context/Authentication";
 import useGetRequest from "@hooks/shared/useGetRequest";
 import { useRouter } from "next/router";
@@ -45,9 +46,11 @@ const ListOfAssesseePage = () => {
   }, [user]);
 
   return (
-    <PageTemplate>
-      <ListOfAssessees assessees={assessees} />
-    </PageTemplate>
+    <ProtectedRoute>
+      <PageTemplate>
+        <ListOfAssessees assessees={assessees} />
+      </PageTemplate>
+    </ProtectedRoute>
   );
 };
 

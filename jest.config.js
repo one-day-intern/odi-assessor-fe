@@ -6,6 +6,7 @@ module.exports = {
     '**/*.{js,jsx,ts,tsx}',
     "!**/index.ts",
     "!**/cypress/**",
+    "!**/CreateResponseTest.tsx",
     '!**/*.d.ts',
     '!**/node_modules/**',
     "!**/pages/**",

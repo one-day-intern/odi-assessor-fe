@@ -1,0 +1,7 @@
+.form__error {
+  font-size: 0.7rem;
+  letter-spacing: -0.05em;
+  margin-top: 0.15rem;
+
+  color: #cc4037;
+}
