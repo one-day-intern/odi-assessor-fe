@@ -1,35 +1,3 @@
-// import React, { useState } from "react";
-// import dynamic from "next/dynamic";
-// import styles from "./CreateResponseForm.module.css";
-// import "react-quill/dist/quill.snow.css";
-
-// import { Loader } from "@components/shared/elements/Loader";
-// import { Button } from "@components/shared/elements/Button";
-// import TrashIcon from "@components/shared/svg/TrashIcon";
-// import { CreateIcon } from "@components/shared/svg/CreateIcon";
-// import { emptyValidator } from "@utils/validators/emptyValidator";
-// import { InputField } from "@components/shared/forms/InputField";
-// import { useCreateResponseForm } from "@hooks/CreateResponseForm";
-
-// interface Props {
-//   onSubmit: (message: string, subject: string, name: string) => void;
-//   status: string;
-// }
-
-// const ReactQuill = dynamic(import("react-quill"), {
-//   ssr: false,
-//   loading: () => <Loader />,
-// });
-
-// const CreateResponseForm = ({ onSubmit, status }: Props) => {
-
-//   return (
-//    <div></div>
-//   );
-// };
-
-// export default CreateResponseForm;
-
 import { Button } from "@components/shared/elements/Button";
 import { Loader } from "@components/shared/elements/Loader";
 import { InputField } from "@components/shared/forms/InputField";
