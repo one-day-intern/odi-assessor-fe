@@ -5,7 +5,6 @@ import { SelectField } from "@components/shared/forms/SelectField";
 import { TextAreaField } from "@components/shared/forms/TextAreaField";
 import { TimeField } from "@components/shared/forms/TimeField";
 import { useCreateAssignmentStore } from "@hooks/CreateAssessmentEvent/useCreateAssignmentStore";
-import useGetRequest from "@hooks/shared/useGetRequest";
 import usePostRequest from "@hooks/shared/usePostRequest";
 import { EXTENSIONS } from "@utils/data/fileExtensions";
 import { emptyValidator } from "@utils/validators/emptyValidator";

@@ -202,6 +202,7 @@ function usePostRequest<T, V>(
       }
 
       dispatch({ type: "error", payload: error as PostError });
+      return error;
     }
   };
 
