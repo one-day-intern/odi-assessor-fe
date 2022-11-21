@@ -203,9 +203,8 @@ const useQuizBuilder = (initialQuestions?: Question[]): QuizBuilderHook => {
 
   const validateQuiz = () => {
     const errorMap: QuizValidationError = new Map();
-    for (let i = 0; i < questions.length; i++) {
+    for (const question of questions) {
       const currentQuestionErrors = [];
-      const question = questions[i];
       if (!question.prompt?.trim()) {
         currentQuestionErrors.push("Missing question prompt");
       }
