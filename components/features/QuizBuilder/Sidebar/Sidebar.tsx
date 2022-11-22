@@ -80,6 +80,7 @@ const Sidebar: React.FC<Props> = ({ builder, onSave }) => {
           </SortableContext>
         </div>
         <motion.button
+          id="BuilderAddQuestion"
           whileTap={{ scale: 0.9 }}
           onClick={() => builder.addQuestion()}
           className={styles["question-add"]}
@@ -87,6 +88,7 @@ const Sidebar: React.FC<Props> = ({ builder, onSave }) => {
           + Add Question
         </motion.button>
         <motion.button
+          id="BuilderSave"
           whileTap={emptyQuiz ? undefined : { scale: 0.9 }}
           onClick={() => onSave()}
           disabled={emptyQuiz}
