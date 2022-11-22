@@ -1,6 +1,5 @@
 .question-tile {
   padding: 0.5rem 1rem;
-  background: none;
   width: 100%;
   height: fit-content;
   border: 2px solid var(--secondary);
@@ -77,7 +76,6 @@
 }
 
 .question-remove {
-  height: fit-content;
   background: none;
   border: 0;
   padding: 0;
