@@ -1,0 +1,127 @@
+.choice-option_container {
+  --delete-button-width: 100px;
+  --edit-button-width: 30px;
+  --choice-option-height: 70px;
+  --choice-option-indicator-width: 25px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.choice-option {
+  min-height: var(--choice-option-height);
+  padding: 0.75rem 1rem;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 10px;
+  background: transparent;
+  width: calc(100% - var(--delete-button-width));
+  cursor: pointer;
+  text-align: left;
+  font-weight: bold;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.choice-option.correct {
+  color: white;
+  background-color: var(--primary);
+}
+
+.choice-option_value {
+  word-wrap: break-word;
+  max-width: calc(100% - 100px);
+}
+
+.choice-option:focus {
+  outline: none;
+}
+
+.choice-option.editing {
+  cursor: default;
+}
+
+.preview {
+  cursor: default;
+  width: 100%;
+}
+
+.choice-option_input {
+  width: 100%;
+  height: 100%;
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  outline: none;
+  color: currentColor;
+  max-width: calc(100% - 100px);
+}
+
+.choice-option_edit {
+  margin-left: auto;
+  height: 30px;
+  width: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+
+.choice-option_edit.editing::after {
+  position: absolute;
+  content: "";
+  width: 90%;
+  height: 2px;
+  background-color: currentColor;
+  transform: rotate(45deg);
+}
+
+.choice-option_edit:hover {
+  background-color: #ccc;
+}
+
+.choice-option_delete {
+  width: var(--delete-button-width);
+  height: var(--choice-option-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.choice-option_delete > button {
+  background: none;
+  border: 0;
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  padding: 0;
+}
+
+.choice-option_indicator {
+  width: var(--choice-option-indicator-width);
+  height: var(--choice-option-indicator-width);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+}
+
+.choice-option.correct .choice-option_indicator-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.choice-option_indicator-inner {
+  width: 0;
+  height: 0;
+  transition: width 50ms, height 50ms;
+}
