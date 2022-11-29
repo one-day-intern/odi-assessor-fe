@@ -1,0 +1,13 @@
+.circle {
+  background: var(--secondary);
+  
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle--title {
+  margin: 0;
+  font-size: 1.5rem;
+}
