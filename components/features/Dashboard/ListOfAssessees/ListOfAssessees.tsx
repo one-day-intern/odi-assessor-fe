@@ -6,19 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { AssessmentParticipationCard } from "./AssessmentParticipationCard";
 import { useRouter } from "next/router";
 
-const initialAssessmentEvent: AssessmentEventParticipation[] = [
-  {
-    assesseeEmail: "rashad@aziz.com",
-    assesseeName: "Rashad",
-    assessmentEventId: "jkasfdlk;udsaio",
-  },
-  {
-    assesseeEmail: "indira@jakslfaskjl.com",
-    assesseeName: "Indira",
-    assessmentEventId: "jkasfdlk;udsaio",
-  }
-];
-
 interface Props extends React.PropsWithChildren {
   assessees: AssessmentEventParticipation[];
 }

@@ -19,7 +19,9 @@ module.exports = {
     "!**/mocks/**",
     "!**/VideoConference.tsx",
     "!**/components/**/TestFlow/**",
-    "!**/LeaveIcon.tsx"
+    "!**/LeaveIcon.tsx",
+    "!**/ParticipationTimeline/**",
+    "!**/TextEditor/**"
   ],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)

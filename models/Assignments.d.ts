@@ -18,6 +18,17 @@ interface AssignmentNode extends AssignmentInstance {
   }
 }
 
+interface ToolAttempt extends AssessmentTool {
+  attempt_id: string | null;
+}
+
+interface ToolNode extends ToolAttempt {
+  position: {
+    x: number,
+    y: number
+  }
+}
+
 interface Assignment {
   assessment_id: string;
   name: string;

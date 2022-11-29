@@ -318,8 +318,7 @@ const CreateTestFlow = ({ options } : CreateTestFlowProps) => {
                 label="Release time"
                 onChange={(e) => {
                   setToolData("release_time", e.target.value);
-                  if (tools.asg?.type === "responsetest")
-                    setToolData("start_time", e.target.value);
+                  setToolData("start_time", e.target.value);
                 }}
               />
 
