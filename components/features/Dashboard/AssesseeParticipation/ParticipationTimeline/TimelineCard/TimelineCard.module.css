@@ -1,0 +1,65 @@
+.timeline-card {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: initial;
+
+  padding: 1rem;
+  width: 250px;
+
+  display: grid;
+  grid-template-areas:
+    "title icon"
+    "complete icon";
+}
+
+.timeline-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.25rem;
+  grid-area: title;
+}
+
+.timeline-icon {
+  grid-area: icon;
+}
+
+.timeline-submission {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.timeline-submission p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.timeline-submission--nosubmit {
+  color: #d75c5c;
+}
+
+.timeline-submission--submit {
+  color: white;
+}
+
+.timeline-link {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+
+  font-family: "Inter", sans-serif;
+  
+  background: #2a6b3f;
+  color: white;
+  border: none;
+  
+  width: fit-content;
+  padding: 0.15rem 0.5rem;
+
+  border-radius: 2rem;
+  cursor: pointer;
+}
