@@ -1,0 +1,24 @@
+.grader-wrapper {
+  display: flex;
+}
+
+.grader {
+  padding: 2.25rem;
+  width: 100%;
+}
+
+.displayed-row {
+  display: flex;
+  padding: 2rem;
+  width: 100%;
+}
+
+.grader__title {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.grader__subtitle {
+  font-size: 1.6rem;
+  margin: 0;
+}
