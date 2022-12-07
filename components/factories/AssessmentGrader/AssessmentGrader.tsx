@@ -35,6 +35,12 @@ const AssessmentGrader = ({
             assessmentData={assessmentData as Assignment}
           />
         );
+      case "responsetest":
+        return (
+          <div>Response Test</div>
+        );
+      case "interactivequiz":
+        return <div>Interactive Quiz</div>
       default:
         return <div></div>;
     }

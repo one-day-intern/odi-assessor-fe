@@ -1,6 +1,6 @@
 import { useAuthContext } from "@context/Authentication";
 import { AuthDispatchTypes } from "@context/Authentication/AuthDispatchTypes";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useReducer } from "react";
 
 interface State {
   data?: Blob;
@@ -63,7 +63,6 @@ function useGetRequest(uri?: string, options?: Options): UseGetRequest {
   } = useAuthContext();
 
   const fetchData = useCallback(async () => {
-
     dispatch({ type: "loading" });
 
     // If a cache exists for this url, return it
@@ -81,7 +80,6 @@ function useGetRequest(uri?: string, options?: Options): UseGetRequest {
         dispatch({ type: "error", payload: error });
         return;
       }
-
 
       dispatch({ type: "fetched", payload: blob });
 
@@ -104,7 +102,6 @@ function useGetRequest(uri?: string, options?: Options): UseGetRequest {
         error.message = json?.message;
         throw error;
       }
-
 
       dispatch({ type: "fetched", payload: data });
       return data;
@@ -149,7 +146,7 @@ function useGetRequest(uri?: string, options?: Options): UseGetRequest {
             error.status = response.status;
             error.message = json?.message;
             dispatch({ type: "error", payload: error });
-            return error as FetchError;
+            return error;
           }
 
           dispatch({ type: "fetched", payload: data });

@@ -1,6 +1,6 @@
 import { InputField } from "@components/shared/forms/InputField";
 import styles from "./GradingForm.module.css";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { TextAreaField } from "@components/shared/forms/TextAreaField";
 import { Button } from "@components/shared/elements/Button";
 import { Loader } from "@components/shared/elements/Loader";
@@ -22,6 +22,9 @@ const GradingForm = ({ grader, status } : Props) => {
     );
   };
 
+  const numberChangeHandler: React.ChangeEventHandler = useCallback((e) => forceTextIntoNumber((e.target as HTMLInputElement).value), []);
+
+
   const submitHandler: React.FormEventHandler = async (e) => {
     e.preventDefault();
     grader(Number(gradeInput), notes);
@@ -34,7 +37,7 @@ const GradingForm = ({ grader, status } : Props) => {
         <div className={styles["grade-input__wrapper"]}>
           <InputField
             label="Grade"
-            onChange={(e) => forceTextIntoNumber(e.target.value)}
+            onChange={numberChangeHandler}
             value={gradeInput}
           />
         </div>

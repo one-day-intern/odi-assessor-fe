@@ -15,7 +15,7 @@ const iconMap: Record<string, ReactNode> = {
 
 const AttemptItem = ({name, type, attempt_id} : ToolAttempt) => {
   const router = useRouter();
-  type = "assignment"
+  const usedType = type ?? "assignment";
   return (
     <div className={styles["attempt-card"]} data-testid="attemptCard">
       <h2 className={styles["attempt-title"]}>{name}</h2>
@@ -36,7 +36,7 @@ const AttemptItem = ({name, type, attempt_id} : ToolAttempt) => {
           <button
             className={styles["attempt-link"]}
             onClick={() =>
-              router.push(`/assessment/${router.query.id}/${router.query.email}/${type}/${attempt_id}`)
+              router.push(`/assessment/${router.query.id}/${router.query.email}/${usedType}/${attempt_id}`)
             }
           >
             <CheckIcon width={10} height={10} color="white" />

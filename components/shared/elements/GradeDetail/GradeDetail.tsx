@@ -24,7 +24,7 @@ const GradeDetail = ({ grade, options }: Props) => {
 
     const incrementGrade = () => {
       if (currentGrade < grade) {
-        setCurrentGrade((currentGrade) => currentGrade += 0.5);
+        setCurrentGrade((currentGrade) => currentGrade + 0.5);
         return;
       }
 

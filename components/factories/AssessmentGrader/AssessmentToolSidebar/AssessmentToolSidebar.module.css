@@ -67,10 +67,6 @@
   padding: 1rem;
 }
 
-.progress-assessment-list::-webkit-scrollbar {
-  width: 10px;
-}
-
 .progress-assessment-list::-webkit-scrollbar-track {
   background-color: none;
   margin-left: 1rem;

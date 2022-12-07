@@ -3,7 +3,7 @@ import { Loader } from "@components/shared/elements/Loader";
 import usePostRequest from "@hooks/shared/usePostRequest";
 import { dateFormatter } from "@utils/formatters/dateFormatter";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useCallback } from "react";
 import { toast } from "react-toastify";
 import { ParticipationCard } from "../ParticipationCard";
 import styles from "./Confirmation.module.css";
@@ -52,7 +52,7 @@ const Confirmation = ({
       }
     );
 
-  const handleConfirm = async () => {
+  const handleConfirm = useCallback(async () => {
     const assessmentSubmission: AssessmentEventSubmission = {
       name,
       start_date,
@@ -82,10 +82,13 @@ const Confirmation = ({
     );
 
     if (responseFromAssigning instanceof Error) {
-      toast.error(`${responseFromAssigning.message}. Assessment event created.`, {
-        containerId: "root-toast",
-        position: toast.POSITION.TOP_CENTER,
-      });
+      toast.error(
+        `${responseFromAssigning.message}. Assessment event created.`,
+        {
+          containerId: "root-toast",
+          position: toast.POSITION.TOP_CENTER,
+        }
+      );
       router.push("/");
       return;
     }
@@ -95,7 +98,15 @@ const Confirmation = ({
       position: toast.POSITION.TOP_CENTER,
     });
     router.push("/");
-  };
+  }, [
+    list_of_participants,
+    name,
+    postAssignAssessment,
+    postCreateAssessment,
+    router,
+    start_date,
+    test_flow?.test_flow_id,
+  ]);
 
   return (
     <div className={styles["confirm"]} data-testid="confirm">
