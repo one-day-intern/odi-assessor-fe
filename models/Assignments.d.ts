@@ -2,6 +2,7 @@ interface AssessmentTool {
   assessment_id: string;
   name: string;
   type: string;
+  description: string;
 }
 
 interface AssignmentInstance {
@@ -29,10 +30,7 @@ interface ToolNode extends ToolAttempt {
   }
 }
 
-interface Assignment {
-  assessment_id: string;
-  name: string;
-  description: string;
+interface Assignment extends AssessmentTool {
   expected_file_format: string;
   duration_in_minutes: number;
   owning_company_id: string;

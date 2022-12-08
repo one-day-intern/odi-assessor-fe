@@ -21,13 +21,13 @@ const iconMap: Record<string, ReactNode> = {
 
 const TimelineCard = ({ data }: Props) => {
   const router = useRouter();
+  // Erase later
+  data.type = "assignment";
 
   return (
     <>
       <Handle position={Position.Left} type="target" isConnectable={false} />
-      <div
-        className={styles["timeline-card"]}
-      >
+      <div className={styles["timeline-card"]}>
         <h2 className={styles["timeline-title"]}>{data.name}</h2>
         <div className={styles["timeline-icon"]}>{iconMap[data.type]}</div>
         <div
@@ -43,7 +43,12 @@ const TimelineCard = ({ data }: Props) => {
               <p>No attempts made</p>
             </>
           ) : (
-            <button className={styles["timeline-link"]} onClick={() => router.push(`/attempts/${data.attempt_id}`)}>
+            <button
+              className={styles["timeline-link"]}
+              onClick={() =>
+                router.push(`/assessment/${router.query.id}/${router.query.email}/${data.type}/${data.attempt_id}`)
+              }
+            >
               <CheckIcon width={14} height={14} color="white" />
               <p>View Attempt</p>
             </button>

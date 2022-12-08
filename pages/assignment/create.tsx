@@ -1,4 +1,4 @@
-import { CreateAssignment } from "@components/features/Assignment";
+import { CreateAssignment } from "@components/features/Assignment/Create";
 import { PageTemplate } from "@components/shared/layouts/PageTemplate";
 import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 import { NextPage } from "next";

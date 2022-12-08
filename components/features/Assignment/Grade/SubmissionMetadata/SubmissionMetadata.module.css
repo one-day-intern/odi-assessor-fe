@@ -1,0 +1,15 @@
+.time-grid {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  align-items: center;
+}
+
+.time-grid p {
+  margin: 0;
+}
+
+.time-text {
+  grid-column: 1 / 3;
+  font-size: 1.15rem;
+  font-weight: 600;
+}

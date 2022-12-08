@@ -1,15 +1,15 @@
 import { useAuthContext } from "@context/Authentication";
 import { AuthDispatchTypes } from "@context/Authentication/AuthDispatchTypes";
-import { useCallback, useEffect, useReducer, useRef } from "react";
+import { useCallback, useReducer } from "react";
 
-interface State<T> {
-  data?: T;
+interface State {
+  data?: Blob;
   error?: Error;
   status: "loading" | "fetched" | "error" | "initial";
 }
 
-interface UseGetRequest<T> extends State<T> {
-  fetchData: () => Promise<T | FetchError>;
+interface UseGetRequest extends State {
+  fetchData: () => Promise<Blob | FetchError | undefined>;
 }
 
 interface FetchError extends Error {
@@ -17,37 +17,26 @@ interface FetchError extends Error {
 }
 
 interface Options {
-  useCache?: boolean;
   requiresToken?: boolean;
-  disableFetchOnMount?: boolean;
 }
 
-type Cache<T> = { [url: string]: T };
-
 // discriminated union type
-type Action<T> =
+type Action =
   | { type: "loading" }
-  | { type: "fetched"; payload: T }
+  | { type: "fetched"; payload: Blob }
   | { type: "error"; payload: FetchError };
 
-function useGetRequest<T = unknown>(
-  uri?: string,
-  options?: Options
-): UseGetRequest<T> {
-  const cache = useRef<Cache<T>>({});
-
+function useGetRequest(uri?: string, options?: Options): UseGetRequest {
   const url = `${process.env.NEXT_PUBLIC_BACKEND_URL}${uri}`;
 
-  // Used to prevent state update if the component is unmounted
-  const cancelRequest = useRef<boolean>(false);
-
-  const initialState: State<T> = {
+  const initialState: State = {
     error: undefined,
     data: undefined,
     status: "initial",
   };
+
   // Keep state logic separated
-  const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
+  const fetchReducer = (state: State, action: Action): State => {
     switch (action.type) {
       case "loading":
         return { ...initialState, status: "loading" };
@@ -74,36 +63,27 @@ function useGetRequest<T = unknown>(
   } = useAuthContext();
 
   const fetchData = useCallback(async () => {
-    if (accessToken === "") return;
-
     dispatch({ type: "loading" });
 
     // If a cache exists for this url, return it
     // If token is required, cache is automatically disabled
-    if (!options?.requiresToken && options?.useCache && cache.current[url]) {
-      dispatch({ type: "fetched", payload: cache.current[url] });
-      return cache.current[url];
-    }
 
     if (!options?.requiresToken) {
-      if (cancelRequest.current) return;
       const response = await fetch(url);
-      const json = await response.json();
+      const blob = await response.blob();
 
-      if (!response.ok) {
-        if (cancelRequest.current) return;
+      if (blob.type === "application/json") {
         const error: FetchError = new Error(response.statusText);
+        const json = JSON.parse(await blob.text());
         error.status = response.status;
         error.message = json?.message;
         dispatch({ type: "error", payload: error });
         return;
       }
 
-      cache.current[url] = json;
+      dispatch({ type: "fetched", payload: blob });
 
-      dispatch({ type: "fetched", payload: json });
-
-      return json;
+      return blob;
     }
 
     try {
@@ -112,23 +92,20 @@ function useGetRequest<T = unknown>(
           Authorization: `Bearer ${accessToken}`,
         },
       });
-      if (!response.ok) {
+
+      const data = await response.blob();
+
+      if (data.type === "application/json") {
         const error: FetchError = new Error(response.statusText);
-        const json = await response.json();
+        const json = JSON.parse(await data.text());
         error.status = response.status;
         error.message = json?.message;
         throw error;
       }
 
-      const data = (await response.json()) as T;
-      cache.current[url] = data;
-      if (cancelRequest.current) return;
-
       dispatch({ type: "fetched", payload: data });
       return data;
     } catch (error) {
-      if (cancelRequest.current) return;
-
       if ((error as FetchError)?.status === 401) {
         try {
           const REQUEST_ACCESS_TOKEN_URL = `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/api/token/refresh/`;
@@ -156,19 +133,24 @@ function useGetRequest<T = unknown>(
               user,
             },
           });
-          if (options.disableFetchOnMount) {
-            const response = await fetch(url, {
-              headers: {
-                Authorization: `Bearer ${access}`,
-              },
-            });
-            const data = (await response.json()) as T;
-            cache.current[url] = data;
-            if (cancelRequest.current) return;
 
-            dispatch({ type: "fetched", payload: data });
-            return data;
+          const response = await fetch(url, {
+            headers: {
+              Authorization: `Bearer ${access}`,
+            },
+          });
+          const data = await response.blob();
+          if (data.type === "application/json") {
+            const error: FetchError = new Error(response.statusText);
+            const json = JSON.parse(await data.text());
+            error.status = response.status;
+            error.message = json?.message;
+            dispatch({ type: "error", payload: error });
+            return error;
           }
+
+          dispatch({ type: "fetched", payload: data });
+          return data;
         } catch (e) {
           authDispatch({
             type: AuthDispatchTypes.LOGOUT,
@@ -184,29 +166,8 @@ function useGetRequest<T = unknown>(
     authDispatch,
     url,
     options?.requiresToken,
-    options?.useCache,
-    options?.disableFetchOnMount,
     user,
   ]);
-
-  useEffect(() => {
-    if (!url || options?.disableFetchOnMount) return;
-
-    if (accessToken === "") return;
-
-    if (options?.requiresToken && !accessToken) {
-      return;
-    }
-
-    cancelRequest.current = false;
-
-    fetchData();
-
-    return () => {
-      cancelRequest.current = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, accessToken, options?.disableFetchOnMount, fetchData]);
 
   return { ...state, fetchData };
 }

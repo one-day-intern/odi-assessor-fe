@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from "react";
 import styles from "./GradeDetail.module.css";
 
+interface GradeDetailOptions {
+  fontSize?: string;
+  labelSize?: string;
+  labelColor?: string;
+}
+
 interface Props {
   grade: number;
+  options?: GradeDetailOptions;
 }
 
 const easeOutQuart = (x: number): number => 1 - Math.pow(1 - x, 4);
 const FPS = 60;
 
-const GradeDetail = ({ grade }: Props) => {
+const GradeDetail = ({ grade, options }: Props) => {
   const [currentGrade, setCurrentGrade] = useState(0);
   const displayedGrade = (easeOutQuart(currentGrade/grade) * grade).toFixed(1);
 
@@ -17,7 +24,7 @@ const GradeDetail = ({ grade }: Props) => {
 
     const incrementGrade = () => {
       if (currentGrade < grade) {
-        setCurrentGrade((currentGrade) => currentGrade += 0.5);
+        setCurrentGrade((currentGrade) => currentGrade + 0.5);
         return;
       }
 
@@ -33,9 +40,9 @@ const GradeDetail = ({ grade }: Props) => {
 
   return (
     <div className={styles["grade"]}>
-      <p className={styles["grade--label"]}>Overall Grade</p>
+      <p className={styles["grade--label"]} style={{color: options?.labelColor, fontSize: options?.labelSize}}>Overall Grade</p>
       <div className={styles["grade--course"]}>
-        <p className={styles["grade--number"]}>{displayedGrade}</p>
+        <p className={styles["grade--number"]} style={{fontSize: options?.fontSize}}>{displayedGrade}</p>
       </div>
     </div>
   );

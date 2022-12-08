@@ -10,21 +10,22 @@ const dateFormatter = (
   options?: DateFormatterOptions
 ): string => {
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
+    "January",
+    "February",
+    "March",
+    "April",
     "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   const formatsConditionally = options?.isConditional ?? true;
+
 
   if (formatsConditionally) {
     const now = options?.nowDate ?? new Date(Date.now());
@@ -55,15 +56,25 @@ const dateFormatter = (
 
   const month = date.getMonth();
   const year = date.getFullYear();
+  const hour = date.getHours();
 
   const dateString = date.getDate().toString().padStart(2, "0");
   const monthString = (month + 1).toString().padStart(2, "0");
+  const hourString = (hour % 12).toString().padStart(2, "0");
+  const minuteString = date.getMinutes().toString().padStart(2, "0");
+
+  let returnedString = `${dateString}/${monthString}/${year}`;
 
   if (options?.returnsComplete) {
-    return `${date.getDate()} ${months[month]} ${year}`;
+    returnedString = `${date.getDate()} ${months[month]} ${year}`;
   }
 
-  return `${dateString}/${monthString}/${year}`;
+  
+  if (options?.showsTime) {
+    returnedString = `${returnedString}, ${hourString}:${minuteString} ${hour <= 12 ? "AM" : "PM"}`;
+  }
+
+  return returnedString;
   
 
 
