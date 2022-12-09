@@ -20,8 +20,8 @@ import { toast } from "react-toastify";
 import styles from "./Login.module.css";
 import { LoginDivider } from "./LoginDivider";
 
-const LOGIN_CALLBACK_URI_ASSESSOR = 'http://localhost:8000/users/google/oauth/login/assessor/';
-const CLIENT_ID = '460270221613-mursh2cpfjstu8oepv6cas4oj3bkmlqo.apps.googleusercontent.com';
+const LOGIN_CALLBACK_URI_ASSESSOR = process.env.NEXT_PUBLIC_BACKEND_URL! + process.env.NEXT_PUBLIC_GOOGLE_LOGIN_CALLBACK_URL;
+const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
 
 
 interface LoginProps {
@@ -125,7 +125,7 @@ const Login = ({ loginUrl }: LoginProps) => {
       localStorage.removeItem('googleErrorMessage');
     }
     
-  }, []);
+  }, [router]);
 
   return (
     <Backdrop>
