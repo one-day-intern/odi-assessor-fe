@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router';
 
+const ASSESSOR_LOGIN_URL = '/accounts/login/assessor';
+
+
 export default function Redirect() {
     const router = useRouter();
 
@@ -27,7 +30,7 @@ export default function Redirect() {
           
         } else {
           localStorage.setItem('googleErrorMessage', googleErrorMessage!);
-          router.push('/accounts/login/assessor')
+          router.push(ASSESSOR_LOGIN_URL)
         }
         
       }, [router]); 
