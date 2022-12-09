@@ -14,11 +14,15 @@ import usePostRequest from "@hooks/shared/usePostRequest";
 import { emailValidator } from "@utils/validators/emailValidator";
 import { emptyValidator } from "@utils/validators/emptyValidator";
 import { useRouter } from "next/router";
-import React, { FormEventHandler, useState } from "react";
+import React, { FormEventHandler, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 import styles from "./Login.module.css";
 import { LoginDivider } from "./LoginDivider";
+
+const LOGIN_CALLBACK_URI_ASSESSOR = process.env.NEXT_PUBLIC_BACKEND_URL! + process.env.NEXT_PUBLIC_GOOGLE_LOGIN_CALLBACK_URL;
+const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID;
+
 
 interface LoginProps {
   loginUrl: string;
@@ -106,6 +110,23 @@ const Login = ({ loginUrl }: LoginProps) => {
     router.push('/');
   };
 
+  useEffect(() => {
+    let errorMessage = localStorage.getItem('googleErrorMessage');
+    if (errorMessage != null) {
+      errorMessage = errorMessage.replaceAll('\"', '');
+
+      toast.error(errorMessage, {
+        position: toast.POSITION.TOP_CENTER,
+        theme: "colored",
+        containerId: "root-toast",
+        autoClose: 2000,
+      });
+  
+      localStorage.removeItem('googleErrorMessage');
+    }
+    
+  }, [router]);
+
   return (
     <Backdrop>
       <div className={styles["window__illustration"]}>
@@ -150,7 +171,9 @@ const Login = ({ loginUrl }: LoginProps) => {
 
           <LoginDivider />
 
-          <GoogleButton onClick={() => {}} />
+          <GoogleButton onClick={() => {
+            window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=' + LOGIN_CALLBACK_URI_ASSESSOR + '&prompt=consent&response_type=code&client_id=' + CLIENT_ID + '&scope=email profile https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/user.phonenumbers.read&access_type=offline';
+          }} />
         </form>
       </div>
     </Backdrop>
