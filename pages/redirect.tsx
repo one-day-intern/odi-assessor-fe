@@ -30,7 +30,7 @@ export default function Redirect() {
           router.push('/accounts/login/assessor')
         }
         
-      }, []); 
+      }, [router]); 
 
     return (
         <div>Redirect</div>
