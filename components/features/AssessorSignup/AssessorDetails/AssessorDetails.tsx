@@ -11,9 +11,15 @@ import { PhoneField } from "@components/shared/forms/PhoneField";
 import { useAssessorSignupStepContext } from "@context/Signup/AssessorSignupStepContext";
 import { phoneParser } from "@utils/formatters/phoneParser";
 import { phoneNumberValidator } from "@utils/validators/phoneNumberValidator";
+import { LoginDivider } from "@components/features/Login/LoginDivider";
+import { GoogleButton } from "@components/shared/elements/GoogleButton";
 
-const AssessorDetails = () => {
-    const { selectStep, selectedId } = useAssessorSignupStepContext();
+interface Props {
+  googleLogin: () => void;
+}
+
+const AssessorDetails = ({ googleLogin }: Props) => {
+  const { selectStep, selectedId } = useAssessorSignupStepContext();
   const { data, errors, setValue, setError } = useAssessorSignupStoreContext();
   const firstNameRef = useRef<HTMLInputElement>(null);
   const lastNameRef = useRef<HTMLInputElement>(null);
@@ -39,7 +45,6 @@ const AssessorDetails = () => {
     }
   }, [errors, inputRefs]);
 
-
   const continueNext: FormEventHandler<Element> = (e) => {
     e.preventDefault();
 
@@ -49,15 +54,21 @@ const AssessorDetails = () => {
     const [isLastNameValid, lastNameError] = emptyValidator(data.last_name);
     setError("last_name", lastNameError);
 
-    const [isEmployeeIdValid, employeeIdError] = emptyValidator(data.employee_id);
+    const [isEmployeeIdValid, employeeIdError] = emptyValidator(
+      data.employee_id
+    );
     setError("employee_id", employeeIdError);
 
     const parsedPhoneNumber = phoneParser(data.phone_number);
-    const [isPhoneNumberValid, phoneNumberError] = phoneNumberValidator(parsedPhoneNumber);
+    const [isPhoneNumberValid, phoneNumberError] =
+      phoneNumberValidator(parsedPhoneNumber);
     setError("phone_number", phoneNumberError);
 
     const isValid =
-      isFirstNameValid && isLastNameValid && isPhoneNumberValid && isEmployeeIdValid;
+      isFirstNameValid &&
+      isLastNameValid &&
+      isPhoneNumberValid &&
+      isEmployeeIdValid;
     if (!isValid) return;
 
     selectStep(selectedId + 1);
@@ -71,7 +82,7 @@ const AssessorDetails = () => {
 
       <form
         className={styles["window__form"]}
-        data-testid="form"
+        data-testid="forms"
         onSubmit={continueNext}
       >
         <InputField
@@ -109,6 +120,11 @@ const AssessorDetails = () => {
           <h2>Next</h2>
         </Button>
       </form>
+
+      <LoginDivider />
+      <div className={styles["google-login"]}>
+        <GoogleButton onClick={googleLogin} />
+      </div>
 
       <SigninNotice />
     </>

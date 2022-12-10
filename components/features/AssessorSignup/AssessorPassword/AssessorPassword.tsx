@@ -1,4 +1,6 @@
+import { LoginDivider } from "@components/features/Login/LoginDivider";
 import { Button } from "@components/shared/elements/Button";
+import { GoogleButton } from "@components/shared/elements/GoogleButton";
 import { Loader } from "@components/shared/elements/Loader";
 import { InputField } from "@components/shared/forms/InputField";
 import { PasswordField } from "@components/shared/forms/PasswordField";
@@ -9,7 +11,11 @@ import React, { FormEventHandler, useEffect, useMemo, useRef } from "react";
 
 import styles from "./AssessorPassword.module.css";
 
-const AssessorPassword = () => {
+interface Props {
+  googleLogin: () => void;
+}
+
+const AssessorPassword = ({ googleLogin }: Props) => {
   const { data, errors, setValue, postResult, loadingStatus } =
     useAssessorSignupStoreContext();
   const { password, confirmed_password: confirmedPassword, email } = data;
@@ -82,6 +88,10 @@ const AssessorPassword = () => {
           {loadingStatus === "loading" ? <Loader /> : <h2>Sign Up</h2>}
         </Button>
       </form>
+      <LoginDivider />
+      <div className={styles["google-login"]}>
+        <GoogleButton onClick={googleLogin} />
+      </div>
       <SigninNotice />
     </>
   );

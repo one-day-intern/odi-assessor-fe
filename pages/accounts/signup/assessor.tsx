@@ -3,8 +3,12 @@ import { NextPage } from 'next'
 import React from 'react'
 
 const AssessorSignupPage: NextPage = () => {
+  const googleLoginCallback = async () => {
+    // Jo do something here
+    console.log("Test")
+  }
   return (
-    <AssessorSignup/>
+    <AssessorSignup googleLoginCallback={googleLoginCallback}/>
   )
 }
 
