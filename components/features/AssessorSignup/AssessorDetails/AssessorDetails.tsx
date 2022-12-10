@@ -82,7 +82,7 @@ const AssessorDetails = ({ googleLogin }: Props) => {
 
       <form
         className={styles["window__form"]}
-        data-testid="forms"
+        data-testid="form"
         onSubmit={continueNext}
       >
         <InputField
