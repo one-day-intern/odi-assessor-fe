@@ -61,12 +61,25 @@ const Navbar = () => {
         id: 1,
         reactElement: () => (
           <Link href="/assignment/create">
-            <p className={styles["dropdown__text"]}>Assignment</p>
+            <div className={`${styles["button--logout"]}`}>
+              <p className={styles["dropdown__text"]}>Assignment</p>
+            </div>
           </Link>
-        )
-      }
-    ], []
-  )
+        ),
+      },
+      {
+        id: 2,
+        reactElement: () => (
+          <Link href="/responsetest/create">
+            <div className={`${styles["button--logout"]}`}>
+              <p className={styles["dropdown__text"]}>Response Test</p>
+            </div>
+          </Link>
+        ),
+      },
+    ],
+    []
+  );
 
   const setGlobalDropdownState =
     (id: number, state: boolean): React.MouseEventHandler<HTMLButtonElement> =>
@@ -139,9 +152,14 @@ const Navbar = () => {
         </li>
         <li>
           <Link href="/testflow/create">
-            <a className={`${styles["navbar__link"]} ${
-                routerPath === "/testflow/create" && styles["navbar__link--selected"]
-              }`}>Flow Builder</a>
+            <a
+              className={`${styles["navbar__link"]} ${
+                routerPath === "/testflow/create" &&
+                styles["navbar__link--selected"]
+              }`}
+            >
+              Flow Builder
+            </a>
           </Link>
         </li>
         <li>
