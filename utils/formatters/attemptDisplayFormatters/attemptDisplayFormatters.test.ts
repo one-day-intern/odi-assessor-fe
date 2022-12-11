@@ -7,11 +7,11 @@ describe("attemptifyToolAttempt test suite", () => {
       {
         "attempt-id": "asfdkjkasdjkalcs",
         start_working_time: new Date("2022-10-05"),
+        type: "Assessment Type",
         "tool-data": {
           assessment_id: "id_asjdfkjasfkldsadf",
           name: "Assessment Name",
-          type: "Assessment Type",
-          description: "jcsdakljaklsdc",
+          description: "jcsdakljaklsdc"
         },
       },
     ];
