@@ -1,4 +1,4 @@
-import { AssignmentIcon } from "@components/shared/svg/AppIcons/AssignmentIcon";
+import AssignmentIcon  from "@components/shared/svg/AppIcons/AssignmentIcon";
 import InteractiveQuizIcon from "@components/shared/svg/AppIcons/InteractiveQuizIcon";
 import ResponseTestIcon from "@components/shared/svg/AppIcons/ResponseTestIcon";
 import { CheckIcon } from "@components/shared/svg/CheckIcon";
@@ -15,7 +15,7 @@ const iconMap: Record<string, ReactNode> = {
 
 const AttemptItem = ({name, type, attempt_id} : ToolAttempt) => {
   const router = useRouter();
-  const usedType = type ?? "assignment";
+  const usedType = type;
   return (
     <div className={styles["attempt-card"]} data-testid="attemptCard">
       <h2 className={styles["attempt-title"]}>{name}</h2>

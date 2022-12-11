@@ -1,4 +1,4 @@
-import { CreateResponseTest } from "@components/features/ResponseTest";
+import { CreateResponseTest } from "@components/features/ResponseTest/Create";
 import { PageTemplate } from "@components/shared/layouts/PageTemplate";
 import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 import usePostRequest from "@hooks/shared/usePostRequest";
@@ -11,6 +11,7 @@ interface ResponseTest {
   prompt: string;
   subject: string;
   name: string;
+  sender: string;
 }
 
 const CREATE_RESPONSE_TEST_URI = "/assessment/create/response-test/";
@@ -25,11 +26,12 @@ const CreateResponseTestPage: NextPage = () => {
 
   const router = useRouter();
 
-  const createResponseTestSubmit = async (message: string, subject: string, name: string) => {
+  const createResponseTestSubmit = async (message: string, subject: string, name: string, sender: string) => {
     const response = await postData({
       prompt: message,
       subject,
-      name
+      name,
+      sender
     });
 
     if (response instanceof Error) {

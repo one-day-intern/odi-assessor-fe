@@ -1,3 +1,3 @@
 import AssignmentIcon from "./AssignmentIcon";
 
-export { AssignmentIcon }
+export default AssignmentIcon;
