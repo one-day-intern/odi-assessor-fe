@@ -1,4 +1,6 @@
 import { AssignmentGrade } from "@components/features/Assignment/Grade";
+import { ResponseTestGrade } from "@components/features/ResponseTest/Grade";
+import { useRouter } from "next/router";
 import React, { useMemo } from "react";
 import styles from "./AssessmentGrader.module.css";
 import { AssessmentToolSidebar } from "./AssessmentToolSidebar";
@@ -24,8 +26,10 @@ const AssessmentGrader = ({
   sidebarMetadata,
   assessmentData,
   grader,
-  loadingStatus
+  loadingStatus,
 }: Props) => {
+  const router = useRouter();
+  console.log(submission);
   const displayedComponent = useMemo(() => {
     switch (type) {
       case "assignment":
@@ -36,15 +40,21 @@ const AssessmentGrader = ({
           />
         );
       case "responsetest":
-        return (
-          <div>Response Test</div>
-        );
+        return <ResponseTestGrade
+        submission={submission as ResponseTestSubmission}
+        assesseeEmail={router.query.email as string}
+      />;
       case "interactivequiz":
-        return <div>Interactive Quiz</div>
+        return <div>Interactive Quiz</div>;
       default:
-        return <div></div>;
+        return <div></div>
     }
-  }, [type, submission, assessmentData]);
+  }, [
+    submission,
+    assessmentData,
+    router.query.email,
+    type
+  ]);
 
   return (
     <main className={styles["grader-wrapper"]} data-testid="assessment-grader">
@@ -59,7 +69,7 @@ const AssessmentGrader = ({
         <div className={styles["grader__divisor"]}></div>
         <div className={styles["displayed-row"]}>
           {displayedComponent}
-          <GradingForm grader={grader} status={loadingStatus}/>
+          <GradingForm grader={grader} status={loadingStatus} />
         </div>
       </div>
     </main>

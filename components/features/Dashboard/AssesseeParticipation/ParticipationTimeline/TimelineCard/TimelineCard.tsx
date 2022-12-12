@@ -1,4 +1,4 @@
-import AssignmentIcon  from "@components/shared/svg/AppIcons/AssignmentIcon";
+import AssignmentIcon from "@components/shared/svg/AppIcons/AssignmentIcon";
 import InteractiveQuizIcon from "@components/shared/svg/AppIcons/InteractiveQuizIcon";
 import ResponseTestIcon from "@components/shared/svg/AppIcons/ResponseTestIcon";
 import { CheckIcon } from "@components/shared/svg/CheckIcon";
@@ -20,8 +20,6 @@ const iconMap: Record<string, ReactNode> = {
 
 const TimelineCard = ({ data }: Props) => {
   const router = useRouter();
-  // Erase later
-  data.type = "assignment";
 
   return (
     <>
@@ -45,7 +43,9 @@ const TimelineCard = ({ data }: Props) => {
             <button
               className={styles["timeline-link"]}
               onClick={() =>
-                router.push(`/assessment/${router.query.id}/${router.query.email}/${data.type}/${data.attempt_id}`)
+                router.push(
+                  `/assessment/${router.query.id}/${router.query.email}/${data.type}/${data.attempt_id}`
+                )
               }
             >
               <CheckIcon width={14} height={14} color="white" />

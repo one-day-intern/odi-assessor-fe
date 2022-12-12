@@ -15,7 +15,7 @@ const iconMap: Record<string, ReactNode> = {
 
 const AttemptItem = ({name, type, attempt_id} : ToolAttempt) => {
   const router = useRouter();
-  const usedType = type ?? "assignment";
+  const usedType = type;
   return (
     <div className={styles["attempt-card"]} data-testid="attemptCard">
       <h2 className={styles["attempt-title"]}>{name}</h2>

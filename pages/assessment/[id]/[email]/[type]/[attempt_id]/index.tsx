@@ -33,7 +33,7 @@ const AssessmentToolPage: NextPage = () => {
   const urlMap: Record<AssessmentType, string> = {
     assignment: `/assessment/review/assignment/data/?tool-attempt-id=${router.query.attempt_id}`,
     interactivequiz: "",
-    responsetest: "",
+    responsetest: `/assessment/assessment/review/response-test/?tool-attempt-id=${router.query.attempt_id}`,
   };
 
   const {

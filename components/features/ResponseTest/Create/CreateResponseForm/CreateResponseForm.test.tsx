@@ -3,18 +3,20 @@ import React from "react";
 import CreateResponseForm from "./CreateResponseForm";
 
 import { RouterContext } from "next/dist/shared/lib/router-context";
-import { createMockRouter } from "../../../../mocks/createMockRouter";
+import { createMockRouter } from "../../../../../mocks/createMockRouter";
 
 const data = {
   message: "",
   subject: "",
   name: "",
+  sender: ""
 };
 
 const error = {
   message: "",
   subject: "",
   name: "",
+  sender: ""
 };
 
 const setDataValue = jest.fn();
