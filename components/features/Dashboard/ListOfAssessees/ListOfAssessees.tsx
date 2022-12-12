@@ -11,14 +11,10 @@ interface Props extends React.PropsWithChildren {
 }
 
 const ListOfAssessees: React.FC<Props> = ({ assessees }) => {
-  const [searchedWords, setSearchedWords] = useState("");
   const [_, setAsgEventId] = useState("");
 
   const router = useRouter();
 
-  const debouncedWord = useDebounce(searchedWords, 500);
-
-  useEffect(() => {}, [debouncedWord]);
 
   useEffect(() => {
 
@@ -33,10 +29,6 @@ const ListOfAssessees: React.FC<Props> = ({ assessees }) => {
     <main id="main-content" className={styles["content"]} data-testid="main">
       <div className={styles["content__group-horizontal"]}>
         <h1 className={styles["text--heading"]}>My Assessments</h1>
-        <FormSearch
-          value={searchedWords}
-          onInputChange={(e) => setSearchedWords(e.target.value)}
-        />
       </div>
       <motion.div layout className={styles["content__list"]}>
         <AnimatePresence>

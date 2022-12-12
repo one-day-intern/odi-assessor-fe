@@ -5,6 +5,21 @@
   padding: 2rem;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button--grade {
+  background-color: var(--secondary);
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
+
+  color: white;
+  cursor: pointer;
+}
+
 .divider {
   background-color: var(--primary);
   height: 2px;
@@ -54,6 +69,7 @@
 
 .card__text--secondary {
   color: var(--secondary);
+  padding: 0.25rem
 }
 
 .content__group-card {

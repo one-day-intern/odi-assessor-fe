@@ -17,7 +17,7 @@ const FPS = 60;
 
 const GradeDetail = ({ grade, options }: Props) => {
   const [currentGrade, setCurrentGrade] = useState(0);
-  const displayedGrade = (easeOutQuart(currentGrade/grade) * grade).toFixed(1);
+  const displayedGrade = grade === 0 ? 0 : (easeOutQuart(currentGrade/grade) * grade).toFixed(1);
 
   useEffect(() => {
     let interval: NodeJS.Timer;

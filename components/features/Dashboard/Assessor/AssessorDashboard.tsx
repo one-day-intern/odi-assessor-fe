@@ -59,18 +59,11 @@ const AssessorDashboard = () => {
     // eslint-disable-next-line
   }, [user]);
 
-  const debouncedWord = useDebounce(searchedWords, 500);
-
-  useEffect(() => {}, [debouncedWord]);
-
   return (
     <main id="main-content" className={styles["content"]} data-testid="main">
       <div className={styles["content__group-horizontal"]}>
         <h1 className={styles["text--heading"]}>My Assessments</h1>
-        <FormSearch
-          value={searchedWords}
-          onInputChange={(e) => setSearchedWords(e.target.value)}
-        />
+        
       </div>
       <div className={styles["content__group-horizontal"]}>
         <EventStatusFilter status={statusFilter} setStatus={setStatus} />

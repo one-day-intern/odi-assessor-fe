@@ -3,7 +3,6 @@ import InteractiveQuizIcon from "@components/shared/svg/AppIcons/InteractiveQuiz
 import ResponseTestIcon from "@components/shared/svg/AppIcons/ResponseTestIcon";
 import { CheckIcon } from "@components/shared/svg/CheckIcon";
 import { CrossIcon } from "@components/shared/svg/CrossIcon";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
 import { Handle, Position } from "reactflow";
