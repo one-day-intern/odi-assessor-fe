@@ -1,4 +1,4 @@
-import { AssignmentIcon } from "@components/shared/svg/AppIcons/AssignmentIcon";
+import AssignmentIcon  from "@components/shared/svg/AppIcons/AssignmentIcon";
 import InteractiveQuizIcon from "@components/shared/svg/AppIcons/InteractiveQuizIcon";
 import ResponseTestIcon from "@components/shared/svg/AppIcons/ResponseTestIcon";
 import { CheckIcon } from "@components/shared/svg/CheckIcon";
