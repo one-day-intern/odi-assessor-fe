@@ -4,6 +4,15 @@ interface Submission {
   submitted_time: string;
 }
 
+interface GradeReportModel {
+  tool_name: string;
+  tool_description: string;
+  is_attempted: boolean;
+  grade: number;
+  note: string | null;
+  type: string;
+}
+
 interface AssignmentSubmission extends Submission {
   filename: string;
 }

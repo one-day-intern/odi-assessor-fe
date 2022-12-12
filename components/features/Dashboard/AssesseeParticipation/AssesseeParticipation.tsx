@@ -5,6 +5,8 @@ import { CountdownTimer } from "./CountdownTimer";
 import { DetailCard } from "./DetailCard";
 import { GradeDetail } from "../../../shared/elements/GradeDetail";
 import { calculateSubmittedToolPercentage } from "@utils/formatters/attemptDisplayFormatters";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface AssessmentEventData {
   name: string;
@@ -15,9 +17,11 @@ interface Props {
   data: AssessmentEventData;
   tools: ToolAttempt[];
   endTime: Date;
+  grade: number;
 }
 
-const AssesseeParticipation = ({ children, data, tools, endTime }: Props) => {
+const AssesseeParticipation = ({ children, data, tools, endTime, grade }: Props) => {
+  const router = useRouter();
   return (
     <main id="main-content" className={styles["content"]} data-testid="main">
       <h1 className={styles["content__title"]}>{data.name}</h1>
@@ -39,7 +43,12 @@ const AssesseeParticipation = ({ children, data, tools, endTime }: Props) => {
           </>
         </DetailCard>
         <DetailCard>
-          <GradeDetail grade={80} />
+          <div className={styles["column"]}>
+          <GradeDetail grade={grade} />
+          <Link href={`${router.asPath}/grade`}>
+            <div className={styles["button--grade"]}>View Report</div>
+          </Link>
+          </div>
         </DetailCard>
         <DetailCard>
           <CountdownTimer

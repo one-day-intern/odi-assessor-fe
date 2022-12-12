@@ -6,7 +6,13 @@ import useGetRequest from "@hooks/shared/useGetRequest";
 import { attemptifyToolAttempt } from "@utils/formatters/attemptDisplayFormatters";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
+
+const getOverallAverage = (list?: GradeReportModel[]) => {
+  const length = list?.length ?? 0;
+  const total = list?.reduce((prev, current) => prev + current.grade, 0) ?? 0;
+  return total / length || 0;
+}
 
 const AssesseeParticipationPage: NextPage = () => {
   const router = useRouter();
@@ -17,8 +23,10 @@ const AssesseeParticipationPage: NextPage = () => {
     { requiresToken: true }
   );
 
+  const { data: gradeData, error: gradeError } = useGetRequest<GradeReportModel[]>(`/assessment/assessment-event/report/?assessment-event-id=${router.query.id}&assessee-email=${router.query.email}`, { requiresToken: true})
+
   const assessee = {
-    name: "Rashad Aziz",
+    name: router.query.email as string,
   };
 
   return (
@@ -31,6 +39,7 @@ const AssesseeParticipationPage: NextPage = () => {
             endTime={new Date("2022-11-22T21:15:00")}
             data={assessee}
             tools={attemptifyToolAttempt(progressData!)}
+            grade={getOverallAverage(gradeData)}
           >
             <ParticipationTimeline
               tools={attemptifyToolAttempt(progressData!)}
