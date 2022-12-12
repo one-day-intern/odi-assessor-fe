@@ -7,7 +7,7 @@ import { CreateResponseForm } from "./CreateResponseForm";
 import styles from "./CreateResponseTest.module.css";
 
 interface Props {
-  onSubmit: (message: string, subject: string, name: string) => void;
+  onSubmit: (message: string, subject: string, name: string, sender: string) => void;
   status: string;
 }
 
@@ -20,7 +20,7 @@ const CreateResponseTest = ({ onSubmit, status }: Props) => {
     const isValid = validate();
     if (!isValid) return;
 
-    onSubmit(data.message, data.subject, data.name);
+    onSubmit(data.message, data.subject, data.name, data.sender);
   };
 
   return (

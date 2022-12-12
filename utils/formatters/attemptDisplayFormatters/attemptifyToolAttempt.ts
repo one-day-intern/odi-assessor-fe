@@ -1,9 +1,10 @@
 const attemptifyToolAttempt = (response: AttemptResponse[]): ToolAttempt[] => {
+  console.log(response);
   return response?.map((attempt) => ({
     assessment_id: attempt["tool-data"].assessment_id,
     attempt_id: attempt["attempt-id"],
     name: attempt["tool-data"].name,
-    type: attempt["tool-data"].type,
+    type: attempt.type,
     description: attempt["tool-data"].description
   }));
 };

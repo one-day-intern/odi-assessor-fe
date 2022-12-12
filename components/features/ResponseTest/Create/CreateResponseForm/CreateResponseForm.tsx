@@ -7,9 +7,10 @@ import React, { ReactNode } from "react";
 import styles from "./CreateResponseForm.module.css";
 
 interface CreateResponseItem {
-  message: string;
+  sender: string;
   name: string;
   subject: string;
+  message: string;
 }
 
 type CreateResponseError = {
@@ -45,6 +46,13 @@ const CreateResponseForm = ({
           error={error.name}
         />
 
+        <InputField
+          label="Sender *"
+          value={data.sender}
+          onChange={(e) => setDataValue("sender", e.target.value)}
+          error={error.name}
+        />
+
         <div className={styles["form--divider"]}></div>
 
         <div>
@@ -72,7 +80,7 @@ const CreateResponseForm = ({
           </Button>
           <Button
             disabled={
-              data.message === "" ||
+              data.sender === "" ||
               data.subject === "" ||
               data.name === "" ||
               status === "loading"

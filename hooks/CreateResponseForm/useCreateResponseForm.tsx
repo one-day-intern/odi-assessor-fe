@@ -2,6 +2,7 @@ import { emptyValidator } from "@utils/validators/emptyValidator";
 import { useState } from "react";
 
 interface CreateResponseItem {
+  sender: string;
   message: string;
   name: string;
   subject: string;
@@ -13,12 +14,14 @@ type CreateResponseError = {
 
 const useCreateResponseForm = () => {
   const [data, setData] = useState<CreateResponseItem>({
+    sender: "",
     message: "",
     subject: "",
     name: "",
   });
 
   const [error, setError] = useState<CreateResponseError>({
+    sender: "",
     message: "",
     subject: "",
     name: "",
@@ -39,6 +42,9 @@ const useCreateResponseForm = () => {
   };
 
   const validate = () => {
+    const [isSenderValid, senderError] = emptyValidator(data.sender);
+    setErrorValue("message", senderError);
+
     const [isMessageValid, messageError] = emptyValidator(data.message);
     setErrorValue("message", messageError);
 
@@ -48,7 +54,7 @@ const useCreateResponseForm = () => {
     const [isNameValid, nameError] = emptyValidator(data.name);
     setErrorValue("name", nameError);
 
-    return isMessageValid && isSubjectValid && isNameValid;
+    return isSenderValid && isMessageValid && isSubjectValid && isNameValid;
   };
 
   return { error, data, validate, setErrorValue, setDataValue };
