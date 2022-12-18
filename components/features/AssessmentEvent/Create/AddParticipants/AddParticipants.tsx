@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import styles from "./AddParticipants.module.css";
 import { ParticipationCard } from "../ParticipationCard";
+import { AnimatePresence } from "framer-motion";
 
 interface CreateAssessmentDetailsProps {
   addEmptyParticipation: () => void;
@@ -28,7 +29,7 @@ const AddParticipants = ({
   updateParticipation,
   assessmentData,
   validateParticipationBeforeSubmit,
-  selectStep
+  selectStep,
 }: CreateAssessmentDetailsProps) => {
   const [isEditing, setEditing] = useState(false);
 
@@ -38,6 +39,7 @@ const AddParticipants = ({
       <div>
         <div className={styles["form__div"]}>
           <Button
+            disabled={isEditing}
             type="button"
             onClick={(e: Event) => {
               if (isEditing) return;
@@ -81,16 +83,18 @@ const AddParticipants = ({
         <div className={styles["separator"]}></div>
 
         <div className={styles["participation"]}>
-          {assessmentData.list_of_participants.map((participation) => (
-            <ParticipationCard
-              key={participation.id}
-              {...participation}
-              updateParticipation={updateParticipation}
-              removeParticipation={removeParticipation}
-              validateParticipation={validateParticipationBeforeSubmit}
-              onSave={() => setEditing(false)}
-            />
-          ))}
+          <AnimatePresence>
+            {assessmentData.list_of_participants.map((participation) => (
+              <ParticipationCard
+                key={participation.id}
+                {...participation}
+                updateParticipation={updateParticipation}
+                removeParticipation={removeParticipation}
+                validateParticipation={validateParticipationBeforeSubmit}
+                onSave={() => setEditing(false)}
+              />
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </div>

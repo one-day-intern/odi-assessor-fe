@@ -4,6 +4,9 @@ import usePostRequest from "@hooks/shared/usePostRequest";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import styles from "./OneTimeCode.module.css";
+import { toast } from "react-toastify";
+import EmailList from "./EmailList";
+import { emailValidator } from "@utils/validators/emailValidator";
 
 const ONE_TIME_CODE_REQUEST = "/company/one-time-code/generate/";
 
@@ -18,13 +21,13 @@ const OneTimeCode = () => {
 
   useEffect(() => {
     if (data == null) return;
-
-    console.log(data);
+    toast.success("Email has been sent to assessees");
+    router.push("/");
   }, [data, router]);
 
   useEffect(() => {
     if (error == null) return;
-    console.log(error);
+    toast.error(error.message);
   }, [error]);
 
   const postOneTimeData: React.FormEventHandler<HTMLFormElement> = async (
@@ -34,14 +37,25 @@ const OneTimeCode = () => {
     postData({ assessor_emails: emailList });
   };
 
-  const onClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const onClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    const [isEmailValid, emailError] = emailValidator(assesseeEmail);
+    if (!isEmailValid) {
+      toast.error(emailError);
+      return;
+    }
+
+    if (emailList.includes(assesseeEmail)) {
+      toast.error("This email has already been added to the list.");
+      return;
+    }
+
     setEmailList((prev) => [...prev, assesseeEmail]);
     setAssesseeEmail("");
   };
 
   return (
     <div className={styles["one-time-code"]} data-testid="otc">
-      <form onSubmit={postOneTimeData}>
+      <form onSubmit={postOneTimeData} className={styles["otc-form"]} data-testid="form">
         <InputField
           label="Assessee email to send"
           value={assesseeEmail}
@@ -50,10 +64,12 @@ const OneTimeCode = () => {
         <Button type="submit" variant="primary">
           <h2>Generate One Time Code</h2>
         </Button>
-        <Button type="button" variant="secondary" onClick={onClick}>
+        <Button disabled={assesseeEmail === ""} type="button" variant="secondary" onClick={onClick}>
           <h2>Add To Email List</h2>
         </Button>
       </form>
+      <div className={styles["divider"]}></div>
+      <EmailList emailList={emailList} setEmailList={setEmailList}/>
     </div>
   );
 };

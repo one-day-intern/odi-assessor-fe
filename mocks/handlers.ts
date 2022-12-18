@@ -237,8 +237,16 @@ export const handlers = [
       );
     }
   ),
-  rest.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/assessment/grade/submit-grade-and-note/`, (req, res, ctx) => {
-    console.log("Test")
-    return res(ctx.json({ message: "I'm done" }));
-  }),
+  rest.get(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/assessment/grade/submit-grade-and-note/`,
+    (req, res, ctx) => {
+      return res(ctx.json({ message: "I'm done" }));
+    }
+  ),
+  rest.post(
+    `${process.env.NODE_PUBLIC_BACKEND_URL}/company/one-time-code/generate/`,
+    (req, res, ctx) => {
+      return res(ctx.json({ message: "It's good" }));
+    }
+  ),
 ];
