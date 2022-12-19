@@ -1,11 +1,9 @@
 import { Button } from "@components/shared/elements/Button";
 import { AddIcon } from "@components/shared/svg/AddIcon";
-import { useDebounce } from "@hooks/shared/useDebounce";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "./AssessorDashboard.module.css";
 import { EventStatusFilter } from "./EventStatusFilter";
-import { FormSearch } from "../../../shared/forms/FormSearch";
 import { AnimatePresence, motion } from "framer-motion";
 import { AssessmentCard } from "./AssessmentCard";
 import useGetRequest from "@hooks/shared/useGetRequest";
@@ -21,7 +19,6 @@ interface AssessmentEventListRequest {
 }
 
 const AssessorDashboard = () => {
-  const [searchedWords, setSearchedWords] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("active");
   const [assessmentEvents, setAssessmentEvents] = useState<AssessmentEvent[]>(
     []

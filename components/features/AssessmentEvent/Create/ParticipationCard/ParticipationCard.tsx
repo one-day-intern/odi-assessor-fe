@@ -1,5 +1,6 @@
 import { Button } from "@components/shared/elements/Button";
 import { InputField } from "@components/shared/forms/InputField";
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import styles from "./ParticipationCard.module.css";
 
@@ -70,7 +71,16 @@ const ParticipationCard = ({
   };
 
   return (
-    <form data-testid="participation-card" onSubmit={handleSubmission} className={styles["participation-card"]}>
+    <motion.form
+      layout
+      data-testid="participation-card"
+      onSubmit={handleSubmission}
+      className={styles["participation-card"]}
+      style={{ originX: 0, originY: 0 }}
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      exit={{ scale: 0 }}
+    >
       {isStatic || (
         <button
           className={styles["participation__close"]}
@@ -126,7 +136,7 @@ const ParticipationCard = ({
           <p>Add Participation</p>
         </Button>
       )}
-    </form>
+    </motion.form>
   );
 };
 

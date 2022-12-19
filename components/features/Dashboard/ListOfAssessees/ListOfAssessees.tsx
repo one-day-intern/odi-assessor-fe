@@ -1,7 +1,5 @@
-import { useDebounce } from "@hooks/shared/useDebounce";
 import React, { useEffect, useState } from "react";
 import styles from "./ListOfAssesees.module.css";
-import { FormSearch } from "../../../shared/forms/FormSearch";
 import { AnimatePresence, motion } from "framer-motion";
 import { AssessmentParticipationCard } from "./AssessmentParticipationCard";
 import { useRouter } from "next/router";
@@ -15,14 +13,12 @@ const ListOfAssessees: React.FC<Props> = ({ assessees }) => {
 
   const router = useRouter();
 
-
   useEffect(() => {
-
     if (router.query.id != null) {
       setAsgEventId(router.query.id as string);
     }
-    
-    // assignment event ID  
+
+    // assignment event ID
   }, [router.query.id]);
 
   return (
