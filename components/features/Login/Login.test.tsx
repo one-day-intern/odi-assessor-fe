@@ -47,7 +47,5 @@ describe("Login Details Test", () => {
 
     const errorMessage = screen.queryByText(/Please fill in this field/g);
     expect(errorMessage).not.toBeInTheDocument();
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
   });
 });
