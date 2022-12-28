@@ -1,4 +1,5 @@
 import CreateTestFlow from "@components/features/TestFlow/Create";
+import { Loader } from "@components/shared/elements/Loader";
 import { PageTemplate } from "@components/shared/layouts/PageTemplate";
 import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 import { useAuthContext } from "@context/Authentication";
@@ -56,7 +57,7 @@ const CreateTestFlowPage: NextPage = () => {
         {assessmentToolList != null ? (
           <CreateTestFlow options={assessmentToolList} />
         ) : (
-          <></>
+          <div className="loader-parent"><Loader/></div>
         )}
       </PageTemplate>
     </ProtectedRoute>

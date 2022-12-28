@@ -29,7 +29,6 @@ const AssessmentGrader = ({
   loadingStatus,
 }: Props) => {
   const router = useRouter();
-  console.log(submission);
   const displayedComponent = useMemo(() => {
     switch (type) {
       case "assignment":

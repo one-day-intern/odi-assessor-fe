@@ -23,6 +23,13 @@ const AssessorDashboard = () => {
   const [assessmentEvents, setAssessmentEvents] = useState<AssessmentEvent[]>(
     []
   );
+  const filteredEvents = assessmentEvents
+    .filter((event) =>
+      statusFilter === "active"
+        ? event.date.getDate() >= new Date().getDate()
+        : event.date.getDate() < new Date().getDate()
+    )
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
   const setStatus = (status: StatusFilter) => setStatusFilter(status);
   const { fetchData } = useGetRequest<AssessmentEventListRequest[]>(
     `/assessor/assessment-event-list/`,
@@ -60,7 +67,6 @@ const AssessorDashboard = () => {
     <main id="main-content" className={styles["content"]} data-testid="main">
       <div className={styles["content__group-horizontal"]}>
         <h1 className={styles["text--heading"]}>My Assessments</h1>
-        
       </div>
       <div className={styles["content__group-horizontal"]}>
         <EventStatusFilter status={statusFilter} setStatus={setStatus} />
@@ -79,16 +85,22 @@ const AssessorDashboard = () => {
       </div>
       <motion.div layout className={styles["content__list"]}>
         <AnimatePresence>
-          {assessmentEvents
-            .filter((event) =>
-              statusFilter === "active"
-                ? event.date >= new Date()
-                : event.date < new Date()
-            )
-            .sort((a, b) => a.date.getTime() - b.date.getTime())
-            .map((event) => (
+          {filteredEvents.length === 0 ? (
+            <motion.p
+              layout
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              key="no-events"
+              className={styles["no-events"]}
+            >
+              No Assessment Events.
+            </motion.p>
+          ) : (
+            filteredEvents.map((event) => (
               <AssessmentCard key={event.event_id} {...event} />
-            ))}
+            ))
+          )}
         </AnimatePresence>
       </motion.div>
     </main>

@@ -3,6 +3,7 @@ import { InputField } from "@components/shared/forms/InputField";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
 import styles from "./ParticipationCard.module.css";
+import { SelectField } from "@components/shared/forms/SelectField";
 
 interface ParticipationCardProps extends ParticipantsManyToMany {
   updateParticipation?: (participation: ParticipantsManyToMany) => void;
@@ -19,6 +20,7 @@ interface ParticipationCardProps extends ParticipantsManyToMany {
   ];
   onSave?: () => void;
   isStatic?: boolean;
+  assessorList?: AssessorOptions[];
 }
 
 const ParticipationCard = ({
@@ -31,6 +33,7 @@ const ParticipationCard = ({
   validateParticipation,
   isSettled,
   isStatic,
+  assessorList
 }: ParticipationCardProps) => {
   const [participation, setParticipation] = useState<ParticipantsManyToMany>({
     assessee_email,
@@ -38,6 +41,7 @@ const ParticipationCard = ({
     id,
     isSettled: isSettled ?? false,
   });
+  
   const [errors, setErrors] = useState({
     assesseeEmailError: "",
     assessorEmailError: "",
@@ -122,14 +126,15 @@ const ParticipationCard = ({
           <p className={styles["participation__text"]}>{assessor_email}</p>
         </>
       ) : (
-        <InputField
-          value={assessor_email}
-          onChange={(e) =>
-            setParticipationValue("assessor_email", e.target.value)
-          }
-          label="Assesor Email"
-          error={errors.assessorEmailError}
-        />
+        <SelectField
+                choices={assessorList ?? []}
+                onChange={(option: AssessorOptions | null) =>
+                  setParticipationValue("assessor_email", option?.label!)
+                }
+                label="Assesor Email"
+                error={errors.assessorEmailError}
+              
+              />
       )}
       {isSettled || isStatic || (
         <Button type="submit" variant="primary">

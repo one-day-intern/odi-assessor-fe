@@ -12,3 +12,14 @@ interface AssessmentEventParticipation {
   assesseeEmail: string;
   assessmentEventId: string;
 }
+
+interface Assessor {
+  email: string;
+  first_name: string;
+  last_name: string;
+}
+
+interface AssessorOptions {
+  readonly value: Assessor;
+  readonly label: string;
+}

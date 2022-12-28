@@ -1,5 +1,6 @@
 import AssesseeParticipation from "@components/features/Dashboard/AssesseeParticipation/AssesseeParticipation";
 import { ParticipationTimeline } from "@components/features/Dashboard/AssesseeParticipation/ParticipationTimeline";
+import { Loader } from "@components/shared/elements/Loader";
 import { PageTemplate } from "@components/shared/layouts/PageTemplate";
 import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 import useGetRequest from "@hooks/shared/useGetRequest";
@@ -48,7 +49,7 @@ const AssesseeParticipationPage: NextPage = () => {
       {(progressData == null && progressError == null) ||
       (eventData == null && eventError == null) ||
       (gradeData == null && gradeError == null) ? (
-        <div>Loading</div>
+        <div className="loader-parent"><Loader/></div>
       ) : (
         <PageTemplate>
           <AssesseeParticipation

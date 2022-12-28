@@ -2,6 +2,9 @@ interface Submission {
   grade: number;
   note?: string;
   submitted_time: string;
+  response_test_sender: string;
+  response_test_subject: string;
+  response_test_prompt: string;
 }
 
 interface GradeReportModel {
