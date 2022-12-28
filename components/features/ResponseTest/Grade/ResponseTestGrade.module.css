@@ -3,6 +3,18 @@
   align-items: center;
 }
 
+.grader--vertical {
+  flex-direction: column;
+}
+
+.grade-division {
+  width: 100%;
+  margin: 0.5rem 0;
+  height: 2px;
+  background-color: var(--secondary);
+
+}
+
 .grader__section {
   display: flex;
   flex-direction: column;

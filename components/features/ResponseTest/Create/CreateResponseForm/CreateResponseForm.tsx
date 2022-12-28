@@ -5,6 +5,7 @@ import { CreateIcon } from "@components/shared/svg/CreateIcon";
 import TrashIcon from "@components/shared/svg/TrashIcon";
 import React, { ReactNode } from "react";
 import styles from "./CreateResponseForm.module.css";
+import { useRouter } from "next/router";
 
 interface CreateResponseItem {
   sender: string;
@@ -34,6 +35,7 @@ const CreateResponseForm = ({
   children,
   submitHandler,
 }: Props) => {
+  const router = useRouter();
   return (
     <div className={styles["response-form"]} data-testid="response-form">
       <h2 className={styles["response-form__heading"]}>New Response Test</h2>
@@ -72,6 +74,7 @@ const CreateResponseForm = ({
         <div className={styles["form--div"]}>
           <Button
             type="button"
+            onClick={() => router.back()}
             variant="danger"
             style={{ width: "fit-content", padding: "0.5rem 2rem" }}
           >

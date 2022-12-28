@@ -5,6 +5,12 @@
   gap: 1rem;
 }
 
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 .report__card {
   display: flex;
   justify-content: space-between;

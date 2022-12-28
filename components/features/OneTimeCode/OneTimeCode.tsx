@@ -7,13 +7,14 @@ import styles from "./OneTimeCode.module.css";
 import { toast } from "react-toastify";
 import EmailList from "./EmailList";
 import { emailValidator } from "@utils/validators/emailValidator";
+import { Loader } from "@components/shared/elements/Loader";
 
 const ONE_TIME_CODE_REQUEST = "/company/one-time-code/generate/";
 
 const OneTimeCode = () => {
   const [assesseeEmail, setAssesseeEmail] = useState("");
   const [emailList, setEmailList] = useState<string[]>([]);
-  const { data, error, postData } = usePostRequest(ONE_TIME_CODE_REQUEST, {
+  const { data, error, postData, status } = usePostRequest(ONE_TIME_CODE_REQUEST, {
     requiresToken: true,
   });
 
@@ -61,11 +62,11 @@ const OneTimeCode = () => {
           value={assesseeEmail}
           onChange={(e) => setAssesseeEmail(e.target.value)}
         />
-        <Button type="submit" variant="primary">
-          <h2>Generate One Time Code</h2>
-        </Button>
         <Button disabled={assesseeEmail === ""} type="button" variant="secondary" onClick={onClick}>
           <h2>Add To Email List</h2>
+        </Button>
+        <Button type="submit" variant="primary" disabled={status === "loading"}>
+          {status === "loading" ? <Loader/> : <h2>Generate One Time Code</h2>}
         </Button>
       </form>
       <div className={styles["divider"]}></div>

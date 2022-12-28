@@ -1,4 +1,5 @@
 import { AssessmentGrader } from "@components/factories/AssessmentGrader";
+import { Loader } from "@components/shared/elements/Loader";
 import { PageTemplate } from "@components/shared/layouts/PageTemplate";
 import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 import useGetRequest from "@hooks/shared/useGetRequest";
@@ -9,7 +10,7 @@ import {
 } from "@utils/formatters/attemptDisplayFormatters";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 type AssessmentType = "assignment" | "interactivequiz" | "responsetest";
@@ -35,6 +36,13 @@ const AssessmentToolPage: NextPage = () => {
     interactivequiz: "",
     responsetest: `/assessment/assessment/review/response-test/?tool-attempt-id=${router.query.attempt_id}`,
   };
+
+  const { data: gradeData, error: gradeError } = useGetRequest<
+    GradeReportModel[]
+  >(
+    `/assessment/assessment-event/report/?assessment-event-id=${router.query.id}&assessee-email=${router.query.email}`,
+    { requiresToken: true }
+  );
 
   const {
     data: progressData,
@@ -85,6 +93,8 @@ const AssessmentToolPage: NextPage = () => {
     router.push(`/assessment/${router.query.id}/${router.query.email}`);
   }
 
+  const [grade, setGrade] = useState(0);
+
   const isLoading =
     progressStatus === "loading" || submissionStatus === "loading";
   
@@ -97,10 +107,17 @@ const AssessmentToolPage: NextPage = () => {
   )?.["tool-data"];
 
 
+  useEffect(() => {
+    const overallGrade = gradeData?.reduce((prev, current) => prev + current.grade, 0) ?? 0;
+    const average = gradeData?.length === 0 ? 0 : overallGrade/(gradeData?.length ?? 0);
+    setGrade(average);
+  }, [gradeData])
+
+
   return (
     <>
       {isLoading || isInitial ? (
-        <div>Loading</div>
+        <div className="loader-parent"><Loader/></div>
       ) : isError ? (
         <div>{progressError?.message} {submissionError?.message}</div>
         ) : (
@@ -113,8 +130,8 @@ const AssessmentToolPage: NextPage = () => {
               submission={submissionData!}
               assessmentData={assessmentData!}
               sidebarMetadata={{
-                name: "Someone Else",
-                grade: 100,
+                name: router.query.email as string,
+                grade,
                 attempts: toolAttempts,
                 progress: calculateSubmittedToolPercentage(toolAttempts)
 

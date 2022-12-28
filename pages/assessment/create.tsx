@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const GET_TEST_FLOWS_URL = "/assessment/test-flow/all/";
+const GET_ASSESSORS = "/company/assessors/";
 
 const CreateAssessmentEventPage: NextPage = () => {
   const { accessToken } = useAuthContext();
@@ -18,7 +19,17 @@ const CreateAssessmentEventPage: NextPage = () => {
       disableFetchOnMount: true,
     }
   );
+  const { fetchData: fetchAssessors } = useGetRequest<Assessor[]>(
+    GET_ASSESSORS,
+    {
+      requiresToken: true,
+      disableFetchOnMount: true,
+    }
+  );
   const [testFlows, setTestFlows] = useState<TestFlowOption[] | null>(null);
+  const [assessorList, setAssessorList] = useState<AssessorOptions[] | null>(
+    null
+  );
 
   useEffect(() => {
     if (accessToken === "") return;
@@ -45,13 +56,34 @@ const CreateAssessmentEventPage: NextPage = () => {
       setTestFlows(choices);
     };
 
+    const displayAssessors = async () => {
+      const responseAssessorList = await fetchAssessors();
+      if (responseAssessorList instanceof Error) {
+        toast.error(responseAssessorList.message, {
+          position: toast.POSITION.TOP_CENTER,
+          theme: "colored",
+          containerId: "root-toast",
+          autoClose: 2000,
+        });
+        return;
+      }
+
+      const assessorList = responseAssessorList.map((assessor) => ({
+        value: assessor,
+        label: assessor.email,
+      }));
+
+      setAssessorList(assessorList);
+    };
+
     displayTestFlowChoices();
+    displayAssessors();
     //eslint-disable-next-line
   }, [accessToken]);
   return (
     <ProtectedRoute>
       <PageTemplate>
-          <CreateAssessmentEvent testFlows={testFlows} />
+        <CreateAssessmentEvent testFlows={testFlows} assessors={assessorList} />
       </PageTemplate>
     </ProtectedRoute>
   );

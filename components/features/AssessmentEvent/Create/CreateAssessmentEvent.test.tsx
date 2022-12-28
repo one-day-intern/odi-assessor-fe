@@ -10,7 +10,7 @@ describe("Login Details Test", () => {
   beforeEach(() => {
     render(
       <RouterContext.Provider value={createMockRouter({ push: fakePush })}>
-        <CreateAssessmentEvent testFlows={[]}/>
+        <CreateAssessmentEvent assessors={[]} testFlows={[]}/>
       </RouterContext.Provider>
     );
   });

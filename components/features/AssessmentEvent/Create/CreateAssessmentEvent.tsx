@@ -1,6 +1,6 @@
 import { Backdrop } from "@components/shared/layouts/Backdrop";
 import { useCreateAssessmentEventDetails } from "@hooks/CreateAssessmentEvent/useCreateAssessmentEventStore/useCreateAssessmentEventDetails";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AddParticipants from "./AddParticipants";
 import { MultistepIndex } from "../../../shared/layouts/MultistepAssignment";
 import { NameAndDateForm } from "./NameAndDateForm";
@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 interface CreateAssessmentEventProps {
   testFlows: TestFlowOption[] | null;
+  assessors: AssessorOptions[] | null;
 }
 
 const wrapperVariants = {
@@ -36,10 +37,13 @@ const wrapperVariants = {
   },
 };
 
-const CreateAssessmentEvent = ({ testFlows }: CreateAssessmentEventProps) => {
+
+
+const CreateAssessmentEvent = ({ testFlows , assessors}: CreateAssessmentEventProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const setCurrentStepId = (id: number) => setCurrentStep(id);
+
 
   const {
     addEmptyParticipation,
@@ -72,6 +76,7 @@ const CreateAssessmentEvent = ({ testFlows }: CreateAssessmentEventProps) => {
         id: 1,
         component: (
           <AddParticipants
+          assessorList={assessors ?? []}
             selectStep={setCurrentStep}
             addEmptyParticipation={addEmptyParticipation}
             removeParticipation={removeParticipation}
@@ -92,6 +97,7 @@ const CreateAssessmentEvent = ({ testFlows }: CreateAssessmentEventProps) => {
     ],
     [
       assessmentData,
+      assessors,
       testFlows,
       assessmentErrors,
       setAssessmentData,

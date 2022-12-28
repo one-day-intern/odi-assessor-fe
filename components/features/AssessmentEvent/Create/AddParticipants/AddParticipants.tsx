@@ -21,6 +21,7 @@ interface CreateAssessmentDetailsProps {
     }
   ];
   selectStep: (id: number) => void;
+  assessorList: AssessorOptions[];
 }
 
 const AddParticipants = ({
@@ -30,6 +31,7 @@ const AddParticipants = ({
   assessmentData,
   validateParticipationBeforeSubmit,
   selectStep,
+  assessorList
 }: CreateAssessmentDetailsProps) => {
   const [isEditing, setEditing] = useState(false);
 
@@ -86,6 +88,7 @@ const AddParticipants = ({
           <AnimatePresence>
             {assessmentData.list_of_participants.map((participation) => (
               <ParticipationCard
+              assessorList={assessorList}
                 key={participation.id}
                 {...participation}
                 updateParticipation={updateParticipation}

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/router';
+import { Loader } from '@components/shared/elements/Loader';
 
 const ASSESSOR_REGISTER_URL = '/accounts/signup/assessor';
 
@@ -28,7 +29,7 @@ function RedirectAssessor() {
       }, [router]); 
 
     return (
-        <div>Redirect</div>
+        <div className="loader-parent"><Loader/></div>
     )
 }
 

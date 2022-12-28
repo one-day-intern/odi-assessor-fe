@@ -1,4 +1,5 @@
 import { GradeReport } from "@components/features/GradeReport";
+import { Loader } from "@components/shared/elements/Loader";
 import { PageTemplate } from "@components/shared/layouts/PageTemplate";
 import ProtectedRoute from "@components/shared/layouts/ProtectedRoute";
 import useGetRequest from "@hooks/shared/useGetRequest";
@@ -20,7 +21,7 @@ const GradePage = () => {
   return (
     <>
       {status === "loading" ? (
-        <div></div>
+        <div className="loader-parent"><Loader/></div>
       ) : (
         <ProtectedRoute>
           <PageTemplate>
