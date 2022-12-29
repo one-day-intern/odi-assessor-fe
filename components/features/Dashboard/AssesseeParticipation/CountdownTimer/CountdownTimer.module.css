@@ -1,0 +1,16 @@
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer--label {
+  color: var(--primary);
+  margin: 0;
+}
+
+.timer--countdown {
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}

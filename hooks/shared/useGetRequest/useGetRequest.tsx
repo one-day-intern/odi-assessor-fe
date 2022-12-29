@@ -5,6 +5,7 @@ import { useCallback, useEffect, useReducer, useRef } from "react";
 interface State<T> {
   data?: T;
   error?: Error;
+  status: "loading" | "fetched" | "error" | "initial";
 }
 
 interface UseGetRequest<T> extends State<T> {
@@ -43,17 +44,22 @@ function useGetRequest<T = unknown>(
   const initialState: State<T> = {
     error: undefined,
     data: undefined,
+    status: "initial",
   };
-
   // Keep state logic separated
   const fetchReducer = (state: State<T>, action: Action<T>): State<T> => {
     switch (action.type) {
       case "loading":
-        return { ...initialState };
+        return { ...initialState, status: "loading" };
       case "fetched":
-        return { ...initialState, data: action.payload, error: undefined };
+        return {
+          ...initialState,
+          status: "fetched",
+          data: action.payload,
+          error: undefined,
+        };
       case "error":
-        return { ...initialState, error: action.payload };
+        return { ...initialState, status: "error", error: action.payload };
       default:
         return state;
     }
@@ -68,7 +74,6 @@ function useGetRequest<T = unknown>(
   } = useAuthContext();
 
   const fetchData = useCallback(async () => {
-
     if (accessToken === "") return;
 
     dispatch({ type: "loading" });

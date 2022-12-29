@@ -6,6 +6,7 @@ module.exports = {
     '**/*.{js,jsx,ts,tsx}',
     "!**/index.ts",
     "!**/cypress/**",
+    "!**/CreateResponseTest.tsx",
     '!**/*.d.ts',
     '!**/node_modules/**',
     "!**/pages/**",
@@ -18,7 +19,9 @@ module.exports = {
     "!**/mocks/**",
     "!**/VideoConference.tsx",
     "!**/components/**/TestFlow/**",
-    "!**/LeaveIcon.tsx"
+    "!**/LeaveIcon.tsx",
+    "!**/ParticipationTimeline/**",
+    "!**/TextEditor/**"
   ],
   moduleNameMapper: {
     // Handle CSS imports (with CSS modules)

@@ -26,7 +26,7 @@ describe("Date formatter utility function test suite", () => {
         const beforeDate = new Date("2022-02-15");
         const formattedDate = dateFormatter(beforeDate, { nowDate });
         
-        expect(formattedDate).toBe("Feb 15");
+        expect(formattedDate).toBe("February 15");
     })
     test("testing different year date", () => {
         const nowDate = new Date("2022-04-15");
@@ -40,7 +40,7 @@ describe("Date formatter utility function test suite", () => {
         const beforeDate = new Date("2022-04-15T23:00:00");
         const formattedDate = dateFormatter(beforeDate, { nowDate });
 
-        expect(formattedDate).toBe("Apr 15");
+        expect(formattedDate).toBe("April 15");
     })
     test("testing for returning the date in dd (month) yyyy regardless of difference with current date", () => {
         const currentDate = new Date("2022-05-11");

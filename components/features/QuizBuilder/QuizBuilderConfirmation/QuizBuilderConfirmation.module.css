@@ -1,0 +1,132 @@
+.quiz-preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0 4rem;
+  padding-top: 10rem;
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+
+.question-list {
+  min-height: 100%;
+  width: min(100%, 900px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.back-button {
+  background: var(--secondary);
+  color: white;
+  border: 0;
+  padding: 0.75rem 1rem;
+  font-weight: bold;
+  border-radius: 10px;
+  margin: 0;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.back-button::before {
+  content: "←";
+  margin-right: 0.5rem;
+}
+
+.question-preview {
+  width: 100%;
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.question-preview::after {
+  content: "";
+  position: absolute;
+  width: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  height: 2px;
+  background: rgb(240, 240, 240);
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+}
+
+.question-points {
+  margin-left: auto;
+}
+
+.question-header > h1 {
+  text-align: left;
+  width: 100%;
+  font-size: 2.25rem;
+  margin: 1rem 0;
+}
+
+.question-header > p {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.question-prompt {
+  font-size: 1.25rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.question-errors {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: rgb(255, 185, 185);
+  color: red;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.question-errors_icon {
+  width: 5%;
+  display: grid;
+  place-items: center;
+}
+
+.question-errors_icon > svg {
+  width: 30px;
+  height: 30px;
+}
+
+.question-errors_errors {
+  width: 95%;
+  font-weight: bold;
+  text-align: justify;
+  margin-right: 1rem;
+}
+
+.action-bar {
+  z-index: 2;
+  position: fixed;
+  top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

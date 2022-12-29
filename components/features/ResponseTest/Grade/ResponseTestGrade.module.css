@@ -1,0 +1,74 @@
+.responsetest {
+  display: flex;
+  align-items: center;
+}
+
+.grader--vertical {
+  flex-direction: column;
+}
+
+.grade-division {
+  width: 100%;
+  margin: 0.5rem 0;
+  height: 2px;
+  background-color: var(--secondary);
+
+}
+
+.grader__section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  align-self: flex-start;
+  min-width: 300px;
+  width: 100%;
+}
+
+.responsetest__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.responsetest__header--text {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.responsetest__header--clock {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  color: #454545;
+}
+
+.responsetest__header--bold {
+  font-weight: 700;
+}
+
+.grader__divisor--horizontal {
+  margin: 0 2rem;
+  width: 2px;
+  height: 75%;
+  border-radius: 4rem;
+  background-color: var(--primary);
+  z-index: 5;
+}
+
+.message-divisor {
+  width: 75%;
+  background-color: #898989;
+  height: 1px;
+}
+
+.message--label {
+  margin: 0;
+  font-size: 0.65rem;
+  color: var(--secondary);
+}
+
+.message--subject {
+  margin: 0;
+  font-size: 1.1rem;
+}

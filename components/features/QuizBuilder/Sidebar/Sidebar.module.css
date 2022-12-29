@@ -1,0 +1,45 @@
+.builder-sidebar {
+  min-height: inherit;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: 1rem;
+  padding-right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: var(--sidebar-width);
+  gap: 1rem;
+  background-color: rgba(217, 175, 217, 0.4);
+  background-image: linear-gradient(0deg, rgba(217, 175, 217, 0.4) 0%, rgba(151, 217, 225, 0.4) 100%);
+}
+
+.question-list {
+  gap: 1rem;
+  padding: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  scrollbar-gutter: stable;
+  height: 100%;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.question-add {
+  position: relative;
+  margin-left: 1rem;
+  margin-right: 2rem;
+  background: var(--primary);
+  color: white;
+  border: 0;
+  padding: 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.disabled {
+  background: grey !important;
+  cursor: default;
+}

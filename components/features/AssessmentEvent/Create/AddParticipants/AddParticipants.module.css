@@ -1,7 +1,7 @@
 .name-form {
   width: 100%;
+  height: 100%;
 
-  background: white;
 
   display: flex;
   flex-direction: column;
@@ -22,6 +22,7 @@
 }
 
 .participation {
+  overflow-x: hidden;
   overflow-y: scroll;
   height: 50vh;
   padding: 2rem;

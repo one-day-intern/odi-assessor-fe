@@ -7,7 +7,10 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect, useMemo } from "react";
 
 import styles from "./Navbar.module.css";
-import { NotificationGroup } from "./NotificationGroup";
+
+interface Company extends AuthUser {
+  company_name: string;
+}
 
 interface Dropdowns {
   id: number;
@@ -61,12 +64,35 @@ const Navbar = () => {
         id: 1,
         reactElement: () => (
           <Link href="/assignment/create">
-            <p className={styles["dropdown__text"]}>Assignment</p>
+            <div className={`${styles["button--logout"]}`}>
+              <p className={styles["dropdown__text"]}>Assignment</p>
+            </div>
           </Link>
-        )
+        ),
+      },
+      {
+        id: 2,
+        reactElement: () => (
+          <Link href="/responsetest/create">
+            <div className={`${styles["button--logout"]}`}>
+              <p className={styles["dropdown__text"]}>Response Test</p>
+            </div>
+          </Link>
+        ),
+      },
+      {
+        id: 3,
+        reactElement: () => (
+          <Link href="/quiz-builder">
+            <div className={`${styles["button--logout"]}`}>
+              <p className={styles["dropdown__text"]}>Interactive Quiz</p>
+            </div>
+          </Link>
+        ),
       }
-    ], []
-  )
+    ],
+    []
+  );
 
   const setGlobalDropdownState =
     (id: number, state: boolean): React.MouseEventHandler<HTMLButtonElement> =>
@@ -139,25 +165,26 @@ const Navbar = () => {
         </li>
         <li>
           <Link href="/testflow/create">
-            <a className={`${styles["navbar__link"]} ${
-                routerPath === "/testflow/create" && styles["navbar__link--selected"]
-              }`}>Flow Builder</a>
+            <a
+              className={`${styles["navbar__link"]} ${
+                routerPath === "/testflow/create" &&
+                styles["navbar__link--selected"]
+              }`}
+            >
+              Flow Builder
+            </a>
           </Link>
         </li>
-        <li>
-          <Link href="/">
-            <a className={styles["navbar__link"]}>Candidates</a>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <a className={styles["navbar__link"]}>About Us</a>
-          </Link>
-        </li>
+        {!user?.hasOwnProperty("employee_id") && (
+          <li>
+            <Link href="/accounts/otc">
+              <a className={styles["navbar__link"]}>Add Assessors</a>
+            </Link>
+          </li>
+        )}
       </ul>
 
       <div className={styles["user-group"]}>
-        <NotificationGroup count={11} />
         <Dropdown
           style={{
             color: "black",
@@ -167,9 +194,9 @@ const Navbar = () => {
           setOpened={setGlobalDropdownState(2, !dropdownState[1].isOpen)}
           dropdownElements={profileDropdown}
         >
-          <p data-testid="dropdown-2" className={styles["user-info"]}>{`${
+          <p data-testid="dropdown-2" className={styles["user-info"]}>{ user?.hasOwnProperty("employee_id") ?  `${
             user?.first_name ?? ""
-          } ${user?.last_name ?? ""}`}</p>
+          } ${user?.last_name ?? ""}` : (user as Company)?.company_name}</p>
         </Dropdown>
       </div>
     </nav>

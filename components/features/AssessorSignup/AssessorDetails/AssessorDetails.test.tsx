@@ -7,13 +7,15 @@ import { AssessorSignupStepProvider } from "../../../../context/Signup/AssessorS
 import { RouterContext } from "next/dist/shared/lib/router-context";
 import { createMockRouter } from "../../../../mocks/createMockRouter";
 
+const google = jest.fn();
+
 describe("Assessor Details Test", () => {
   beforeEach(() => {
     render(
       <RouterContext.Provider value={createMockRouter({})}>
-        <AssessorSignupStepProvider>
+        <AssessorSignupStepProvider googleLoginCallback={google}>
           <AssessorSignupStoreProvider>
-            <AssessorDetails />
+            <AssessorDetails googleLogin={google}/>
           </AssessorSignupStoreProvider>
         </AssessorSignupStepProvider>
       </RouterContext.Provider>

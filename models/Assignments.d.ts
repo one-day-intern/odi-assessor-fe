@@ -2,6 +2,7 @@ interface AssessmentTool {
   assessment_id: string;
   name: string;
   type: string;
+  description: string;
 }
 
 interface AssignmentInstance {
@@ -18,10 +19,18 @@ interface AssignmentNode extends AssignmentInstance {
   }
 }
 
-interface Assignment {
-  assessment_id: string;
-  name: string;
-  description: string;
+interface ToolAttempt extends AssessmentTool {
+  attempt_id: string | null;
+}
+
+interface ToolNode extends ToolAttempt {
+  position: {
+    x: number,
+    y: number
+  }
+}
+
+interface Assignment extends AssessmentTool {
   expected_file_format: string;
   duration_in_minutes: number;
   owning_company_id: string;

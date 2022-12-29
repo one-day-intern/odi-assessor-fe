@@ -1,11 +1,9 @@
 import { Button } from "@components/shared/elements/Button";
 import { AddIcon } from "@components/shared/svg/AddIcon";
-import { useDebounce } from "@hooks/shared/useDebounce";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "./AssessorDashboard.module.css";
 import { EventStatusFilter } from "./EventStatusFilter";
-import { FormSearch } from "../../../shared/forms/FormSearch";
 import { AnimatePresence, motion } from "framer-motion";
 import { AssessmentCard } from "./AssessmentCard";
 import useGetRequest from "@hooks/shared/useGetRequest";
@@ -21,11 +19,17 @@ interface AssessmentEventListRequest {
 }
 
 const AssessorDashboard = () => {
-  const [searchedWords, setSearchedWords] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("active");
   const [assessmentEvents, setAssessmentEvents] = useState<AssessmentEvent[]>(
     []
   );
+  const filteredEvents = assessmentEvents
+    .filter((event) =>
+      statusFilter === "active"
+        ? event.date.getDate() >= new Date().getDate()
+        : event.date.getDate() < new Date().getDate()
+    )
+    .sort((a, b) => a.date.getTime() - b.date.getTime());
   const setStatus = (status: StatusFilter) => setStatusFilter(status);
   const { fetchData } = useGetRequest<AssessmentEventListRequest[]>(
     `/assessor/assessment-event-list/`,
@@ -59,18 +63,10 @@ const AssessorDashboard = () => {
     // eslint-disable-next-line
   }, [user]);
 
-  const debouncedWord = useDebounce(searchedWords, 500);
-
-  useEffect(() => {}, [debouncedWord]);
-
   return (
     <main id="main-content" className={styles["content"]} data-testid="main">
       <div className={styles["content__group-horizontal"]}>
         <h1 className={styles["text--heading"]}>My Assessments</h1>
-        <FormSearch
-          value={searchedWords}
-          onInputChange={(e) => setSearchedWords(e.target.value)}
-        />
       </div>
       <div className={styles["content__group-horizontal"]}>
         <EventStatusFilter status={statusFilter} setStatus={setStatus} />
@@ -89,16 +85,22 @@ const AssessorDashboard = () => {
       </div>
       <motion.div layout className={styles["content__list"]}>
         <AnimatePresence>
-          {assessmentEvents
-            .filter((event) =>
-              statusFilter === "active"
-                ? event.date >= new Date()
-                : event.date < new Date()
-            )
-            .sort((a, b) => a.date.getTime() - b.date.getTime())
-            .map((event) => (
+          {filteredEvents.length === 0 ? (
+            <motion.p
+              layout
+              animate={{ opacity: 1 }}
+              initial={{ opacity: 0 }}
+              exit={{ opacity: 0 }}
+              key="no-events"
+              className={styles["no-events"]}
+            >
+              No Assessment Events.
+            </motion.p>
+          ) : (
+            filteredEvents.map((event) => (
               <AssessmentCard key={event.event_id} {...event} />
-            ))}
+            ))
+          )}
         </AnimatePresence>
       </motion.div>
     </main>

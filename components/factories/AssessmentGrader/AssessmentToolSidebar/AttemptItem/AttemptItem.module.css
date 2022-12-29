@@ -1,0 +1,67 @@
+.attempt-card {
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0px 6px 15px -3px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: initial;
+
+  padding: 1rem;
+  width: 100%;
+
+  display: grid;
+  justify-content: space-between;
+  grid-template-areas:
+    "title icon"
+    "complete icon";
+}
+
+.attempt-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  grid-area: title;
+}
+
+.attempt-icon {
+  grid-area: icon;
+}
+
+.attempt-submission {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.attempt-submission p {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.attempt-submission--nosubmit {
+  color: #d75c5c;
+}
+
+.attempt-submission--submit {
+  color: white;
+}
+
+.attempt-link {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+
+  font-family: "Inter", sans-serif;
+
+  background: #2a6b3f;
+  color: white;
+  border: none;
+
+  width: fit-content;
+  padding: 0.15rem 0.5rem;
+
+  border-radius: 2rem;
+  cursor: pointer;
+}

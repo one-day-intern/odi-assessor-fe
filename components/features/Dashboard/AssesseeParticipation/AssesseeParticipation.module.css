@@ -1,0 +1,96 @@
+.content {
+  display: flex;
+  flex-direction: column;
+
+  padding: 2rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button--grade {
+  background-color: var(--secondary);
+  padding: 0.25rem 1rem;
+  border-radius: 0.5rem;
+
+  color: white;
+  cursor: pointer;
+}
+
+.divider {
+  background-color: var(--primary);
+  height: 2px;
+  width: 100%;
+  border-radius: 10rem;
+
+  margin: 3rem 0;
+}
+
+.content__title {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.content__subtitle {
+  margin: 1rem 0;
+  font-size: 2rem;
+}
+
+.card__text {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.card__text--body {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.card__text--label {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.card__text--title {
+  font-size: 1.8rem;
+}
+
+.card__text--center {
+  text-align: center;
+}
+
+.card__text--pink {
+  color: #EAA799;
+}
+
+.card__text--secondary {
+  color: var(--secondary);
+  padding: 0.25rem
+}
+
+.content__group-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 200px;
+  gap: 1rem;
+}
+
+.card__vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card__horizontal {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.content__wrapper {
+  padding: 2rem;
+}

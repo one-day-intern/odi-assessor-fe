@@ -15,3 +15,8 @@
 
   margin: 2.5rem 0;
 }
+
+.google-login {
+  width: clamp(500px, 100%, 550px);
+  margin: 1rem 0;
+}

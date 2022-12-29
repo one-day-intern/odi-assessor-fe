@@ -1,0 +1,58 @@
+.card {
+  background-color: #edf2fd;
+  padding: 1rem;
+
+  display: flex;
+  justify-content: space-between;
+
+  border-radius: 0.7rem;
+  box-shadow: 0 8px 32px 0 rgba(143, 143, 143, 0.37);
+}
+
+.card--row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.card--column {
+  display: flex;
+  flex-direction: column;
+}
+
+.card__name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.card__is-attempted {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.card__is-attempted p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.card__is-attempted--yes {
+  color: #2a6b3f;
+}
+
+.card__is-attempted--no {
+  color: #d75c5c;
+}
+
+.grade--label {
+  font-size: 0.7rem;
+  color: var(--secondary);
+  margin: 0;
+}
+
+.grade {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}

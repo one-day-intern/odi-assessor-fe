@@ -3,13 +3,15 @@ on:
     branches:
       - master
 jobs:
-  jest-run: 
+  jest-run:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install Dependencies
         run: npm install
       - name: Run Jest
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test
   cypress-run:
     runs-on: ubuntu-latest
@@ -18,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cypress run
-        uses: cypress-io/github-action@v4.0.0 
+        uses: cypress-io/github-action@v4.0.0
         with:
           build: npm run build
           start: npm start
@@ -29,15 +31,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
       - name: Install Dependencies
         run: npm install
       - name: Test and coverage
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
         run: npm run test:coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   deploy:
     runs-on: ubuntu-latest

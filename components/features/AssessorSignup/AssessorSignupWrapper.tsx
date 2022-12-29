@@ -3,9 +3,13 @@ import { AssessorSignupStoreProvider } from "@context/Signup/AssessorSignupStore
 import React from "react";
 import { AssessorSignup } from "./AssessorSignup";
 
-const AssessorSignupWrapper = () => {
+interface Props {
+  googleLoginCallback: () => void;
+}
+
+const AssessorSignupWrapper = ({ googleLoginCallback } : Props) => {
   return (
-    <AssessorSignupStepProvider>
+    <AssessorSignupStepProvider googleLoginCallback={googleLoginCallback}>
       <AssessorSignupStoreProvider>
         <AssessorSignup />
       </AssessorSignupStoreProvider>

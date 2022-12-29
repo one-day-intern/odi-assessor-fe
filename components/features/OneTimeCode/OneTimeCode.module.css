@@ -1,5 +1,16 @@
 .one-time-code {
-    width: 100%;
+  width: 100%;
+  display: flex;
 
-    padding: 5rem;
+  padding: 5rem;
+}
+
+.otc-form {
+  width: 100%;
+}
+
+.divider {
+    width: 2px;
+    background-color: var(--primary);
+    margin: 0 1rem;
 }

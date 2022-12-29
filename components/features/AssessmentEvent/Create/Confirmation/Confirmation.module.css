@@ -1,7 +1,6 @@
 .confirm {
   width: 100%;
-
-  background: white;
+  height: 100%;
 
   display: flex;
   flex-direction: column;

@@ -36,3 +36,9 @@
 
   margin: 0;
 }
+
+.no-events {
+  color: var(--secondary);
+  font-size: 1.15rem;
+  font-weight: 600;
+}

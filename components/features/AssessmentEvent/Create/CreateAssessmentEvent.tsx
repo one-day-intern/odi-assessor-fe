@@ -1,20 +1,49 @@
 import { Backdrop } from "@components/shared/layouts/Backdrop";
 import { useCreateAssessmentEventDetails } from "@hooks/CreateAssessmentEvent/useCreateAssessmentEventStore/useCreateAssessmentEventDetails";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AddParticipants from "./AddParticipants";
 import { MultistepIndex } from "../../../shared/layouts/MultistepAssignment";
 import { NameAndDateForm } from "./NameAndDateForm";
 import styles from "./CreateAssessmentEvent.module.css";
 import { Confirmation } from "./Confirmation";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface CreateAssessmentEventProps {
   testFlows: TestFlowOption[] | null;
+  assessors: AssessorOptions[] | null;
 }
 
-const CreateAssessmentEvent = ({ testFlows } : CreateAssessmentEventProps) => {
+const wrapperVariants = {
+  beforeShown: {
+    x: -20,
+    opacity: 0,
+    transition: {
+      type: "tween",
+    },
+  },
+  shown: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      type: "tween",
+    },
+  },
+  afterShown: {
+    x: 20,
+    opacity: 0,
+    transition: {
+      type: "tween",
+    },
+  },
+};
+
+
+
+const CreateAssessmentEvent = ({ testFlows , assessors}: CreateAssessmentEventProps) => {
   const [currentStep, setCurrentStep] = useState(0);
 
   const setCurrentStepId = (id: number) => setCurrentStep(id);
+
 
   const {
     addEmptyParticipation,
@@ -24,7 +53,7 @@ const CreateAssessmentEvent = ({ testFlows } : CreateAssessmentEventProps) => {
     assessmentErrors,
     validateParticipationBeforeSubmit,
     setAssessmentData,
-    setAssessmentErrors
+    setAssessmentErrors,
   } = useCreateAssessmentEventDetails();
 
   const steps: Step[] = useMemo(
@@ -45,34 +74,62 @@ const CreateAssessmentEvent = ({ testFlows } : CreateAssessmentEventProps) => {
       },
       {
         id: 1,
-        component: <AddParticipants 
-        selectStep={setCurrentStep}
-        addEmptyParticipation={addEmptyParticipation}
-        removeParticipation={removeParticipation}
-        updateParticipation={updateParticipation}
-        assessmentData={assessmentData}
-        validateParticipationBeforeSubmit={validateParticipationBeforeSubmit}/>,
+        component: (
+          <AddParticipants
+          assessorList={assessors ?? []}
+            selectStep={setCurrentStep}
+            addEmptyParticipation={addEmptyParticipation}
+            removeParticipation={removeParticipation}
+            updateParticipation={updateParticipation}
+            assessmentData={assessmentData}
+            validateParticipationBeforeSubmit={
+              validateParticipationBeforeSubmit
+            }
+          />
+        ),
         name: "Assign Participants",
       },
       {
         id: 2,
-        component: <Confirmation {...assessmentData}/>,
-        name: "Confirm Event Creation"
-      }
+        component: <Confirmation {...assessmentData} />,
+        name: "Confirm Event Creation",
+      },
     ],
-    [assessmentData, testFlows, assessmentErrors, setAssessmentData, setAssessmentErrors, addEmptyParticipation, removeParticipation, updateParticipation, validateParticipationBeforeSubmit]
+    [
+      assessmentData,
+      assessors,
+      testFlows,
+      assessmentErrors,
+      setAssessmentData,
+      setAssessmentErrors,
+      addEmptyParticipation,
+      removeParticipation,
+      updateParticipation,
+      validateParticipationBeforeSubmit,
+    ]
   );
 
   return (
     <>
-      <Backdrop/>
+      <Backdrop />
       <div className={styles["multistep-wrapper"]}>
         <MultistepIndex
           currentStepId={currentStep}
           setCurrentStepId={setCurrentStepId}
           steps={steps}
         />
-        {steps[currentStep].component}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={steps[currentStep].id}
+            variants={wrapperVariants}
+            initial="beforeShown"
+            animate="shown"
+            exit="afterShown"
+            className={styles["steps"]}
+          >
+            {steps[currentStep].component}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </>
   );

@@ -1,0 +1,35 @@
+.email-list {
+  height: 50vh;
+  width: 100%;
+}
+
+.email p {
+  margin: 0;
+}
+
+.email {
+  position: relative;
+  border-radius: 0.25rem;
+  padding: 1rem 2rem;
+  margin: 1rem 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  background-color: #edf2fd;
+}
+
+.emails {
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.email-cross {
+  font-size: 0.7rem;
+  top: 5%;
+  right: 2%;
+
+  border: none;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+}
